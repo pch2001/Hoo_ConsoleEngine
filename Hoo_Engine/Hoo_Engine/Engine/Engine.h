@@ -7,7 +7,9 @@ namespace Wanted
 	{
 		//데이터 
 		struct KeyState {
+			//현재 키가 누렷는지
 			bool isKeyDown = false;
+			//이전에 키가 눌렸는지
 			bool wasKeyDown = false;
 		};
 
@@ -15,7 +17,9 @@ namespace Wanted
 		Engine();
 		~Engine();
 
+		//엔진 루프(게임 루프)
 		void Run();
+		//엔진 종료 함수
 		void QuitEngine();
 
 		//입력 확인 함수
@@ -32,14 +36,21 @@ namespace Wanted
 	private :
 		//입력 처리 함수
 		void ProcessInput();
+
 		//게임 플레이 시작 함수
 		void BeginPlay();
 
+		//업데이트 함수
 		void Tick(float deltaTime);
+		
+		//그리기 함수
 		void Draw();
 
 	private : 
+		//엔진 종료 플래그
 		bool isQuit = false;
+
+		//키 상태 저장용 배열
 		KeyState keyStates[255] = {};
 
 

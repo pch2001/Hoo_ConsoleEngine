@@ -77,53 +77,6 @@ namespace Wanted
 	{
 		isQuit = true;
 	}
-	void Engine::ProcessInput()
-	{
-		//키 마다의 입력 읽기
-		// !!! 운영체제가 제공하는 기능을 사용할 수 밖에 없음
-		for (int ix = 0; ix < 255; ++ix) {
-			keyStates[ix].isKeyDown = GetAsyncKeyState(ix) & 0x8000 > 0 ? true : false;
-		}
-	}
-	void Engine::BeginPlay()
-	{
-		//레벨이 있으면 이벤트 전달
-		if (!mainLevel) {
-			std::cout << "mainLevel is empty \n";
-			return;
-		}
-
-
-		mainLevel->BeginPlay();
-	}
-	void Engine::Tick(float deltaTime)
-	{
-		std::cout << "DeltaTime: " << deltaTime << ", FPS: " << (1.0f / deltaTime) << "\n";
-
-		//ESC키 눌리면 종료
-		if (GetKeyDown(VK_ESCAPE)) {
-			isQuit = true;
-		}
-
-		if (!mainLevel) {
-			std::cout << "Error: Engie::Tick() mainLevel is empty\n";
-			return;
-		}
-		mainLevel->Tick(deltaTime);
-
-	}
-	void Engine::Draw()
-	{
-
-		if (!mainLevel) {
-			std::cout << "Error: Engie::Draw() mainLevel is empty\n";
-			return;
-		}
-		mainLevel->Draw();
-
-
-	}
-
 
 	bool Engine::GetKeyDown(int keyCode)
 	{
@@ -153,5 +106,56 @@ namespace Wanted
 
 		mainLevel = newLevel;
 	}
+
+	void Engine::ProcessInput()
+	{
+		//키 마다의 입력 읽기
+		// !!! 운영체제가 제공하는 기능을 사용할 수 밖에 없음
+		for (int ix = 0; ix < 255; ++ix) {
+			keyStates[ix].isKeyDown = GetAsyncKeyState(ix) & 0x8000 > 0 ? true : false;
+		}
+	}
+	void Engine::BeginPlay()
+	{
+		//레벨이 있으면 이벤트 전달
+		if (!mainLevel) {
+			std::cout << "mainLevel is empty \n";
+			return;
+		}
+
+
+		mainLevel->BeginPlay();
+	}
+	void Engine::Tick(float deltaTime)
+	{
+		//std::cout << "DeltaTime: " << deltaTime << ", FPS: " << (1.0f / deltaTime) << "\n";
+
+		//ESC키 눌리면 종료
+		if (GetKeyDown(VK_ESCAPE)) {
+			QuitEngine();
+		}
+
+
+		if (!mainLevel) {
+			std::cout << "Error: Engie::Tick() mainLevel is empty\n";
+			return;
+		}
+		mainLevel->Tick(deltaTime);
+
+	}
+	void Engine::Draw()
+	{
+
+		if (!mainLevel) {
+			std::cout << "Error: Engie::Draw() mainLevel is empty\n";
+			return;
+		}
+		mainLevel->Draw();
+
+
+	}
+
+
+	
 
 }
