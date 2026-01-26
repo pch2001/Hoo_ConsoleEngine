@@ -134,7 +134,18 @@ namespace Wanted
 		if (GetKeyDown(VK_ESCAPE)) {
 			QuitEngine();
 		}
-
+		if (GetKeyDown(VK_UP)) {
+			printf("UP key pressed\n");
+		}
+		if (GetKeyDown(VK_DOWN)) {
+			printf("DOWN key pressed\n");
+		}
+		if (GetKeyDown(VK_LEFT)) {
+			printf("LEFT key pressed\n");
+		}
+		if (GetKeyDown(VK_RIGHT)) {
+			printf("RIGHT key pressed\n");
+		}
 
 		if (!mainLevel) {
 			std::cout << "Error: Engie::Tick() mainLevel is empty\n";
