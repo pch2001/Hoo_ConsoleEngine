@@ -1,9 +1,9 @@
 #pragma once
-#include "Level.h"
+
+#include "Level/Level.h"
+
 class TestLevel : public Wanted::Level
 {
-public :
+public:
 	TestLevel();
-
 };
-
