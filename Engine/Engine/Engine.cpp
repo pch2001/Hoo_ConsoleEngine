@@ -8,6 +8,7 @@
 namespace Wanted
 {
 	// 전역 변수 초기화.
+	// 어디서든 엔진에 접근할 수 있게 전역 포인터를 초기화
 	Engine* Engine::instance = nullptr;
 
 	Engine::Engine()
@@ -148,7 +149,6 @@ namespace Wanted
 		//std::cout
 		//	<< "DeltaTime: " << deltaTime
 		//	<< ", FPS: " << (1.0f / deltaTime) << "\n";
-
 
 
 		// 레벨에 이벤트 흘리기.
