@@ -53,7 +53,33 @@ namespace Wanted
 		// 액터에 이벤트 흘리기.
 		for (Actor* actor : actors)
 		{
-			actor->Draw();
+			Actor* search = nullptr;;
+		
+			for (Actor* otherActor : actors)
+			{
+				if (actor == otherActor)
+				{
+					continue;
+				}
+				//위치 비교
+				if (actor->GetPosition() == otherActor->GetPosition())
+				{
+					search = otherActor;
+					break;
+				}
+
+				// 같은 위치에 다른 액터가 없으면 그림
+				if (!search)
+				{
+					actor->Draw();
+					continue;
+				}
+				// 같은 위치에 다른 액터가 있는데 우선 순위가 높으면 그림
+				if (search && actor->GetSortingOrder() > search->GetSortingOrder())
+				{
+					actor->Draw();
+				}
+			}
 		}
 	}
 
