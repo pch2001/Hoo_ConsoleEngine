@@ -2,5 +2,5 @@
 
 Ground::Ground(const Vector2& position) : super(' ', position)
 {
-	sortingOrder = 0;
+	sortingOrder = 2;
 }

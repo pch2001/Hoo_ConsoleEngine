@@ -5,7 +5,7 @@
 
 using namespace Wanted;
 
-class Player : public Wanted::Actor
+class Player : public Actor
 {
 	RTTI_DECLARATIONS(Player, Actor)
 public :
@@ -15,4 +15,5 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
+public:
 };
