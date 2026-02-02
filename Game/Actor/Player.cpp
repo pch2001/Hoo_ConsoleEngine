@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 
-Player::Player() : super('P', Wanted::Vector2(10,10), Wanted::Color::Red)
+Player::Player(const Wanted::Vector2& position) : super('P', position, Wanted::Color::Red)
 {
 	//그릭 우선순위설정
 	sortingOrder = 10;
