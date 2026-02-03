@@ -1,19 +1,11 @@
 #pragma once
 
-#include "Common/RTTI.h"
-#include "Math/Vector2.h"
-#include "Math/Color.h"
+#include "Common/Common.h"
 
 namespace Wanted
 {
-	// 전방 선언.
-	class Level;
-
-	class WANTED_API Actor : public RTTI
+	class WANTED_API Actor
 	{
-		// RTTI 코드 추가.
-		RTTI_DECLARATIONS(Actor, RTTI)
-
 	public:
 		Actor(
 			const char image = ' ', 
