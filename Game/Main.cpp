@@ -1,9 +1,6 @@
 #include <iostream>
 #include "Engine/Engine.h"
-<<<<<<< HEAD
 #include "Game/Game.h"
-=======
->>>>>>> parent of e79c575 (메뉴 레벨 추가 및 레벨 전환 적용)
 #include "Level/SokobanLevel.h"
 
 using namespace Wanted;
@@ -12,7 +9,6 @@ using namespace Wanted;
 
 int main()
 {
-<<<<<<< HEAD
 	//Wanted::Engine engine;
 	//engine.SetNewLevel(new SokobanLevel());
 	//engine.Run();
@@ -26,11 +22,6 @@ int main()
 	//���� �迭
 	const int width = 3;
 	const int height = 3;
-=======
-	Wanted::Engine engine;
-	engine.SetNewLevel(new SokobanLevel());
-	engine.Run();
->>>>>>> parent of e79c575 (메뉴 레벨 추가 및 레벨 전환 적용)
 
 	CHAR_INFO charArray[width * height] = { };
 	charArray[2 * height + 1].Char.AsciiChar = 'P';

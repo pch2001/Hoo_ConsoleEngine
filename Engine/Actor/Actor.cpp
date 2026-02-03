@@ -1,20 +1,22 @@
 #include "Actor.h"
 #include "Util/Util.h"
-#include "Core/Renderer.h"
+#include "../Render/Renderer.h"
+
 #include <iostream>
 #include <Windows.h>
-#include <Util/Util.h>
 
 namespace Wanted
 {
-	Actor::Actor(const char image, const Vector2& position, Color color ) : image(image), position(position), color(color)
+	Actor::Actor(
+		const char image, 
+		const Vector2& position,
+		Color color)
+		: image(image), position(position), color(color)
 	{
-
 	}
 
 	Actor::~Actor()
 	{
-
 	}
 
 	void Actor::BeginPlay()
@@ -29,15 +31,16 @@ namespace Wanted
 
 	void Actor::Draw()
 	{
-		//렌더러에 그리기 요청
+		// 렌더러에 그리기 요청.
 		Renderer::Draw(position, color, image);
-
 	}
+
 	void Actor::SetPosition(const Vector2& newPosition)
 	{
+		// 렌더러에 빈칸 그리기 요청.
 		Renderer::Draw(position, ' ');
 
-		// 새로운 위치 설정
+		// 새로운 위치 설정.
 		position = newPosition;
 	}
 }

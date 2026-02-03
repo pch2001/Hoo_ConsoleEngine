@@ -53,74 +53,78 @@ namespace Wanted
 		// 액터에 이벤트 흘리기.
 		for (Actor* actor : actors)
 		{
-			Actor* search = nullptr;;
-		
+			// 같은 위치에 다른 액터가 있는지 확인하기 위함.
+			Actor* search = nullptr;
 			for (Actor* otherActor : actors)
 			{
+				// 같은 액터는 비교 안함.
 				if (actor == otherActor)
 				{
 					continue;
 				}
-				//위치 비교
+
+				// 위치 비교.
 				if (actor->GetPosition() == otherActor->GetPosition())
 				{
-					//정렬 순서 비교
-
-					if (actor->GetSortingOrder() < otherActor->GetSortingOrder())
+					// 정렬 순서 비교.
+					if (actor->GetSortingOrder()
+						< otherActor->GetSortingOrder())
 					{
 						search = otherActor;
 						break;
 					}
-
 				}
-
-				// 같은 위치에 우선순위 높은 다른 액터가 있으면 안그림
-				if (search)
-				{
-					continue;
-				}
-
-				//그리기
-				actor->Draw();
 			}
+
+			// 같은 위치에 우선순위 높은 다른 액터가 있으면 안그림.
+			if (search)
+			{
+				continue;
+			}
+
+			// 그리기.
+			actor->Draw();
 		}
 	}
 
 	void Level::AddNewActor(Actor* newActor)
 	{
-		// 나중에 추가를 위해 임시 배열에 저장
+		// 나중에 추가를 위해 임시 배열에 저장.
 		addRequestedActors.emplace_back(newActor);
-	
-		// 오너십 설정
+
+		// 오너십 설정.
 		newActor->SetOwner(this);
 	}
+
 	void Level::ProcessAddAndDestroyActors()
 	{
-		//제거 처리
-		for (int ix = 0; ix < static_cast<int>(actors.size());)
+		// 제거 처리.
+		for (int ix = 0; ix < static_cast<int>(actors.size()); )
 		{
-			//제거 요청된 액터가 있는지 확인
+			// 제거 요청된 액터가 있는지 확인.
 			if (actors[ix]->DestroyRequested())
 			{
-				//삭제 처리
+				// 삭제 처리.
 				delete actors[ix];
 				actors.erase(actors.begin() + ix);
 				continue;
 			}
+
 			++ix;
 		}
-		//추가 처리
+
+		// 추가 처리.
 		if (addRequestedActors.size() == 0)
 		{
 			return;
 		}
-		for (Actor* const actor : addRequestedActors) 
+
+		for (Actor* const actor : addRequestedActors)
 		{
 			actors.emplace_back(actor);
 		}
 
-		//처리가 끝났으면 배열 초기화
+		// 처리가 끝났으면 배열 초기화.
 		addRequestedActors.clear();
-
 	}
 }

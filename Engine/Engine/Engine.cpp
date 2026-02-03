@@ -9,23 +9,21 @@
 namespace Wanted
 {
 	// 전역 변수 초기화.
-	// 어디서든 엔진에 접근할 수 있게 전역 포인터를 초기화
 	Engine* Engine::instance = nullptr;
 
 	Engine::Engine()
 	{
 		// 전역 변수 값 초기화.
 		instance = this;
-		
+
 		// 입력 관리자 생성.
 		input = new Input();
 
-		//설정 파일 로드
+		// 설정 파일 로드.
 		LoadSetting();
 
-		//커서 끄기
+		// 커서 끄기.
 		Util::TurnOffCursor();
-		
 	}
 
 	Engine::~Engine()
@@ -63,9 +61,8 @@ namespace Wanted
 		currentTime = time.QuadPart;
 		previousTime = currentTime;
 
-		// 기준 프레임(단위: 초).
-		//float targetFrameRate = 120.0f;
-		setting.framerate = setting.framerate == 0.0f ? 60.6f : setting.framerate;
+		setting.framerate
+			= setting.framerate == 0.0f ? 60.0f : setting.framerate;
 		float oneFrameTime = 1.0f / setting.framerate;
 
 		// 엔진 루프(게임 루프).
@@ -99,6 +96,7 @@ namespace Wanted
 
 				input->SavePreviousInputStates();
 
+				// 레벨에 요청된 추가/제거 처리.
 				if (mainLevel)
 				{
 					mainLevel->ProcessAddAndDestroyActors();
@@ -106,11 +104,8 @@ namespace Wanted
 			}
 		}
 
-		
-		//정리.
+		// 정리.
 		Shutdown();
-		
-	
 	}
 
 	void Engine::QuitEngine()
@@ -151,31 +146,34 @@ namespace Wanted
 		// 정리 작업.
 		std::cout << "Engine has been shutdown....\n";
 
-		//커서 켜기
+		// 커서 켜기.
 		Util::TurnOnCursor();
 	}
 
 	void Engine::LoadSetting()
 	{
-		//엔진 설정 파일 열기
+		// 엔진 설정 파일 열기.
 		FILE* file = nullptr;
 		fopen_s(&file, "../Config/Setting.txt", "rt");
 
-		//예외처리
-		if (!file) {
+		// 예외처리.
+		if (!file)
+		{
 			std::cout << "Failed to open engine setting file.\n";
 			__debugbreak();
 			return;
 		}
-		//파일에서 읽은 데이터 담을 버퍼
+
+		// 파일에서 읽은 데이터 담을 버퍼.
 		char buffer[2048] = {};
 
-		//파일에서 읽기
+		// 파일에서 읽기.
 		size_t readSize = fread(buffer, sizeof(char), 2048, file);
 
-		//문자열 포맷 활용해서 데이터 추출
+		// 문자열 포맷 활용해서 데이터 추출.
 		sscanf_s(buffer, "framerate = %f", &setting.framerate);
 
+		// 파일 닫기.
 		fclose(file);
 	}
 
@@ -199,6 +197,7 @@ namespace Wanted
 		//std::cout
 		//	<< "DeltaTime: " << deltaTime
 		//	<< ", FPS: " << (1.0f / deltaTime) << "\n";
+
 
 
 		// 레벨에 이벤트 흘리기.

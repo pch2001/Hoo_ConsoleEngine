@@ -4,32 +4,22 @@
 #include "Math/Vector2.h"
 #include "Math/Color.h"
 
-
 namespace Wanted
 {
-	//전방 선언
+	// 전방 선언.
 	class Level;
 
 	class WANTED_API Actor : public RTTI
 	{
-		// RTTI 코드 추가
-	friend class RTTI; protected: static const size_t TypeIdClass() {
-		static int runTimeTypeId = 0; return reinterpret_cast<size_t>(&runTimeTypeId);
-	} public: virtual const size_t& GetType() const override {
-		return Actor::TypeIdClass();
-	} using super = RTTI; virtual bool Is(const size_t id) const override {
-		if (id == TypeIdClass()) {
-			return true;
-		}
-		else {
-			return RTTI::Is(id);
-		}
-	} virtual bool Is(RTTI* const rtti) const override {
-		return Is(rtti->GetType());
-	}
+		// RTTI 코드 추가.
+		RTTI_DECLARATIONS(Actor, RTTI)
 
 	public:
-		Actor(const char image = ' ', const Vector2& position = Vector2::Zero, Color color = Color::White);
+		Actor(
+			const char image = ' ', 
+			const Vector2& position = Vector2::Zero,
+			Color color = Color::White
+		);
 		virtual ~Actor();
 
 		// 게임 플레이 이벤트.
@@ -37,21 +27,29 @@ namespace Wanted
 		virtual void Tick(float deltaTime);
 		virtual void Draw();
 
-		//위치 변경 및 읽기 함수
+		// 위치 변경 및 읽기 함수.
 		void SetPosition(const Vector2& newPosition);
 		inline Vector2 GetPosition() const { return position; }
 
-		// 오너십 추가/읽기 함수
-		void SetOwner(Level* newOwner) { owner = newOwner; }
+		// 오너십 추가/읽기 함수.
+		inline void SetOwner(Level* newOwner) { owner = newOwner; }
 		inline Level* GetOwner() const { return owner; }
 
 		// Getter.
-		inline bool HasBeganPlay() const { return hasBeganPlay; }
+		inline bool HasBeganPlay() const
+		{
+			return hasBeganPlay;
+		}
+
 		inline bool IsActive() const
 		{
 			return isActive && !destroyRequested;
 		}
-		inline bool DestroyRequested() const { return destroyRequested; }
+
+		inline bool DestroyRequested() const
+		{
+			return destroyRequested;
+		}
 
 		inline int GetSortingOrder() const { return sortingOrder; }
 
@@ -64,22 +62,21 @@ namespace Wanted
 
 		// 현재 프레임에 삭제 요청 받았는지 여부.
 		bool destroyRequested = false;
-	
-		//그릴 문자(이미지)
+
+		// 그릴 문자(이미지).
 		char image = ' ';
 
-		//색상
+		// 색상.
 		Color color = Color::White;
 
-		// 오너십(Ownership)
+		// 오너십(Ownership).
 		Level* owner = nullptr;
 
-		// 그리기 우선 순위(값이 크면 우선순위가 높음)
+		// 그리기 우선 순위 (값이 크면 우선순위가 높음).
 		int sortingOrder = 0;
 
-	private :
-		//위치
+	private:
+		// 위치.
 		Vector2 position;
-
 	};
 }

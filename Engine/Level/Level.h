@@ -13,9 +13,9 @@ namespace Wanted
 
 	// 담당 임무: 레벨에 있는 모든 액터(물체) 관리.
 	class WANTED_API Level : public RTTI
-
 	{
 		RTTI_DECLARATIONS(Level, RTTI)
+
 	public:
 		Level();
 		virtual ~Level();
@@ -28,16 +28,14 @@ namespace Wanted
 		// 액터 추가 함수.
 		void AddNewActor(Actor* newActor);
 
-		// 액터 추가/제거 처리 함수
+		// 액터 추가/제거 처리 함수.
 		void ProcessAddAndDestroyActors();
 
 	protected:
 		// 액터 배열.
 		std::vector<Actor*> actors;
 
-		//실행 중에 추가 요청된 액터의 배열
-		//한프레임정도는 기다렸다가 추가를 해줘야 된다.
+		// 실행 중에 추가 요청된 액터의 배열.
 		std::vector<Actor*> addRequestedActors;
-
 	};
 }

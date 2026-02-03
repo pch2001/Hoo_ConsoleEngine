@@ -6,10 +6,10 @@
 // 동적(실행중에) 형변환을 하기 위해 사용하는 클래스.
 // RunTime-Type-Information.
 namespace Wanted
-{	
-	//커스텀 RTTI를 제공하는 클래스의 최상위 클래스
-	//C#의 Object, Jave의 Objec,
-	//언리얼의 UObject로 생각해 볼 수 있음
+{
+	// 커스텀 RTTI를 제공하는 클래스의 최상위 클래스.
+	// C#의 Object, Java의 object, 
+	// 언리얼의 UObject로 생각해볼 수 있음.
 	class WANTED_API RTTI
 	{
 	public:
@@ -23,6 +23,13 @@ namespace Wanted
 		virtual bool Is(const size_t id) const
 		{
 			return false;
+		}
+
+		// 타입 질문 함수.
+		template<typename T>
+		bool IsTypeOf()
+		{
+			return Is(T::TypeIdClass());
 		}
 
 		template<typename T>
@@ -48,7 +55,6 @@ namespace Wanted
 		}
 	};
 }
-
 
 // RTTI를 선언할 클래스에 추가할 매크로.
 // 아래 코드에서 Type, ParentType이 실제 타입으로 변환되어 복사/붙여넣기 됨.
