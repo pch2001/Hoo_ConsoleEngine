@@ -1,17 +1,16 @@
 #pragma once
 
-#include "Math/Color.h"
 #include "Math/Vector2.h"
-
+#include "Math/Color.h"
 #include <Windows.h>
 #include <vector>
 
 namespace Wanted
 {
-	//콘솔 버퍼를 관리하는 클래스.
+	// 콘솔 버퍼를 관리하는 클래스.
 	class ScreenBuffer;
-	
-	//더블 버퍼링을 지원하는 렌더러 클래스.
+
+	// 더블 버퍼링을 지원하는 렌더러 클래스.
 	class WANTED_API Renderer
 	{
 		// 프레임 구조체 - 2차원 글자 배열의 항목이 될 구조체.
@@ -23,7 +22,7 @@ namespace Wanted
 			// 지우기 함수.
 			void Clear(const Vector2& screenSize);
 
-			// 글자 값과 글자의 색상을 갖는 타입
+			// 글자 값과 글자의 색상을 갖는 타입.
 			CHAR_INFO* charInfoArray = nullptr;
 
 			// 그리기 우선순위 배열.
@@ -36,13 +35,13 @@ namespace Wanted
 			// 화면에 보여줄 문자열 값.
 			const char* text = nullptr;
 
-			// 좌표
+			// 좌표.
 			Vector2 position;
 
-			//색상
+			// 색상.
 			Color color = Color::White;
 
-			//그리기 우선순위
+			// 그리기 우선순위.
 			int sortingOrder = 0;
 		};
 
@@ -50,10 +49,10 @@ namespace Wanted
 		Renderer(const Vector2& screenSize);
 		~Renderer();
 
-		// 그리기 함수
+		// 그리기 함수.
 		void Draw();
 
-		//그리는데 필요한 데이터를 제출(적재)하는 함수.
+		// 그리는데 필요한 데이터를 제출(적재)하는 함수.
 		void Submit(
 			const char* text,
 			const Vector2& position,
@@ -64,35 +63,34 @@ namespace Wanted
 		// 싱글톤 접근 함수.
 		static Renderer& Get();
 
-	private :
-		// 화면 지우는 함수
+	private:
+
+		// 화면 지우는 함수.
 		void Clear();
 
-		//더블 버퍼링을 활용해 활성화 버퍼를 교환하는 함수.
+		// 더블 버퍼링을 활용해 활성화 버퍼를 교환하는 함수.
 		void Present();
 
-		//현재 사용할 버퍼를 반환하는 함수(Getter).
+		// 현재 사용할 버퍼를 반환하는 함수(Getter).
 		ScreenBuffer* GetCurrentBuffer();
 
-
-	private :
-		//화면 크기
+	private:
+		// 화면 크기.
 		Vector2 screenSize;
 
-		//관리할 프레임 객체
+		// 관리할 프레임 객체.
 		Frame* frame = nullptr;
 
-		//이중 버퍼 배열
+		// 이중 버퍼 배열.
 		ScreenBuffer* screenBuffers[2] = {};
 
-		//현재 활성화된 버퍼 인덱스.
+		// 현재 활성화된 버퍼 인덱스.
 		int currentBufferIndex = 0;
 
-		// 렌더 큐. (씬의 모든 그리기 명령을 모아두는 배열 ex) 번호 표 뽑고 기다리는 거)
+		// 렌더 큐 (씬의 모든 그리기 명령을 모아두는 배열).
 		std::vector<RenderCommand> renderQueue;
 
 		// 싱글톤 구현을 위한 정적 변수.
 		static Renderer* instance;
-
 	};
 }

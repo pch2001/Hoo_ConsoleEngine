@@ -1,14 +1,22 @@
 #pragma once
 
-#include "Common/Common.h"
+#include "Common/RTTI.h"
+#include "Math/Vector2.h"
+#include "Math/Color.h"
 
 namespace Wanted
 {
-	class WANTED_API Actor
+	// 전방 선언.
+	class Level;
+
+	class WANTED_API Actor : public RTTI
 	{
+		// RTTI 코드 추가.
+		RTTI_DECLARATIONS(Actor, RTTI)
+
 	public:
 		Actor(
-			const char image = ' ', 
+			const char* image = " ",
 			const Vector2& position = Vector2::Zero,
 			Color color = Color::White
 		);
@@ -56,7 +64,7 @@ namespace Wanted
 		bool destroyRequested = false;
 
 		// 그릴 문자(이미지).
-		char image = ' ';
+		char* image = nullptr;
 
 		// 색상.
 		Color color = Color::White;

@@ -1,10 +1,15 @@
 #pragma once
+
 #include "Math/Vector2.h"
 #include <Windows.h>
 
-
 namespace Wanted
 {
+	/*
+	* 작성자 : 장세윤
+	* 날짜   : 2026.02.03
+	* 내용   : 더블 버퍼링에 사용할 Console Output 핸들을 관리하는 클래스.
+	*/
 	class ScreenBuffer
 	{
 	public:
@@ -21,13 +26,10 @@ namespace Wanted
 		inline HANDLE GetBuffer() const { return buffer; }
 
 	private:
-		//콘솔 출력 핸들
+		// 콘솔 출력 핸들.
 		HANDLE buffer = nullptr;
 
-		//화면 크기
+		// 화면 크기.
 		Vector2 screenSize;
 	};
-	
 }
-
-
