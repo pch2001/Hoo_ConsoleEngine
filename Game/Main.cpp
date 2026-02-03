@@ -1,40 +1,50 @@
 #include <iostream>
 #include "Engine/Engine.h"
-#include "Level/SokobanLevel.h"
 #include "Game/Game.h"
+#include "Level/SokobanLevel.h"
 
 using namespace Wanted;
 
+
+
 int main()
 {
-	Game game;
-	game.Run();
+	//Wanted::Engine engine;
+	//engine.SetNewLevel(new SokobanLevel());
+	//engine.Run();
+
+	//Game game;
+	//game.Run();
+
+	//=========================================================
 
 
-	/*Wanted::Engine engine;
-	engine.SetNewLevel(new SokobanLevel());
-	engine.Run();*/
+	//예시 배열
+	const int width = 3;
+	const int height = 3;
 
-	/*
-	TestLevel* level = new TestLevel();
-	//Actor* actor = new Actor();
+	CHAR_INFO charArray[width * height] = { };
+	charArray[2 * height + 1].Char.AsciiChar = 'P';
+	charArray[2 * height + 1].Attributes = FOREGROUND_GREEN;
 
-	//TestActor* testActor = actor->As<TestActor>();
-	Actor* actor = new TestActor();
-	TestActor* testActor = new TestActor();
+	charArray[0 * height + 1].Char.AsciiChar = '#';
+	charArray[0 * height + 1].Attributes = FOREGROUND_RED;
 
-	TestActor* test2 = actor->As<TestActor>();
-	if (test2) {
-		std::cout << "actor is TestActor Type\n";
-	}
-	else {
-		std::cout << "actor is not TestAtor Type\n";
-	}
 
-	if (testActor) {
-		std::cout << "actor is TestActor type.\n";
-	}
-	else {
-		std::cout << "actor is not TestActor type.\n";
-	}*/ // RTTI
+	COORD position = {};
+	COORD screenSize;
+	screenSize.X = 3;
+	screenSize.Y = 3;
+
+	SMALL_RECT writeRegion{ 0, 0, static_cast<short> (width), static_cast<short> (height) };
+
+	// 문자 배열을 한번에 콘솔로 넘겨서 그릴 때 사용하는 함수.
+	WriteConsoleOutputA(
+		GetStdHandle(STD_OUTPUT_HANDLE), charArray, screenSize, position, &writeRegion
+	);
+
+	//CreateConsoleScreenBuffer();
+	
+
+	std::cin.get();
 }

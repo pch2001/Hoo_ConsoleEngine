@@ -1,12 +1,13 @@
 #pragma once
+
 #include "Actor/Actor.h"
 
 using namespace Wanted;
+
 class Target : public Actor
 {
-	RTTI_DECLARATIONS(Target, Actor);
+	RTTI_DECLARATIONS(Target, Actor)
 
-public :
+public:
 	Target(const Vector2& position);
 };
-

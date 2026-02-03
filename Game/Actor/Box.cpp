@@ -1,8 +1,8 @@
 #include "Box.h"
 
-
-
-Box::Box(const Wanted::Vector2& newPosition): super('B', newPosition, Wanted::Color::Blue)
+Box::Box(const Vector2& newPosition)
+	: super('B', newPosition, Color::Blue)
 {
-	sortingOrder = 7;	
+	// 그리기 우선순위 설정.
+	sortingOrder = 5;
 }
