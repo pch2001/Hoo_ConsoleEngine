@@ -1,14 +1,19 @@
 #include <iostream>
 #include "Engine/Engine.h"
 #include "Level/SokobanLevel.h"
+#include "Game/Game.h"
 
 using namespace Wanted;
 
 int main()
 {
-	Wanted::Engine engine;
+	Game game;
+	game.Run();
+
+
+	/*Wanted::Engine engine;
 	engine.SetNewLevel(new SokobanLevel());
-	engine.Run();
+	engine.Run();*/
 
 	/*
 	TestLevel* level = new TestLevel();

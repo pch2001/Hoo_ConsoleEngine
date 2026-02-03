@@ -199,7 +199,7 @@ namespace Wanted
 		//std::cout
 		//	<< "DeltaTime: " << deltaTime
 		//	<< ", FPS: " << (1.0f / deltaTime) << "\n";
-
+		//Input->Tick();
 
 		// 레벨에 이벤트 흘리기.
 		// 예외처리.

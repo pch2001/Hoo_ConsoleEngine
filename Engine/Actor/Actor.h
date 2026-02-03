@@ -13,20 +13,7 @@ namespace Wanted
 	class WANTED_API Actor : public RTTI
 	{
 		// RTTI 코드 추가
-	friend class RTTI; protected: static const size_t TypeIdClass() {
-		static int runTimeTypeId = 0; return reinterpret_cast<size_t>(&runTimeTypeId);
-	} public: virtual const size_t& GetType() const override {
-		return Actor::TypeIdClass();
-	} using super = RTTI; virtual bool Is(const size_t id) const override {
-		if (id == TypeIdClass()) {
-			return true;
-		}
-		else {
-			return RTTI::Is(id);
-		}
-	} virtual bool Is(RTTI* const rtti) const override {
-		return Is(rtti->GetType());
-	}
+		RTTI_DECLARATIONS(Actor, RTTI);
 
 	public:
 		Actor(const char image = ' ', const Vector2& position = Vector2::Zero, Color color = Color::White);
@@ -42,7 +29,7 @@ namespace Wanted
 		inline Vector2 GetPosition() const { return position; }
 
 		// 오너십 추가/읽기 함수
-		void SetOwner(Level* newOwner) { owner = newOwner; }
+		inline void SetOwner(Level* newOwner) { owner = newOwner; }
 		inline Level* GetOwner() const { return owner; }
 
 		// Getter.

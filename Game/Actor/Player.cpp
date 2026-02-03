@@ -1,45 +1,58 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Core/Input.h"
 #include "Engine/Engine.h"
 #include "Actor/Box.h"
 #include "Level/Level.h"
-
+#include "Game/Game.h"
 #include "Interface/ICanPlayerMove.h"
 
 #include <iostream>
 #include <Windows.h>
 
+using namespace Wanted;
 
 Player::Player(const Wanted::Vector2& position) : super('P', position, Wanted::Color::Red)
 {
-	//±×¸¯ ¿ì¼±¼øÀ§¼³Á¤
+	//ê·¸ë¦­ ìš°ì„ ìˆœìœ„ì„¤ì •
 	sortingOrder = 10;
 }
 
 void Player::BeginPlay()
 {
-	// »óÀ§ ÇÔ¼ö È£Ãâ.
-	// C++´Â ºÎ¸ğÇÔ¼ö °¡¸®Å°´Â Æ÷ÀÎÅÍ°¡ ¾øÀ½.
+	// ìƒìœ„ í•¨ìˆ˜ í˜¸ì¶œ.
+	// C++ëŠ” ë¶€ëª¨í•¨ìˆ˜ ê°€ë¦¬í‚¤ëŠ” í¬ì¸í„°ê°€ ì—†ìŒ.
 	Actor::BeginPlay();
 
-	std::cout << "TestActor::BeginPlay().\n";
+	//std::cout << "TestActor::BeginPlay().\n";
 }
 
 void Player::Tick(float deltaTime)
 {
 	Actor::Tick(deltaTime);
-
-	// QÅ° Á¾·á.
+	
+	//ESCí‚¤ ì²˜ë¦¬.
+	if (Wanted::Input::Get().GetKeyDown(VK_ESCAPE))
+	{
+		//ë©”ë‰´ í™œì„±í™”
+		Game::Get().ToggleMenu();
+		return;
+	}
+	
+	// Qí‚¤ ì¢…ë£Œ.
 	if (Wanted::Input::Get().GetKeyDown('Q'))
 	{
-		// Todo: °ÔÀÓ ¿£Áø Á¾·á ¿äÃ».
+		// Todo: ê²Œì„ ì—”ì§„ ì¢…ë£Œ ìš”ì²­.
+		std::cout << "ì¢…ë£Œ ìš”ì²­.\n";
+
 		Wanted::Engine::Get().QuitEngine();
 	}
 
-	// ½ºÆäÀÌ½º·Î ¹Ú½º »ı¼º
+	// ìŠ¤í˜ì´ìŠ¤ë¡œ ë°•ìŠ¤ ìƒì„±
 	if (Wanted::Input::Get().GetKeyDown(VK_SPACE))
-	{			
-		// ¹Ú½º »ı¼º
+	{
+		std::cout << "í­íƒ€ì†Œí™˜.\n";
+
+		// ë°•ìŠ¤ ìƒì„±
 		if (owner)
 		{
 			GetOwner()->AddNewActor(new Box(GetPosition()));
@@ -47,23 +60,23 @@ void Player::Tick(float deltaTime)
 		}
 	}
 
-	//ÀÎÅÍÆäÀÌ½º È®ÀÎ
+	//ì¸í„°í˜ì´ìŠ¤ í™•ì¸
 	static ICanPlayerMove* canPlayerMoveInterface = nullptr;
 
-	//dynamic_cast°¡ °è¼Ó ÇÁ·¹ÀÓ¸¶´Ù È£ÃâÇÏ´Â°Ç ÁÁÁö ¾Ê±â ‹š¹®¿¡
-	// canPlayerMoveInterfaceÀ» Àü¿ªº¯¼ö·Î ¼±¾ğÇØ¼­ µ¥ÀÌÅÍ ¿µ¿ª¿¡ ÇÑ¹ø¸¸ °øÀ¯ÇÏµµ·Ï ¼±¾ğ
-	// ÀÌÈÄ¿¡´Â º¯È¯¾ÈÇÔ
-	//¿À³Ê½Ê È®ÀÎ(nullÈ®ÀÎ)
+	//dynamic_castê°€ ê³„ì† í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œí•˜ëŠ”ê±´ ì¢‹ì§€ ì•Šê¸° ë–„ë¬¸ì—
+	// canPlayerMoveInterfaceì„ ì „ì—­ë³€ìˆ˜ë¡œ ì„ ì–¸í•´ì„œ ë°ì´í„° ì˜ì—­ì— í•œë²ˆë§Œ ê³µìœ í•˜ë„ë¡ ì„ ì–¸
+	// ì´í›„ì—ëŠ” ë³€í™˜ì•ˆí•¨
+	//ì˜¤ë„ˆì‹­ í™•ì¸(nullí™•ì¸)
 	if (!canPlayerMoveInterface && GetOwner())
 	{
-		//ÀÎÅÍÆäÀÌ½º·Î Çüº¯È¯ 
+		//ì¸í„°í˜ì´ìŠ¤ë¡œ í˜•ë³€í™˜ 
 		canPlayerMoveInterface = dynamic_cast<ICanPlayerMove*>(GetOwner());
 
 	}
 
-	//ÀÌµ¿
+	//ì´ë™
 	if (Wanted::Input::Get().GetKeyDown(VK_RIGHT) && GetPosition().x < 40) {
-		//ÀÌµ¿ °¡´É ¿©ºÎ ÆÇ´Ü
+		//ì´ë™ ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
 		Vector2 newPosition(GetPosition().x + 1, GetPosition().y);
 		if(canPlayerMoveInterface->CanMove(GetPosition(), newPosition))
 		{
