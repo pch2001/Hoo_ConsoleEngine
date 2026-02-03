@@ -1,7 +1,6 @@
 #include "Engine.h"
 #include "Level/Level.h"
 #include "Core/Input.h"
-#include "Util/Util.h"
 
 #include <iostream>
 #include <Windows.h>
