@@ -1,9 +1,9 @@
 #include "Actor.h"
 #include "Util/Util.h"
 #include "Core/Renderer.h"
-
 #include <iostream>
 #include <Windows.h>
+#include <Util/Util.h>
 
 namespace Wanted
 {

@@ -4,8 +4,6 @@
 #include "Actor/Ground.h"
 #include "Actor/Box.h"
 #include "Actor/Target.h"
-#include "Util/Util.h"
-
 #include <iostream>
 
 /*
@@ -24,6 +22,7 @@ SokobanLevel::SokobanLevel()
 	LoadMap("Stage1.txt");
 }
 
+<<<<<<< HEAD
 void SokobanLevel::Draw()
 {
 	super::Draw();
@@ -40,6 +39,8 @@ void SokobanLevel::Draw()
 	}
 }
 
+=======
+>>>>>>> parent of e79c575 (ë©”ë‰´ ë ˆë²¨ ì¶”ê°€ ë° ë ˆë²¨ ì „í™˜ ì ìš©)
 void SokobanLevel::LoadMap(const char* filename)
 {
 	// ÆÄÀÏ ·Îµå.
@@ -179,6 +180,7 @@ bool SokobanLevel::CanMove(
 			continue;
 		}
 	}
+<<<<<<< HEAD
 
 	// ÀÌµ¿ÇÏ·Á´Â À§Ä¡¿¡ ¹Ú½º°¡ ÀÖ´ÂÁö È®ÀÎ.
 	Actor* boxActor = nullptr;
@@ -312,3 +314,9 @@ bool SokobanLevel::CheckGameClear()
 	// ¸ñÇ¥ Á¡¼ö¿¡ µµ´ŞÇß´ÂÁö È®ÀÎ.
 	return currentScore == targetScore;
 }
+=======
+
+	return false;
+}
+
+>>>>>>> parent of e79c575 (ë©”ë‰´ ë ˆë²¨ ì¶”ê°€ ë° ë ˆë²¨ ì „í™˜ ì ìš©)
