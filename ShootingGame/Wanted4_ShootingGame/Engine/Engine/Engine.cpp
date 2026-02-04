@@ -28,6 +28,9 @@ namespace Wanted
 
 		// 커서 끄기.
 		Util::TurnOffCursor();
+
+		//종자 값 설정
+		Util::SetRandomSeed();
 	}
 
 	Engine::~Engine()
@@ -48,6 +51,7 @@ namespace Wanted
 
 		// 렌더러 객체 제거.
 		SafeDelete(renderer);
+	
 	}
 
 	void Engine::Run()
@@ -254,6 +258,7 @@ namespace Wanted
 
 	void Engine::Draw()
 	{
+		
 		// 레벨에 이벤트 흘리기.
 		// 예외처리.
 		if (!mainLevel)

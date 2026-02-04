@@ -36,6 +36,9 @@ namespace Wanted
 		// 엔진 종료 함수
 		void QuitGame();
 
+		//충돌 여부 확인 함수
+		bool TestIntersect(const Actor* const other);
+
 		// 위치 변경 및 읽기 함수.
 		void SetPosition(const Vector2& newPosition);
 		inline Vector2 GetPosition() const { return position; }
