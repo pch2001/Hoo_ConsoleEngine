@@ -31,7 +31,8 @@ void Player::Tick(float deltaTime)
 		MoveRight();
 	}
 
-}
+} 
+
 
 void Player::MoveRight()
 {
