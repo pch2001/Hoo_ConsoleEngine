@@ -101,6 +101,7 @@
     <ClCompile Include="Actor\PlayerAttack.cpp" />
     <ClCompile Include="Effect\WhiteEffect.cpp" />
     <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Level\BaseMenuLevel.cpp" />
     <ClCompile Include="Level\EndLevel.cpp" />
     <ClCompile Include="Level\GameLevel.cpp" />
     <ClCompile Include="Level\MainLevel.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Actor\PlayerAttack.h" />
     <ClInclude Include="Effect\WhiteEffect.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Level\BaseMenuLevel.h" />
     <ClInclude Include="Level\EndLevel.h" />
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Level\MainLevel.h" />

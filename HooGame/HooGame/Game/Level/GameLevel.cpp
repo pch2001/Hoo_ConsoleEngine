@@ -17,12 +17,8 @@ using namespace Wanted;
 
 GameLevel::GameLevel()
 {
-	// Player 액터 추가.
 	player = new Player();
 	AddNewActor(player);
-	//AddNewActor(new Enemy());
-	//float targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
-
 }
 
 GameLevel::~GameLevel()
@@ -38,7 +34,7 @@ void GameLevel::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	float targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
+	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
 	if (targetCameraX < 0) targetCameraX = 0;
 
 	// 렌더러에 카메라 위치 전달
@@ -51,6 +47,18 @@ void GameLevel::Tick(float deltaTime)
 
 	
 	Renderer::Get().Submit(scoreBuffer, Vector2(targetCameraX+ Engine::Get().GetWidth() / 2, 0), Color::White, 10);
+
+
+	for (Actor* actor : actors)
+	{
+		if (actor == player) continue;
+
+		if (actor->GetPosition().x < targetCameraX)
+		{
+			actor->Destroy();
+		}
+	}
+
 
 }
  
@@ -66,7 +74,6 @@ void GameLevel::UpdateMap()
 	int screenWidth = Engine::Get().GetWidth();
 
 	int height = Wanted::Engine::Get().GetHeight();
-
 
 	//플레이어가 끝에 다다르기 전에 미리 다음 땅을 생성
 	if (lastSpawnX < playerX + screenWidth)
@@ -97,8 +104,6 @@ void GameLevel::UpdateMap()
 		{
 			AddNewActor(new Ground(Vector2(lastSpawnX, height - 2)));
 		}
-
-
 	}
 }
 
@@ -146,14 +151,5 @@ void GameLevel::SpawnNextPattern(int index)
 }
 
 
-
-void GameLevel::CollisionPlayerAttackAndEnemy()
-{
-}
-
-void GameLevel::CollisionEnemyAttackAndPlayer()
-{
-
-}
 
 

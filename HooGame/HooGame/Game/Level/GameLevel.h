@@ -29,12 +29,6 @@ private:
 
 	void SpawnNextPattern(int index); //다음 맵 패턴
 
-
-	void CollisionPlayerAttackAndEnemy();
-	void CollisionEnemyAttackAndPlayer();
-
-
-
 private:
 	//마지막으로 생성된 지점 저장
 	int lastSpawnX = 0;

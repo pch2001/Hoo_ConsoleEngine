@@ -7,7 +7,7 @@ using namespace Wanted;
 
 class WhiteEffect : public Actor
 {
-	RTTI_DECLARATIONS(WhiteEffect, Actor);
+	RTTI_DECLARATIONS(WhiteEffect, Actor)
 
 public :
 
@@ -30,6 +30,6 @@ private :
 	int targetHeight;
 
 	bool isWarning = false; // 플레이어에게 피격하는 조건
-	const char* icon;
+	const char* icon = nullptr;
 };
 

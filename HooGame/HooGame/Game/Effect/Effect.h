@@ -7,7 +7,7 @@ using namespace Wanted;
 
 class Effect : public Actor
 {
-	RTTI_DECLARATIONS(Effect, Actor);
+	RTTI_DECLARATIONS(Effect, Actor)
 
 	Effect(Vector2 position,Actor* actor ,float effectTime);
 	~Effect();

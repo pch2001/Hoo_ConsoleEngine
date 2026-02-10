@@ -26,6 +26,8 @@ private :
 	float xPosition = 0.0f;
 
 	EngineTimer timer{ 0.1f };
+
+	EngineTimer arriveTimer{ 2.0f };
 	
 	int currentFrameIndex = 0;                  // 현재 몇 번째 이미지인지
 

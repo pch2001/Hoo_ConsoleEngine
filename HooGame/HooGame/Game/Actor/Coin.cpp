@@ -18,7 +18,7 @@ void Coin::Tick(float deltaTime)
 	timer.Tick(deltaTime);
 	if (timer.IsTimeOut())
 	{
-		currentFrameIndex = (currentFrameIndex + 1) % 3;
+		currentFrameIndex = (currentFrameIndex + 1) % 4;
 
 		// 2. 바뀐 인덱스의 이미지로 변경
 		ChangeImage(frames[currentFrameIndex]);

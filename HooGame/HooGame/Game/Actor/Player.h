@@ -33,9 +33,6 @@ private:
 	// 왼쪽으로 이동하는 함수.
 	void MoveLeft();
 
-	// 점프하는 함수
-	void Jump(float deltaTime);
-
 	// 공격하는 함수
 	void Attack();
 
@@ -67,7 +64,7 @@ private:
 	//무적 무적인지 체크;
 	bool invincibleBool = false;
 
-	EngineTimer invincibleTimer;//무적 타이머
-	EngineTimer blinkTimer;	//색상 바꾸는 타이머
+	EngineTimer invincibleTimer{ 1.5f };//무적 타이머
+	EngineTimer blinkTimer{ 1.5f };	//색상 바꾸는 타이머
 
 };

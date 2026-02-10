@@ -8,7 +8,7 @@ PlayerAttack::PlayerAttack(const Vector2& position, Player* player) : super("/",
 
 	myLayer = CollisionLayer::Player;
 	targetLayer = CollisionLayer::Enemy;
-
+	arriveTimer.Reset();
 }
 
 PlayerAttack::~PlayerAttack()
@@ -20,6 +20,8 @@ void PlayerAttack::Tick(float deltaTime)
 	super::Tick(deltaTime);
 
 	timer.Tick(deltaTime);
+	
+	
 
 	if (timer.IsTimeOut())
 	{
@@ -45,7 +47,12 @@ void PlayerAttack::Tick(float deltaTime)
 	// 위치 갱신
 	SetPosition(newPosition);
 
+	arriveTimer.Tick(deltaTime);
 
+	if (arriveTimer.IsTimeOut())
+	{
+		Destroy();
+	}
 }
 
 void PlayerAttack::OnOverlap(Actor* actor)

@@ -42,35 +42,16 @@ void Player::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-
-	if (Input::Get().GetKey('Q') || Input::Get().GetKey('q'))
-	{
-		
-
-	}
-	if (Input::Get().GetKeyDown(VK_ESCAPE))
-	{
-		Game::Get().ToggleMenu();
-		return;
-	}
+	if (Input::Get().GetKeyDown(VK_ESCAPE))	{Game::Get().ToggleMenu();	return;	}
+	if (Input::Get().GetKey(VK_LEFT) || Input::Get().GetKey('A') || Input::Get().GetKey('a')){MoveLeft();}
+	if (Input::Get().GetKey(VK_RIGHT) || Input::Get().GetKey('d') || Input::Get().GetKey('D')){	MoveRight();}
 
 	timer.Tick(deltaTime);
-
-	if (Input::Get().GetKey(VK_LEFT) || Input::Get().GetKey('A') || Input::Get().GetKey('a'))
-	{
-		MoveLeft();
-	}
-	if (Input::Get().GetKey(VK_RIGHT) || Input::Get().GetKey('d') || Input::Get().GetKey('D'))
-	{
-		MoveRight();
-	}
-
 
 	if (Input::Get().GetKeyDown(VK_SPACE) && !isJumping &&isOnGround)
 	{
 		isJumping = true;
 		isOnGround = false;
-
 		jumpStepsRemaining = 4; 
 	}
 	if (isJumping)
@@ -79,7 +60,7 @@ void Player::Tick(float deltaTime)
 
 		if (timer.IsTimeOut())
 		{
-			position.y -= 1.0f; 
+			position.y -= (int)1.0f; 
 			jumpStepsRemaining--;
 			timer.Reset();
 
@@ -94,14 +75,7 @@ void Player::Tick(float deltaTime)
 	{
 		Attack();
 	}
-	if (Input::Get().GetKeyDown('t') || Input::Get().GetKeyDown('T'))
-	{
-		Upgrade();
-	}
-	if (Input::Get().GetKeyDown('y') || Input::Get().GetKeyDown('Y'))
-	{
-		Downgrade();
-	}
+
 
 	invincibleTimer.Tick(deltaTime);
 	if (invincibleBool)
@@ -136,7 +110,6 @@ void Player::OnOverlap(Actor* actor)
 	{
 		return;
 	}
-
 	invincibleBool = true;
 	if (actor->IsTypeOf<Enemy>() || actor->IsTypeOf<WhiteEffect>())
 	{
@@ -156,8 +129,6 @@ void Player::OnOverlap(Actor* actor)
 		{
 			knockbackDist = 3;
 		}
-
-
 		Downgrade();
 
 		Vector2 myPos = GetPosition();
@@ -208,12 +179,6 @@ void Player::MoveLeft()
 	}
 }
 
-void Player::Jump(float deltaTime)
-{	
-	
-	
-
-}
 
 void Player::Attack()
 {

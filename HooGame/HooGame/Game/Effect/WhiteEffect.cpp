@@ -3,7 +3,7 @@
 #include "Actor/Enemy.h"
 
 #include <iostream>
-WhiteEffect::WhiteEffect(Vector2 position, Actor* actor) : super(" ",position), actor(actor), rootPosition(position)
+WhiteEffect::WhiteEffect(Vector2 position, Actor* actor) : super(" ",position), actor(actor), rootPosition(position), icon(nullptr)
 {
     sortingOrder = 2;
     targetWidth = (actor != nullptr) ? actor->GetWidth() : 1;
