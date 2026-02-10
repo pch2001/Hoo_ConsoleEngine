@@ -26,7 +26,7 @@ SokobanLevel::SokobanLevel()
 
 void SokobanLevel::Draw()
 {
-	super::Draw();
+		super::Draw();
 
 	// 게임 클리어인 경우. 메시지 출력.
 	if (isGameClear)
