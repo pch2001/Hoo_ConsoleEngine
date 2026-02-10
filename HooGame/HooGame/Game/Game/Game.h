@@ -7,9 +7,10 @@ using namespace Wanted;
 
 enum class State
 {
-	GamePlay = 0,
-	Menu = 1,
-	End = 2,
+	Menu = 0,
+	Select =1,
+	GamePlay = 2,
+	End = 3,
 	Length
 };
 
@@ -22,7 +23,7 @@ public :
 	
 	void ToggleMenu();
 	void EndGame();
-	void RestartGame();
+	void RestartGame(int level);
 	static Game& Get();
 
 

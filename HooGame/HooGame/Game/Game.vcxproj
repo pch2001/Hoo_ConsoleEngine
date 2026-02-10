@@ -105,6 +105,7 @@
     <ClCompile Include="Level\EndLevel.cpp" />
     <ClCompile Include="Level\GameLevel.cpp" />
     <ClCompile Include="Level\MainLevel.cpp" />
+    <ClCompile Include="Level\SelectedLevel.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
     <ClInclude Include="Level\EndLevel.h" />
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Level\MainLevel.h" />
+    <ClInclude Include="Level\SelectedLevel.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

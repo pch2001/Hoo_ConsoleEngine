@@ -12,6 +12,7 @@ class Enemy : public Actor
 public :
 	Enemy();
 	Enemy(const Vector2& position);
+	~Enemy();
 
 	void EnemyAttack();
 

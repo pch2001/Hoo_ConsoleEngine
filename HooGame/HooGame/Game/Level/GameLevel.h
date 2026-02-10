@@ -12,8 +12,7 @@ class GameLevel : public Level
 	RTTI_DECLARATIONS(GameLevel, Level)
 
 public:
-	GameLevel();
-	~GameLevel();
+	GameLevel(int level = 100);
 
 
 	void PlusScore();
@@ -37,5 +36,6 @@ private:
 	
 	int score = 0;
 
+	int spawnRange = 0;
 	//Actor* player;
 };

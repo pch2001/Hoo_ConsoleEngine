@@ -27,6 +27,10 @@ Enemy::Enemy(const Vector2& position): super("E", position, Color::Red)
 
 }
 
+Enemy::~Enemy()
+{
+}
+
 void Enemy::EnemyAttack()
 {
 	isAttacking = true;

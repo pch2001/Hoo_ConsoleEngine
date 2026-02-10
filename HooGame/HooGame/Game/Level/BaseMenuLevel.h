@@ -46,7 +46,10 @@ public :
 protected :
 	std::vector<MenuItem*> items;
 
-private :
+	int currentIndex;
+
+	Color selectedColor = Color::Green;
+	Color unselectedColor = Color::White;
 
 };
 

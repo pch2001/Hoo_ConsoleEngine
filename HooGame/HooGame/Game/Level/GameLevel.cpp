@@ -15,15 +15,12 @@
 
 using namespace Wanted;
 
-GameLevel::GameLevel()
+GameLevel::GameLevel(int level) : spawnRange(level)
 {
 	player = new Player();
 	AddNewActor(player);
 }
 
-GameLevel::~GameLevel()
-{
-}
 
 void GameLevel::PlusScore()
 {
@@ -82,7 +79,7 @@ void GameLevel::UpdateMap()
 
 		AddNewActor(new DeathLine(Vector2(lastSpawnX, height-1)));
 
-		int r = Util::Random(1, 100);
+		int r = Util::Random(1, spawnRange);
 		if (r < 20)
 		{
 			AddNewActor(new Ground(Vector2(lastSpawnX, height -2)));
