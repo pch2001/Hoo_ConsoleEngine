@@ -10,7 +10,7 @@ class Cloud : public Actor
 
 public:
 	Cloud(const Vector2& position);
-
+	~Cloud();
 private:
 
 };

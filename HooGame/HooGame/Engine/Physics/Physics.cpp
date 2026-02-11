@@ -22,7 +22,6 @@ void Physics::StartGravity(Actor* actor)
             return;
     }
     gravityActors.emplace_back(actor);
-
 }
 
 void Physics::Tick(float deltaTime)
@@ -59,7 +58,7 @@ void Physics::ProcessCollision(const std::vector<Actor*>& actors) {
             Actor* A = actors[i];
             Actor* B = actors[j];
 
-            // ¼­·Î°¡ ¼­·ÎÀÇ Å¸°Ù ·¹ÀÌ¾î¿¡ Æ÷ÇÔµÇ´ÂÁö È®ÀÎ
+            // ì„œë¡œê°€ ì„œë¡œì˜ íƒ€ê²Ÿ ë ˆì´ì–´ì— í¬í•¨ë˜ëŠ”ì§€ í™•ì¸
             if (A->targetLayer == B->myLayer || B->targetLayer == A->myLayer) {
                 if (A->TestIntersect(B)) {
                     A->OnOverlap(B);

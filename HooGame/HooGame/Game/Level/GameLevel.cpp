@@ -34,7 +34,7 @@ void GameLevel::Tick(float deltaTime)
 	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
 	if (targetCameraX < 0) targetCameraX = 0;
 
-	// ·»´õ·¯¿¡ Ä«¸Ş¶ó À§Ä¡ Àü´Ş
+	// ë Œë”ëŸ¬ì— ì¹´ë©”ë¼ ìœ„ì¹˜ ì „ë‹¬
 	Renderer::Get().SetCameraPosition({ static_cast<int>(targetCameraX), 0 });
 	UpdateMap();
 	
@@ -46,15 +46,16 @@ void GameLevel::Tick(float deltaTime)
 	Renderer::Get().Submit(scoreBuffer, Vector2(targetCameraX+ Engine::Get().GetWidth() / 2, 0), Color::White, 10);
 
 
-	for (Actor* actor : actors)
+	/*for (Actor* actor : actors)
 	{
 		if (actor == player) continue;
 
-		if (actor->GetPosition().x < targetCameraX)
+		if (actor->GetPosition().x*2 < targetCameraX)
 		{
-			actor->Destroy();
+			if (actor->IsTypeOf<Cloud>() || actor->IsTypeOf<Ground>() || actor->IsTypeOf<DeathLine>())
+				actor->Destroy();
 		}
-	}
+	}*/
 
 
 }
@@ -66,13 +67,13 @@ void GameLevel::Draw()
 
 void GameLevel::UpdateMap()
 {
-	// ¸¶Áö¸·À¸·Î »ı¼ºµÈ ¶¥ÀÇ À§Ä¡¸¦ ÃßÀûÇÏ´Â º¯¼ö
+	// ë§ˆì§€ë§‰ìœ¼ë¡œ ìƒì„±ëœ ë•…ì˜ ìœ„ì¹˜ë¥¼ ì¶”ì í•˜ëŠ” ë³€ìˆ˜
 	int playerX = player->GetPosition().x;
 	int screenWidth = Engine::Get().GetWidth();
 
 	int height = Wanted::Engine::Get().GetHeight();
 
-	//ÇÃ·¹ÀÌ¾î°¡ ³¡¿¡ ´Ù´Ù¸£±â Àü¿¡ ¹Ì¸® ´ÙÀ½ ¶¥À» »ı¼º
+	//í”Œë ˆì´ì–´ê°€ ëì— ë‹¤ë‹¤ë¥´ê¸° ì „ì— ë¯¸ë¦¬ ë‹¤ìŒ ë•…ì„ ìƒì„±
 	if (lastSpawnX < playerX + screenWidth)
 	{
 		lastSpawnX++;
@@ -87,20 +88,31 @@ void GameLevel::UpdateMap()
 			if (r% 10 == 0 || r%4 == 0)
 			{
 				AddNewActor(new Enemy(Vector2(lastSpawnX, height - 3)));
+
 			}
 			else if (r % 3 == 0)
 			{
 				AddNewActor(new Coin(Vector2(lastSpawnX, height - 4)));
+
 			}
 			if (r % 7 == 0)
 			{
 				AddNewActor(new Item(Vector2(lastSpawnX, height - 5)));
+				//AddNewActor(new Cloud(Vector2(lastSpawnX, 7)));
+
 			}
 		}
 		else if(r<70)
 		{
 			AddNewActor(new Ground(Vector2(lastSpawnX, height - 2)));
 		}
+		int minx = Util::Random(1, 4);
+		int maxx = Util::Random(1, 7);
+		for (int i = minx; i < maxx; i++)
+		{
+			AddNewActor(new Cloud(Vector2(lastSpawnX, i)));
+		}
+		
 	}
 }
 
@@ -122,7 +134,7 @@ void GameLevel::SpawnNextPattern(int index)
 	{
 		for (int i = 0; i < 20; ++i) {
 			AddNewActor(new Ground(Vector2(lastSpawnX + i, height - 1)));
-			// 10¹øÂ° Ä­¿¡ Àû ¹èÄ¡
+			// 10ë²ˆì§¸ ì¹¸ì— ì  ë°°ì¹˜
 			if (i == 10 || i == 5)
 			{
 				Vector2 v = Vector2(lastSpawnX + i, height - 3);
@@ -134,12 +146,12 @@ void GameLevel::SpawnNextPattern(int index)
 	else if (index < 7)
 	{
 		for (int i = 0; i < 20; ++i) {
-			// 7~10Ä­ »çÀÌ´Â ¶¥À» »ı¼ºÇÏÁö ¾ÊÀ½ (³¶¶°·¯Áö)
+			// 7~10ì¹¸ ì‚¬ì´ëŠ” ë•…ì„ ìƒì„±í•˜ì§€ ì•ŠìŒ (ë‚­ë– ëŸ¬ì§€)
 			if (i < 7 || i > 10) {
 				AddNewActor(new Ground(Vector2(lastSpawnX + i, height - 1)));
 			}
 			else {
-				// ³¶¶°·¯Áö ±¸°£ °øÁß¿¡ ±¸¸§ ¹ßÆÇ ¹èÄ¡
+				// ë‚­ë– ëŸ¬ì§€ êµ¬ê°„ ê³µì¤‘ì— êµ¬ë¦„ ë°œíŒ ë°°ì¹˜
 				if (i % 2 ==0)
 					AddNewActor(new Cloud(Vector2(lastSpawnX + i, (i%3+5) )));
 			}

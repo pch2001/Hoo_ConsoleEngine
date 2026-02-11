@@ -8,6 +8,12 @@
 
 using namespace Wanted;
 
+struct MapChar3
+{
+	const char* character;
+	Vector2 pos;
+};
+
 class EndLevel : public BaseMenuLevel
 {
 	RTTI_DECLARATIONS(EndLevel, BaseMenuLevel)
@@ -17,8 +23,10 @@ public:
 	~EndLevel();
 	virtual void Draw() override;
 
+	void LoadScene();
 private:
 
+	std::vector<MapChar3> mapData3;
 
 
 };

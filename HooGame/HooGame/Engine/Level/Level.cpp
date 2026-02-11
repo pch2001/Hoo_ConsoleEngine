@@ -11,10 +11,10 @@ namespace Wanted
 
 	Level::~Level()
 	{
-		// ¸Ş¸ğ¸® Á¤¸®.
+		// ë©”ëª¨ë¦¬ ì •ë¦¬.
 		for (Actor*& actor : actors)
 		{
-			// ¾×ÅÍ °´Ã¼ ¸Ş¸ğ¸® ÇØÁ¦.
+			// ì•¡í„° ê°ì²´ ë©”ëª¨ë¦¬ í•´ì œ.
 			if (actor)
 			{
 				delete actor;
@@ -22,16 +22,16 @@ namespace Wanted
 			}
 		}
 
-		// ¹è¿­ ÃÊ±âÈ­.
+		// ë°°ì—´ ì´ˆê¸°í™”.
 		actors.clear();
 	}
 
 	void Level::BeginPlay()
 	{
-		// ¾×ÅÍ¿¡ ÀÌº¥Æ® Èê¸®±â.
+		// ì•¡í„°ì— ì´ë²¤íŠ¸ í˜ë¦¬ê¸°.
 		for (Actor* actor : actors)
 		{
-			// ÀÌ¹Ì BeginPlay È£ÃâµÈ ¾×ÅÍ´Â °Ç³Ê¶Ù±â.
+			// ì´ë¯¸ BeginPlay í˜¸ì¶œëœ ì•¡í„°ëŠ” ê±´ë„ˆë›°ê¸°.
 			if (actor->HasBeganPlay())
 			{
 				continue;
@@ -43,18 +43,18 @@ namespace Wanted
 
 	void Level::Tick(float deltaTime)
 	{
-		// ¾×ÅÍ¿¡ ÀÌº¥Æ® Èê¸®±â.
+		// ì•¡í„°ì— ì´ë²¤íŠ¸ í˜ë¦¬ê¸°.
 		for (Actor* actor : actors)
 		{
 			actor->Tick(deltaTime);
 		}
-		//·¹º§¿¡ ¸ğµç ¾×ÅÍµé¿¡°Ô Ãæµ¹ °Ë»çÇÏ±â
+		//ë ˆë²¨ì— ëª¨ë“  ì•¡í„°ë“¤ì—ê²Œ ì¶©ëŒ ê²€ì‚¬í•˜ê¸°
 		Engine::Get().GetPhysics()->ProcessCollision(actors);
 	}
 
 	void Level::Draw()
 	{
-		// ¾×ÅÍ ¼øÈ¸ÇÏ¸é¼­ Draw ÇÔ¼ö È£Ãâ.
+		// ì•¡í„° ìˆœíšŒí•˜ë©´ì„œ Draw í•¨ìˆ˜ í˜¸ì¶œ.
 		for (Actor* const actor : actors)
 		{
 			if (!actor->IsActive())
@@ -68,22 +68,23 @@ namespace Wanted
 
 	void Level::AddNewActor(Actor* newActor)
 	{
-		// ³ªÁß¿¡ Ãß°¡¸¦ À§ÇØ ÀÓ½Ã ¹è¿­¿¡ ÀúÀå.
+		// ë‚˜ì¤‘ì— ì¶”ê°€ë¥¼ ìœ„í•´ ì„ì‹œ ë°°ì—´ì— ì €ì¥.
 		addRequestedActors.emplace_back(newActor);
 
-		// ¿À³Ê½Ê ¼³Á¤.
+		// ì˜¤ë„ˆì‹­ ì„¤ì •.
 		newActor->SetOwner(this);
 	}
 
 	void Level::ProcessAddAndDestroyActors()
 	{
-		// Á¦°Å Ã³¸®.
+		// ì œê±° ì²˜ë¦¬.
 		for (int ix = 0; ix < static_cast<int>(actors.size()); )
 		{
-			// Á¦°Å ¿äÃ»µÈ ¾×ÅÍ°¡ ÀÖ´ÂÁö È®ÀÎ.
+			// ì œê±° ìš”ì²­ëœ ì•¡í„°ê°€ ìˆëŠ”ì§€ í™•ì¸.
 			if (actors[ix]->DestroyRequested())
 			{
-				// »èÁ¦ Ã³¸®.
+				actors[ix]->Destroy();
+				// ì‚­ì œ ì²˜ë¦¬.
 				delete actors[ix];
 				actors.erase(actors.begin() + ix);
 				continue;
@@ -92,7 +93,7 @@ namespace Wanted
 			++ix;
 		}
 
-		// Ãß°¡ Ã³¸®.
+		// ì¶”ê°€ ì²˜ë¦¬.
 		if (addRequestedActors.size() == 0)
 		{
 			return;
@@ -103,7 +104,7 @@ namespace Wanted
 			actors.emplace_back(actor);
 		}
 
-		// Ã³¸®°¡ ³¡³µÀ¸¸é ¹è¿­ ÃÊ±âÈ­.
+		// ì²˜ë¦¬ê°€ ëë‚¬ìœ¼ë©´ ë°°ì—´ ì´ˆê¸°í™”.
 		addRequestedActors.clear();
 	}
 }

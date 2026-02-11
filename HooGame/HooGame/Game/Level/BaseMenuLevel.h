@@ -2,6 +2,7 @@
 
 #include "Level/Level.h"
 #include "Math/Color.h"
+#include "Math/Vector2.h"
 
 #include <vector>
 #include <iostream>
@@ -32,6 +33,7 @@ struct MenuItem
 };
 
 
+//===============================================================
 
 class BaseMenuLevel : public Level
 {
@@ -42,6 +44,8 @@ public :
 
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
+
+	void LoadLine();
 
 protected :
 	std::vector<MenuItem*> items;

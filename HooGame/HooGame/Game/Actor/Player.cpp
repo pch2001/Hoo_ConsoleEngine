@@ -96,6 +96,10 @@ void Player::Tick(float deltaTime)
 		blinkTimer.Reset();
 	}
 
+	if (GetPosition().y < 0)
+	{
+		Game::Get().EndGame();
+	}
 }
 
 void Player::OnOverlap(Actor* actor)
@@ -141,14 +145,14 @@ void Player::OnOverlap(Actor* actor)
 		else if (diffX < 0) pushX = -1;
 		else
 		{
-			// ÁÂÇ¥°¡ ¿ÏÀüÈ÷ °ãÃÆÀ» ¶§(diffX == 0)
-			// ÇÃ·¹ÀÌ¾î°¡ ¿À¸¥ÂÊÀ» º¸°í ÀÖ¾ú´Ù¸é ¿ÞÂÊ(-1)À¸·Î, ¿ÞÂÊÀ» º¸°í ÀÖ¾ú´Ù¸é ¿À¸¥ÂÊ(1)À¸·Î ¹Ð±â
+			// ì¢Œí‘œê°€ ì™„ì „ížˆ ê²¹ì³¤ì„ ë•Œ(diffX == 0)
+			// í”Œë ˆì´ì–´ê°€ ì˜¤ë¥¸ìª½ì„ ë³´ê³  ìžˆì—ˆë‹¤ë©´ ì™¼ìª½(-1)ìœ¼ë¡œ, ì™¼ìª½ì„ ë³´ê³  ìžˆì—ˆë‹¤ë©´ ì˜¤ë¥¸ìª½(1)ìœ¼ë¡œ ë°€ê¸°
 			pushX = rightDirection ? -2 : 2;
 		}
 
 		Vector2 nextPos = {
 			myPos.x + (pushX * knockbackDist),
-			myPos.y - (1 * knockbackDist) // YÃàÀº ÀÏ´Ü ±×´ë·Î µÓ´Ï´Ù.
+			myPos.y - (1 * knockbackDist) // Yì¶•ì€ ì¼ë‹¨ ê·¸ëŒ€ë¡œ ë‘¡ë‹ˆë‹¤.
 		};
 
 		this->blinkTimer = 0.1f;

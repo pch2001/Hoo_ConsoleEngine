@@ -11,10 +11,14 @@ using namespace Wanted;
 
 struct MapChar
 {
-	char character;
+	std::string character;
 	Vector2 pos;
 };
-
+struct MapChar2
+{
+	const char* character;
+	Vector2 pos;
+};
 
 class MainLevel : public BaseMenuLevel
 {
@@ -26,11 +30,11 @@ public :
 
 	virtual void Draw() override;
 
-	//virtual void Overlap() override;
+	void LoadMap(const char* image);
+	void LoadLine();
 
-	//void LoadMap(const char* filename);
-
-private :
 	std::vector<MapChar> mapData;
+	std::vector<MapChar2> mapData2;
+
 };
 

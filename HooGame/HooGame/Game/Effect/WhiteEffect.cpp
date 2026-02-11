@@ -29,7 +29,7 @@ void WhiteEffect::Tick(float deltaTime)
     super::Tick(deltaTime);
     elapsedTime += deltaTime;
 
-    // ÀüÃ¼ Áö¼Ó ½Ã°£ÀÌ ³¡³ª¸é »èÁ¦
+    // ì „ì²´ ì§€ì† ì‹œê°„ì´ ëë‚˜ë©´ ì‚­ì œ
     if (elapsedTime > (warningDuration + attackDuration+2.0f))
     {
         Enemy* enemy = static_cast<Enemy*>(actor);
@@ -42,13 +42,13 @@ void WhiteEffect::Draw()
 {
 
     if (isWarning = (elapsedTime < warningDuration)) {
-        icon = "*"; // ¿¹°í
+        icon = "*"; // ì˜ˆê³ 
     }
     else if (elapsedTime < warningDuration + 0.1f) {
-        icon = " "; // °ø°Ý Á÷Àü ¾ÆÁÖ Àá±ñ ¹ÝÂ¦ÀÌ°Å³ª ºñ¿öµÒ (ÇÃ·¹ÀÌ¾î ¹ÝÀÀ ½Ã°£)
+        icon = " "; // ê³µê²© ì§ì „ 
     }
     else {
-        icon = "X"; // ½ÇÁ¦ °ø°Ý
+        icon = "X"; // ì‹¤ì œ ê³µê²©
     }
     Color drawColor = isWarning ? Color::White : Color::Red;
 

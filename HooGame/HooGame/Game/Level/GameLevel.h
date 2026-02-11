@@ -8,7 +8,7 @@ using namespace Wanted;
 
 class GameLevel : public Level
 {
-	// RTTI µî·Ï.
+	// RTTI ë“±ë¡.
 	RTTI_DECLARATIONS(GameLevel, Level)
 
 public:
@@ -24,12 +24,12 @@ private:
 	virtual void Draw() override;
 
 
-	void UpdateMap();//¹«ÇÑ ¸Ê
+	void UpdateMap();//ë¬´í•œ ë§µ
 
-	void SpawnNextPattern(int index); //´ÙÀ½ ¸Ê ÆĞÅÏ
+	void SpawnNextPattern(int index); //ë‹¤ìŒ ë§µ íŒ¨í„´
 
 private:
-	//¸¶Áö¸·À¸·Î »ı¼ºµÈ ÁöÁ¡ ÀúÀå
+	//ë§ˆì§€ë§‰ìœ¼ë¡œ ìƒì„±ëœ ì§€ì  ì €ì¥
 	int lastSpawnX = 0;
 
 	float cameraX = 0.0f;
