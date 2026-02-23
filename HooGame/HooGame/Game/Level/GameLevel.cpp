@@ -46,7 +46,7 @@ void GameLevel::Tick(float deltaTime)
 	Renderer::Get().Submit(scoreBuffer, Vector2(targetCameraX+ Engine::Get().GetWidth() / 2, 0), Color::White, 10);
 
 
-	/*for (Actor* actor : actors)
+	for (Actor* actor : actors)
 	{
 		if (actor == player) continue;
 
@@ -55,7 +55,7 @@ void GameLevel::Tick(float deltaTime)
 			if (actor->IsTypeOf<Cloud>() || actor->IsTypeOf<Ground>() || actor->IsTypeOf<DeathLine>())
 				actor->Destroy();
 		}
-	}*/
+	}
 
 
 }
