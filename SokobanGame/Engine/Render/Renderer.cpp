@@ -19,7 +19,7 @@ namespace Wanted
 		SafeDeleteArray(charInfoArray);
 		SafeDeleteArray(sortingOrderArray);
 	}
-
+	 
 	void Renderer::Frame::Clear(const Vector2& screenSize)
 	{
 		// 2차원 배열로 다루는 1차원 배열을 순회하면서
@@ -50,8 +50,7 @@ namespace Wanted
 	// 정적 변수 초기화.
 	Renderer* Renderer::instance = nullptr;
 
-	Renderer::Renderer(const Vector2& screenSize)
-		: screenSize(screenSize)
+	Renderer::Renderer(const Vector2& screenSize): screenSize(screenSize)
 	{
 		instance = this;
 
@@ -125,8 +124,7 @@ namespace Wanted
 
 			// 시작 위치.
 			const int visibleStart = startX < 0 ? 0 : startX;
-			const int visibleEnd
-				= endX >= screenSize.x ? screenSize.x - 1 : endX;
+			const int visibleEnd = endX >= screenSize.x ? screenSize.x - 1 : endX;
 
 			// 문자열 설정.
 			for (int x = visibleStart; x <= visibleEnd; ++x)
@@ -135,25 +133,20 @@ namespace Wanted
 				const int sourceIndex = x - startX;
 
 				// 프레임 (2차원 문자 배열) 인덱스.
-				const int index
-					= (command.position.y * screenSize.x) + x;
+				const int index	= (command.position.y * screenSize.x) + x;
 
 				// 그리기 우선순위 비교.
-				if (frame->sortingOrderArray[index]
-					> command.sortingOrder)
+				if (frame->sortingOrderArray[index]	> command.sortingOrder)
 				{
 					continue;
 				}
 
 				// 데이터 기록.
-				frame->charInfoArray[index].Char.AsciiChar
-					= command.text[sourceIndex];
-				frame->charInfoArray[index].Attributes
-					= (WORD)command.color;
+				frame->charInfoArray[index].Char.AsciiChar	= command.text[sourceIndex];
+				frame->charInfoArray[index].Attributes	= (WORD)command.color;
 
 				// 우선순위 업데이트.
-				frame->sortingOrderArray[index]
-					= command.sortingOrder;
+				frame->sortingOrderArray[index]	= command.sortingOrder;
 			}
 		}
 
@@ -171,13 +164,7 @@ namespace Wanted
 	{
 		if (!instance)
 		{
-			MessageBoxA(
-				nullptr,
-				"Renderer::Get() - instance is null",
-				"Error",
-				MB_OK
-			);
-
+			MessageBoxA(nullptr,"Renderer::Get() - instance is null","Error",MB_OK);
 			__debugbreak();
 		}
 
@@ -194,11 +181,7 @@ namespace Wanted
 		GetCurrentBuffer()->Clear();
 	}
 
-	void Renderer::Submit(
-		const char* text,
-		const Vector2& position,
-		Color color,
-		int sortingOrder)
+	void Renderer::Submit(const char* text, const Vector2& position,Color color,int sortingOrder)
 	{
 		// 렌더 데이터 생성 후 큐에 추가.
 		RenderCommand command = {};

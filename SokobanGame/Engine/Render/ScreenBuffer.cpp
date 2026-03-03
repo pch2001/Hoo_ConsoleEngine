@@ -4,8 +4,7 @@
 
 namespace Wanted
 {
-	ScreenBuffer::ScreenBuffer(const Vector2& screenSize)
-		: screenSize(screenSize)
+	ScreenBuffer::ScreenBuffer(const Vector2& screenSize) : screenSize(screenSize)
 	{
 		// Console Output 积己.
 		buffer = CreateConsoleScreenBuffer(
@@ -19,12 +18,7 @@ namespace Wanted
 		// 抗寇 贸府.
 		if (buffer == INVALID_HANDLE_VALUE)
 		{
-			MessageBoxA(
-				nullptr,
-				"ScreenBuffer - Failed to create buffer.",
-				"Buffer creation error",
-				MB_OK
-			);
+			MessageBoxA(nullptr,"ScreenBuffer - Failed to create buffer.","Buffer creation error",MB_OK);
 			__debugbreak();
 		}
 
@@ -32,8 +26,8 @@ namespace Wanted
 		SMALL_RECT rect;
 		rect.Left = 0;
 		rect.Top = 0;
-		rect.Right = static_cast<short>(screenSize.x - 1);
-		rect.Bottom = static_cast<short>(screenSize.y - 1);
+		rect.Right = static_cast<short>(screenSize.x - 1)/2;
+		rect.Bottom = static_cast<short>(screenSize.y - 1)/2;
 
 		if (!SetConsoleWindowInfo(buffer, true, &rect))
 		{

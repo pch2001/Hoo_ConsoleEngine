@@ -53,12 +53,7 @@ namespace Wanted
 		void Draw();
 
 		// 그리는데 필요한 데이터를 제출(적재)하는 함수.
-		void Submit(
-			const char* text,
-			const Vector2& position,
-			Color color = Color::White,
-			int sortingOrder = 0
-		);
+		void Submit(const char* text,const Vector2& position,Color color = Color::White,int sortingOrder = 0);
 
 		// 싱글톤 접근 함수.
 		static Renderer& Get();

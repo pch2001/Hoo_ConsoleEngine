@@ -16,10 +16,10 @@ Game::Game()
 	levels.emplace_back(new MenuLevel());
 
 	// 시작 상태(레벨) 설정.
-	state = State::GamePlay;
+	state = State::Menu;
 
 	// 게임 시작 시 활성화할 레벨 설정.
-	mainLevel = levels[0];
+	mainLevel = levels[1];
 }
 
 Game::~Game()
