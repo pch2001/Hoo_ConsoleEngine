@@ -19,7 +19,9 @@ namespace Wanted
 		~Physics();
 
 		void StartGravity(Actor* actor);
-		// Ãæµ¹ ½Ã °¢ÀÚ ºĞ·ùÇØ¼­ ¾Ë·ÁÁÜ
+		void EndGravity(Actor* actor);
+
+		// ì¶©ëŒ ì‹œ ê°ì ë¶„ë¥˜í•´ì„œ ì•Œë ¤ì¤Œ
 		void ProcessCollision(const std::vector<Actor*>& actors);
 
 		bool IsOnGround(Actor* actor, const std::vector<Actor*>& actors);
@@ -30,7 +32,7 @@ namespace Wanted
 	
 	private:
 		std::vector<Actor*> gravityActors;
-		Engine* ownerEngine; // ¿£Áø ÁÖ¼Ò¸¦ Á÷Á¢ º¸°ü
+		Engine* ownerEngine; // ì—”ì§„ ì£¼ì†Œë¥¼ ì§ì ‘ ë³´ê´€
 		EngineTimer timer{ 0.1f };
 
 	};

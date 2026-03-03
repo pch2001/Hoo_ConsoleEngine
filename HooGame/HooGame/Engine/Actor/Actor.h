@@ -17,6 +17,7 @@ namespace Wanted
 		path,
 		Ground,
 		Item,
+		Cloud,
 	};
 
 	// 전방 선언.

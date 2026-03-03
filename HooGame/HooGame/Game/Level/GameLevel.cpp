@@ -50,10 +50,13 @@ void GameLevel::Tick(float deltaTime)
 	{
 		if (actor == player) continue;
 
-		if (actor->GetPosition().x*2 < targetCameraX)
+		if (actor->GetPosition().x < targetCameraX)
 		{
 			if (actor->IsTypeOf<Cloud>() || actor->IsTypeOf<Ground>() || actor->IsTypeOf<DeathLine>())
+			{
 				actor->Destroy();
+
+			}
 		}
 	}
 

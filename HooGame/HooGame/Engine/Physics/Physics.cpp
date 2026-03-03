@@ -12,6 +12,7 @@ Physics::Physics(Engine* ownerEngine) : ownerEngine(ownerEngine)
 
 Physics::~Physics()
 {
+    ClearActors();
 }
 
 void Physics::StartGravity(Actor* actor)
@@ -24,6 +25,15 @@ void Physics::StartGravity(Actor* actor)
     gravityActors.emplace_back(actor);
 }
 
+void Physics::EndGravity(Actor* actor)
+{
+    auto it = std::find(gravityActors.begin(), gravityActors.end(), actor);
+    if (it != gravityActors.end())
+    {
+        gravityActors.erase(it);
+    }
+}
+
 void Physics::Tick(float deltaTime)
 {
     timer.Tick(deltaTime);
@@ -34,7 +44,7 @@ void Physics::Tick(float deltaTime)
         {
             if (!actor->GetisJumping())
             {
-                if (actor->myLayer == CollisionLayer::Ground)
+                if (actor->myLayer == CollisionLayer::Ground || actor->myLayer == CollisionLayer::Cloud)
                 {
                     continue;
                 }

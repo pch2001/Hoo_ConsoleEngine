@@ -6,11 +6,18 @@
 
 Cloud::Cloud(const Vector2& position) : super("O",position, Color::Blue)
 {
-	//myLayer = CollisionLayer::None;
-	//targetLayer = CollisionLayer::None;
+	myLayer = CollisionLayer::Cloud;
+	targetLayer = CollisionLayer::None;
 
 	sortingOrder = 0;
-	
+
+	auto* physics = Engine::Get().GetPhysics();
+
+	if (physics != nullptr)
+	{
+		physics->StartGravity(this);
+	}
+
 }
 
 Cloud::~Cloud()
