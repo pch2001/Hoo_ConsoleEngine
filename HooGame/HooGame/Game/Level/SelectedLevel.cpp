@@ -2,6 +2,7 @@
 #include "GameLevel.h"
 #include "Game/Game.h"
 #include "Render/Renderer.h"
+#include "MainLevel.h"
 #include "Util/Util.h"
 
 SelectedLevel::SelectedLevel()
@@ -12,6 +13,7 @@ SelectedLevel::SelectedLevel()
 	items.emplace_back(new MenuItem("difficult 4", []() { Game::Get().RestartGame(300); }));
 	items.emplace_back(new MenuItem("Boss", []() { Game::Get().BossGame(); }));
 
+	LoadLine();
 }
 
 SelectedLevel::~SelectedLevel()
@@ -29,8 +31,37 @@ void SelectedLevel::Draw()
 
 
 
-		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 2 + cameraX, Engine::Get().GetHeight() / 3 + ix * 2), textColor);
+		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 2.5f + cameraX, Engine::Get().GetHeight() / 3 + ix * 2), textColor);
 
 		Util::SetConsoleTextColor(textColor);
 	}
+	for (const auto& item : mapData) {
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
+	}
 }
+
+void SelectedLevel::LoadLine()
+{
+	const int width = Engine::Get().GetWidth();
+	const int height = Engine::Get().GetHeight();
+
+	// ┌───────────────┐ (top)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "_", Vector2((float)x, 0.f) });
+	}
+
+	// │               │ (middle)
+	for (int y = 1; y < height - 1; ++y)
+	{
+		mapData.push_back({ "|", Vector2(0.f, (float)y) });
+		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
+	}
+
+	// └───────────────┘ (bottom)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+	}
+}
+

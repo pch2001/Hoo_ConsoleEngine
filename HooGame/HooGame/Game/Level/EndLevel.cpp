@@ -29,12 +29,12 @@ void EndLevel::Draw()
 	{
 		Color textColor = (ix == currentIndex) ? selectedColor : unselectedColor;
 
-		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 4 *(ix+1) + cameraX, Engine::Get().GetHeight() / 2 ), textColor);
+		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 3.5 *(ix+1) + cameraX, Engine::Get().GetHeight() / 2 ), textColor);
 
 		Util::SetConsoleTextColor(textColor);
 	}
 	for (const auto& item : mapData3) {
-		Renderer::Get().Submit(item.character, item.pos, Color::Red);
+		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
 	}
 
 }

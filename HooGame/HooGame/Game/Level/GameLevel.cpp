@@ -21,7 +21,7 @@ GameLevel::GameLevel(int level) : spawnRange(level)
 	player = new Player();
 
 	AddNewActor(player);
-
+	LoadScene();
 }
 
 
@@ -74,6 +74,12 @@ void GameLevel::Tick(float deltaTime)
 void GameLevel::Draw()
 {
 	super::Draw();
+
+	int cameraX = Renderer::Get().GetCameraPosition().x;
+
+	for (const auto& item : mapData) {
+		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
+	}
 }
 
 void GameLevel::UpdateMap()
@@ -173,3 +179,27 @@ void GameLevel::SpawnNextPattern(int index)
 
 
 
+void GameLevel::LoadScene()
+{
+	const int width = Engine::Get().GetWidth();
+	const int height = Engine::Get().GetHeight();
+
+	// ┌───────────────┐ (top)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "_", Vector2((float)x, 0.f) });
+	}
+
+	// │               │ (middle)
+	for (int y = 1; y < height - 1; ++y)
+	{
+		mapData.push_back({ "|", Vector2(0.f, (float)y) });
+		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
+	}
+
+	// └───────────────┘ (bottom)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+	}
+}

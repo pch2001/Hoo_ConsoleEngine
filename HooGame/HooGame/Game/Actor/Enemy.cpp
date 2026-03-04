@@ -37,12 +37,13 @@ void Enemy::EnemyAttack()
 	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this , 1.f));
 }
 
+
 void Enemy::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
 	if (isAttacking) {
-		Vector2 effectPos = { position.x, position.y - 1 }; // ¸Ó¸® À§
+		Vector2 effectPos = { position.x, position.y - 1 }; // ë¨¸ë¦¬ ìœ„
 		Renderer::Get().Submit("!", effectPos, Color::Red);
 		return;
 	}

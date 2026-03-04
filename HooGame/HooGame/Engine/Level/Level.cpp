@@ -32,7 +32,7 @@ namespace Wanted
 		for (Actor* actor : actors)
 		{
 			// 이미 BeginPlay 호출된 액터는 건너뛰기.
-			if (actor->HasBeganPlay())
+			if (actor && actor->HasBeganPlay())
 			{
 				continue;
 			}

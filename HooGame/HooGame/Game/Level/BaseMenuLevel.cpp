@@ -23,6 +23,10 @@ void BaseMenuLevel::Tick(float deltaTime)
 	super::Tick(deltaTime);
 
 	int length = static_cast<int>(items.size());
+
+	if (length==0)
+		return;
+
 	if (Input::Get().GetKeyDown(VK_RIGHT)|| Input::Get().GetKeyDown(VK_UP))
 	{
 		currentIndex = (currentIndex - 1 + length) % length;

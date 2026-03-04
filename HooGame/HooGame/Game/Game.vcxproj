@@ -90,6 +90,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor\BossEnemy.cpp" />
     <ClCompile Include="Actor\BPlayer.cpp" />
     <ClCompile Include="Actor\Cloud.cpp" />
     <ClCompile Include="Actor\Coin.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="Actor\Ground.cpp" />
     <ClCompile Include="Actor\Player.cpp" />
     <ClCompile Include="Actor\PlayerAttack.cpp" />
+    <ClCompile Include="Effect\guidedMissile.cpp" />
     <ClCompile Include="Effect\RedEffect.cpp" />
     <ClCompile Include="Effect\WhiteEffect.cpp" />
     <ClCompile Include="Game\Game.cpp" />
@@ -111,8 +113,10 @@
     <ClCompile Include="Level\MainLevel.cpp" />
     <ClCompile Include="Level\SelectedLevel.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Navigation\Astar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor\BossEnemy.h" />
     <ClInclude Include="Actor\BPlayer.h" />
     <ClInclude Include="Actor\Cloud.h" />
     <ClInclude Include="Actor\Coin.h" />
@@ -124,6 +128,7 @@
     <ClInclude Include="Actor\Ground.h" />
     <ClInclude Include="Actor\Player.h" />
     <ClInclude Include="Actor\PlayerAttack.h" />
+    <ClInclude Include="Effect\guidedMissile.h" />
     <ClInclude Include="Effect\RedEffect.h" />
     <ClInclude Include="Effect\WhiteEffect.h" />
     <ClInclude Include="Game\Game.h" />
@@ -133,6 +138,8 @@
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Level\MainLevel.h" />
     <ClInclude Include="Level\SelectedLevel.h" />
+    <ClInclude Include="Navigation\Astar.h" />
+    <ClInclude Include="Navigation\Node.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

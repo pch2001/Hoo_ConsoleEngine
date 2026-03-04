@@ -101,7 +101,8 @@ namespace Wanted
 
 
 			// 세로 기준 화면 벗어났는지 확인.
-			if (command.position.y < 0|| command.position.y >= screenSize.y)
+			//if (command.position.y < 0|| command.position.y >= screenSize.y)
+			if (screenY < 0 || screenY >= screenSize.y)
 			{
 				continue;
 			}

@@ -34,18 +34,17 @@ void MainLevel::Draw()
 		Color textColor = (ix == currentIndex) ? selectedColor : unselectedColor;
 
 
-		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 2+cameraX - strlen(items[ix]->text)
-			, Engine::Get().GetHeight() / 2 + ix*4),textColor);
+		Renderer::Get().Submit(items[ix]->text, Vector2(Engine::Get().GetWidth() / 2+ cameraX - strlen(items[ix]->text)
+			, Engine::Get().GetHeight() / 2 + ix*2),textColor);
 
 		//Util::SetConsoleTextColor(textColor);
 	}
-
+	cameraX = Renderer::Get().GetCameraPosition().x/2;
 	for (const auto& item : mapData) {
-		//char temp[2] = {item.character, '\0'};
-		Renderer::Get().Submit(item.character.c_str(), item.pos, Color::Red);
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+cameraX, item.pos.y ), Color::Red);
 	}
 	for (const auto& item : mapData2) {
-		Renderer::Get().Submit(item.character, item.pos, Color::Red);
+		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
 	}
 }
 
@@ -76,9 +75,7 @@ void MainLevel::LoadMap(const char* filename)
 	int y = 0;//Engine::Get().GetHeight()/2;
 	for (size_t i = 0; i < readSize; ++i) {
 
-		if (data[i] == '\r') {
-			continue;
-		}
+		if (data[i] == '\r') continue;
 
 		// 1. 줄바꿈 처리 (\n)
 		if (data[i] == '\n') {
@@ -86,22 +83,12 @@ void MainLevel::LoadMap(const char* filename)
 			x = 0;
 			continue;
 		}
-
-		// 2. 무시할 문자들 (\r, \0 등)
-		if (data[i] == '\r' || data[i] == '\0') {
-			continue;
-		}
-
 		if (data[i] != ' ') {
 			mapData.push_back({std::string(1, data[i]), Vector2((float)x+ Engine::Get().GetWidth() / 5 , (float)y + 5.f) });
 		}
 		x++;
 	}
-
-	// 사용한 버퍼 해제.
 	delete[] data;
-
-	// 파일이 정상적으로 열렸으면 닫기.
 	fclose(file);
 }
 

@@ -2,6 +2,13 @@
 #include "Level/Level.h"
 #include "BaseMenuLevel.h"
 using namespace Wanted;
+
+struct MapChar5
+{
+	std::string character;
+	Vector2 pos;
+};
+
 class BossLevel : public Level
 {
 
@@ -14,8 +21,18 @@ public :
 	virtual void Draw() override;
 
 	void LoadScene();
+	void LoadLine();
+
+
+	
+	std::vector<std::vector<int>>& GetNavigationGrid() { return navigationGrid; }
 
 private :
 	class BPlayer* player = nullptr;
+	std::vector<MapChar5> mapData;
+	std::vector<MapChar5> backgroundData;
+
+	std::vector<std::vector<int>> navigationGrid;
+
 };
 

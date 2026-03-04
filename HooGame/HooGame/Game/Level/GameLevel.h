@@ -6,6 +6,11 @@
 
 using namespace Wanted;
 
+struct MapChar4
+{
+	const char* character;
+	Vector2 pos;
+};
 class GameLevel : public Level
 {
 	// RTTI 등록.
@@ -27,6 +32,8 @@ private:
 	void UpdateMap();//무한 맵
 
 	void SpawnNextPattern(int index); //다음 맵 패턴
+	void LoadScene(); // 테두리
+
 
 private:
 	//마지막으로 생성된 지점 저장
@@ -39,4 +46,7 @@ private:
 
 	int spawnRange = 0;
 	//Actor* player;
+	
+	std::vector<MapChar4> mapData;
+
 };
