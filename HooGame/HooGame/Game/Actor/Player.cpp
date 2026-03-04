@@ -96,7 +96,7 @@ void Player::Tick(float deltaTime)
 		blinkTimer.Reset();
 	}
 
-	if (GetPosition().y < 0)
+	if (GetPosition().y > Engine::Get().GetHeight())
 	{
 		Game::Get().EndGame();
 	}
