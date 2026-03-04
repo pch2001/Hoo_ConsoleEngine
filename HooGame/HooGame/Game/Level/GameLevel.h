@@ -30,6 +30,7 @@ private:
 
 private:
 	//마지막으로 생성된 지점 저장
+
 	int lastSpawnX = 0;
 
 	float cameraX = 0.0f;

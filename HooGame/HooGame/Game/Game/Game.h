@@ -10,7 +10,8 @@ enum class State
 	Menu = 0,
 	Select =1,
 	GamePlay = 2,
-	End = 3,
+	Boss = 3,
+	End = 4,
 	Length
 };
 
@@ -24,6 +25,7 @@ public :
 	void ToggleMenu();
 	void EndGame();
 	void RestartGame(int level);
+	void BossGame();
 	static Game& Get();
 
 

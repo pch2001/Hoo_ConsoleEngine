@@ -13,9 +13,6 @@ class Player : public Actor
 	RTTI_DECLARATIONS(Player, Actor)
 
 public:
-
-
-
 	Player();
 	~Player();
 
@@ -27,13 +24,13 @@ private:
 	virtual void OnOverlap(Actor* actor) override; 
 
 
-	// ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ÇÏ´Â ÇÔ¼ö.
+	// ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜.
 	void MoveRight();
 	
-	// ¿ŞÂÊÀ¸·Î ÀÌµ¿ÇÏ´Â ÇÔ¼ö.
+	// ì™¼ìª½ìœ¼ë¡œ ì´ë™í•˜ëŠ” í•¨ìˆ˜.
 	void MoveLeft();
 
-	// °ø°İÇÏ´Â ÇÔ¼ö
+	// ê³µê²©í•˜ëŠ” í•¨ìˆ˜
 	void Attack();
 
 public :
@@ -51,20 +48,20 @@ private:
 
 	bool rightDirection = true;
 
-	// Å¸ÀÌ¸Ó º¯¼ö.
+	// íƒ€ì´ë¨¸ ë³€ìˆ˜.
 	//EngineTimer engine;
 	//Wanted::EngineTimer timer;
 	int jumpStepsRemaining = 0;
 
 	EngineTimer timer{0.1f};
 
-	//¶¥ ³ôÀÌ
+	//ë•… ë†’ì´
 	int groundY = 0;
 
-	//¹«Àû ¹«ÀûÀÎÁö Ã¼Å©;
+	//ë¬´ì  ë¬´ì ì¸ì§€ ì²´í¬;
 	bool invincibleBool = false;
 
-	EngineTimer invincibleTimer{ 1.5f };//¹«Àû Å¸ÀÌ¸Ó
-	EngineTimer blinkTimer{ 1.5f };	//»ö»ó ¹Ù²Ù´Â Å¸ÀÌ¸Ó
+	EngineTimer invincibleTimer{ 1.5f };//ë¬´ì  íƒ€ì´ë¨¸
+	EngineTimer blinkTimer{ 1.5f };	//ìƒ‰ìƒ ë°”ê¾¸ëŠ” íƒ€ì´ë¨¸
 
 };

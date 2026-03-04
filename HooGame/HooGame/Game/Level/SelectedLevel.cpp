@@ -10,6 +10,7 @@ SelectedLevel::SelectedLevel()
 	items.emplace_back(new MenuItem("difficult 2", []() { Game::Get().RestartGame(150); }));
 	items.emplace_back(new MenuItem("difficult 3", []() { Game::Get().RestartGame(200); }));
 	items.emplace_back(new MenuItem("difficult 4", []() { Game::Get().RestartGame(300); }));
+	items.emplace_back(new MenuItem("Boss", []() { Game::Get().BossGame(); }));
 
 }
 

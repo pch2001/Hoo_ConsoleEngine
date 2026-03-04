@@ -3,6 +3,7 @@
 #include "Level/GameLevel.h"
 #include "Level/EndLevel.h"
 #include "Level/SelectedLevel.h"
+#include "Level/BossLevel.h"
 
 #include <iostream>
 
@@ -15,7 +16,10 @@ Game::Game()
 	levels.emplace_back(new MainLevel());
 	levels.emplace_back(new SelectedLevel());
 	levels.emplace_back(new GameLevel());
+	levels.emplace_back(new BossLevel());
 	levels.emplace_back(new EndLevel());
+
+
 
 	state = State::Menu;
 
@@ -61,6 +65,12 @@ void Game::RestartGame(int level)
 	
 	state = State::GamePlay;
 	mainLevel = levels[static_cast<int>(State::GamePlay)];
+}
+
+void Game::BossGame()
+{
+	state = State::Boss;
+	mainLevel = levels[static_cast<int>(State::Boss)];
 }
 
 

@@ -6,6 +6,7 @@
 #include "Actor/Item.h"
 #include "Actor/DeathLine.h"
 #include "Actor/Coin.h"
+#include "Core/Input.h"
 
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
@@ -18,7 +19,9 @@ using namespace Wanted;
 GameLevel::GameLevel(int level) : spawnRange(level)
 {
 	player = new Player();
+
 	AddNewActor(player);
+
 }
 
 
@@ -59,9 +62,14 @@ void GameLevel::Tick(float deltaTime)
 			}
 		}
 	}
-
-
+	if (Input::Get().GetMouseButtonDown(0))
+	{
+		Vector2 pos = Input::Get().MousePosition();
+		AddNewActor(new Item(pos));
+		
+	}
 }
+
  
 void GameLevel::Draw()
 {

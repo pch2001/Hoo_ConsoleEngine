@@ -5,6 +5,7 @@
 #include "Render/Renderer.h"
 
 #include <iostream>1
+#include "BossLevel.h"
 
 
 EndLevel::EndLevel()
@@ -37,6 +38,8 @@ void EndLevel::Draw()
 	}
 
 }
+
+
 
 void EndLevel::LoadScene()
 {
