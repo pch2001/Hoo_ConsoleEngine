@@ -10,11 +10,15 @@
 guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", position), Enemyactor(enemytActor)
 {
 	sortingOrder = 14;
+	Renderer::Get().Submit("0", Vector2(position), Color::Green);
 	Guide();
 }
 
 guidedMissile::~guidedMissile()
 {
+	delete startNode;
+	delete endNode;
+	delete Enemyactor;
 }
 
 void guidedMissile::Guide()
@@ -26,19 +30,43 @@ void guidedMissile::Guide()
 	BPlayer* player = currentLevel->GetBPlayerActor();
 	if (!player) return;
 	
-	Node* startNode = new Node(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
-	Node* endNode = new Node(static_cast<int>(player->GetPosition().x), static_cast<int>(player->GetPosition().y));
+
+
+	startNode = new Node(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
+	endNode = new Node(static_cast<int>(player->GetPosition().x), static_cast<int>(player->GetPosition().y));
 
 	Astar astar;
-	auto path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid());
+	std::vector<Node*> path;
+
+	path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid());
+
+	if (path.empty())
+		return;
+	
+	Node* nextPosition = path[0];
+	if (path.size() > 1)
+		nextPosition = path[1];
+	
+	position.x = (float)nextPosition->position.x;
+	position.y = (float)nextPosition->position.y;
 }
 
 void guidedMissile::Tick(float deltaTime)
 {
+	super::Tick(deltaTime);
+
+	delay.Tick(deltaTime);
+	if (delay.IsTimeOut())
+	{
+		Guide();
+		delay.Reset();
+
+	}
+	
 }
 
 void guidedMissile::Draw()
 {
 	super::Draw(); // 상위 클래스 그리기 호출
-	Renderer::Get().Submit("0", Vector2(position), Color::Green);
+
 }

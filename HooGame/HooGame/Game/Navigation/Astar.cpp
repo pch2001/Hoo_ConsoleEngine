@@ -175,9 +175,9 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             openList.emplace_back(neighborNode);
 
             // 잠시 대기(옵션)
-            DisplayGrid(grid);
-            DWORD delay = static_cast<DWORD>(0.05f * 1000);
-            Sleep(delay);
+            //DisplayGrid(grid);
+            //DWORD delay = static_cast<DWORD>(0.05f * 1000);
+            //Sleep(delay);
         }
     }
 
@@ -221,8 +221,7 @@ bool Astar::IsInRange(int x, int y, const std::vector<std::vector<int>>& grid)
     if (grid.empty() || grid[0].empty())
         return false;
     // x, y 범위가 벗어났는지 확인
-    if (x < 0 || x >= static_cast<int>(grid[0].size())
-        || y < 0 || y >= static_cast<int>(grid.size()))
+    if (x < 0 || x >= static_cast<int>(grid[0].size())|| y < 0 || y >= static_cast<int>(grid.size()))
     {
         return false;
 

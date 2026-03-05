@@ -3,6 +3,7 @@
 #include "Actor/Actor.h"
 #include "Math/Vector2.h"
 #include "Navigation/Node.h"
+#include "Util/EngineTimer.h"
 
 using namespace Wanted;
 
@@ -20,10 +21,11 @@ public :
 
 
 private :
+	EngineTimer delay{ 0.02f };
 	Actor* Enemyactor;
 
 	Node* startNode = nullptr;
-	Node* goalNode = nullptr;
+	Node* endNode = nullptr;
 
 };
 
