@@ -8,10 +8,10 @@ struct MapChar5
 	std::string character;
 	Vector2 pos;
 };
+class BPlayer;
 
 class BossLevel : public Level
 {
-
 	RTTI_DECLARATIONS(BossLevel, Level)
 
 public :
@@ -24,11 +24,11 @@ public :
 	void LoadLine();
 
 
-	
+	BPlayer* GetBPlayerActor() { return player; }
 	std::vector<std::vector<int>>& GetNavigationGrid() { return navigationGrid; }
 
 private :
-	class BPlayer* player = nullptr;
+	BPlayer* player = nullptr;
 	std::vector<MapChar5> mapData;
 	std::vector<MapChar5> backgroundData;
 

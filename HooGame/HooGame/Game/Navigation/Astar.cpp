@@ -28,7 +28,7 @@ Astar::~Astar()
 
 std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid)
 {
-    this->startNode = startNode;
+    this->startNode = StartNode;
     this->goalNode = goalNode;
 
     // 예외처리

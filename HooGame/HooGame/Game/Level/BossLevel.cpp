@@ -81,24 +81,23 @@ void BossLevel::LoadLine()
 	const int width = Engine::Get().GetWidth();
 	const int height = Engine::Get().GetHeight();
 
-	// ┌───────────────┐ (top)
+	navigationGrid.assign(height, std::vector<int>(width, 0));
+
 	for (int x = 0; x < width; ++x)
 	{
+		navigationGrid[0][x] = 1;
 		mapData.push_back({ "_", Vector2((float)x, 0.f) });
-	}
+		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
 
-	// │               │ (middle)
+	}
 	for (int y = 1; y < height - 1; ++y)
 	{
+		navigationGrid[y][0] = 1; // Left wall
+		navigationGrid[y][width - 1] = 1; // Right wall
 		mapData.push_back({ "|", Vector2(0.f, (float)y) });
 		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
 	}
 
-	// └───────────────┘ (bottom)
-	for (int x = 0; x < width; ++x)
-	{
-		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
-	}
 
 	for (int x = 1; x < width-1; ++x)
 	{

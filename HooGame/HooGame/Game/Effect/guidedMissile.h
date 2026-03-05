@@ -2,6 +2,7 @@
 
 #include "Actor/Actor.h"
 #include "Math/Vector2.h"
+#include "Navigation/Node.h"
 
 using namespace Wanted;
 
@@ -19,7 +20,7 @@ public :
 
 
 private :
-	Actor* targetactor;
+	Actor* Enemyactor;
 
 	Node* startNode = nullptr;
 	Node* goalNode = nullptr;

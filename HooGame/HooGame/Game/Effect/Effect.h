@@ -13,6 +13,7 @@ class Effect : public Actor
 	~Effect();
 
 	virtual void Tick(float deltaTime) override;
+	Vector2 SpawnDirection(int x, int y);
 
 private :
 	EngineTimer effectTimer;
@@ -23,7 +24,7 @@ private :
 	int width = 0;
 	int heigth = 0;
 
-	Actor* targetActor;
+	Actor* EnemyActor;
 
 };
 
