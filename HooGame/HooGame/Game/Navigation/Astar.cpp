@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cmath>
 #include <Windows.h>
-#include <Render/Renderer.h>
 
 Astar::Astar()
 {
@@ -26,7 +25,7 @@ Astar::~Astar()
 }
 
 
-std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid)
+std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid, bool pathLine)
 {
     this->startNode = StartNode;
     this->goalNode = goalNode;
@@ -75,7 +74,14 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
         if (IsDestination(currentNode))
         {
             // 경로 반환 후 종료
-            return ConstructPath(currentNode);
+
+            std::vector<Node*> finalPath = ConstructPath(currentNode);
+            
+            if(pathLine)
+                DisplayGridWithPath(finalPath);
+            
+            
+            return finalPath;
         }
 
         // 방문 처리를 위해 열린 리스트에서 제거
@@ -176,7 +182,6 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             // 열린 리스트에 추가
             openList.emplace_back(neighborNode);
 
-            DisplayGridWithPath(grid, openList);
             // 잠시 대기(옵션)
             //DisplayGrid(grid);
             //DWORD delay = static_cast<DWORD>(0.05f * 1000);
@@ -187,14 +192,19 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 
     return std::vector<Node*>();    //아무 빈 파일 넘겨주기
 }
+#include "Render/Renderer.h"
+#include "Math/Vector2.h"
 
-void Astar::DisplayGridWithPath(std::vector<std::vector<int>>& grid, const std::vector<Node*>& openList)
+void Astar::DisplayGridWithPath(const std::vector<Node*>& path)
 {
-    if (!openList.empty())
+
+    if (!path.empty())
     {
-        for (Node* open : openList)
+        for (Node* open : path)
         {
-            grid[open->position.y][open->position.x] = 9;
+            //grid[open->position.y][open->position.x] = 9;
+            Wanted::Renderer::Get().Submit("-", Wanted::Vector2(open->position.x, open->position.y), Wanted::Color::YELLOW, 7);
+
         }
     }
 }

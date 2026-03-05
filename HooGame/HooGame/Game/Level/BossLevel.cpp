@@ -68,6 +68,7 @@ void BossLevel::Tick(float deltaTime)
 	}
 	if (Input::Get().GetKeyDown(VK_ESCAPE)) { Game::Get().ToggleMenu();	return; }
 
+	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
 	//Renderer::Get().SetCameraPosition({ static_cast<int>(targetCameraX), static_cast<int>(targetCameraY) });
 }

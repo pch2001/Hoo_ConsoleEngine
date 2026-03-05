@@ -27,6 +27,7 @@ public :
 
 	BPlayer* GetBPlayerActor() { return player; }
 	std::vector<std::vector<int>>& GetNavigationGrid() { return navigationGrid; }
+	bool pathLine = true;
 
 private :
 	BPlayer* player = nullptr;

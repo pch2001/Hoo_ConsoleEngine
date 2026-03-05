@@ -43,7 +43,7 @@ void guidedMissile::Guide()
 	Astar astar;
 	std::vector<Node*> path;
 
-	path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid());
+	path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid(), currentLevel->pathLine);
 
 	if (path.empty())
 		return;
