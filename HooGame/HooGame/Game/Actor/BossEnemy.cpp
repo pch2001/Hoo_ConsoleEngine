@@ -22,7 +22,7 @@ BossEnemy::~BossEnemy()
 #include "Render/Renderer.h"
 void BossEnemy::Tick(float deltaTime)
 {
-	if (Input::Get().GetKey(VK_SPACE) || Input::Get().GetKey('p') || Input::Get().GetKey('P')) { 
+	if (Input::Get().GetKeyDown(VK_SPACE) || Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
 		ChangeImage("K");
 		MisileAttack(); 
 	

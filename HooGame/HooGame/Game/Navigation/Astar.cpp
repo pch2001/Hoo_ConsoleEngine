@@ -118,11 +118,13 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             // 갈 수는 있지만, 이미 방문한 곳인지 확인
             if (HasVisited(newX, newY, newGCost))
             {
+               /* if (neighborNode)
+                    SafeDelete(neighborNode);*/ //오류 해결 불가
                 continue;
             }
 
             // 방문을 위한 이웃 노드 생성
-            Node* neighborNode = new Node(newX, newY, currentNode);
+            neighborNode = new Node(newX, newY, currentNode);
 
             // 비용 계산
             neighborNode->gCost = newGCost;

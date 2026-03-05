@@ -19,6 +19,9 @@ public :
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
 
+	virtual void OnOverlap(Actor* actor) override;
+
+
 
 private :
 	EngineTimer delay{ 0.02f };

@@ -54,7 +54,8 @@ namespace Wanted
 
 	void Actor::OnDestroy()
 	{
-		Engine::Get().GetPhysics()->EndGravity(this);
+		if(gravity ==true)
+			Engine::Get().GetPhysics()->EndGravity(this);
 	}
 
 	void Actor::QuitGame()

@@ -1,6 +1,7 @@
 #include "BossLevel.h"
 #include "Actor/BPlayer.h"
 #include "Actor/Item.h"
+#include "Actor/Ground.h"
 #include "Actor/BossEnemy.h"
 
 #include "Core/Input.h"
@@ -32,14 +33,22 @@ void BossLevel::Tick(float deltaTime)
 	super::Tick(deltaTime);
 	if (Input::Get().GetMouseButtonDown(0))
 	{
+		if (player->GetPoint() <= 0)
+			return;
+
 		Vector2 pos = Input::Get().MousePosition();
-		AddNewActor(new Item(Vector2(pos.x + cameraX, pos.y + cameraY)));
+
+		int gridX = static_cast<int>(pos.x + 0.5f);
+		int gridY = static_cast<int>(pos.y + 0.5f);
+
+
+		AddNewActor(new Ground(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
+		navigationGrid[gridY][gridX] = 1;
+		player->SetPoint(-1);
+		player->UIUpdate();
+
 	}
 	if (Input::Get().GetKeyDown(VK_ESCAPE)) { Game::Get().ToggleMenu();	return; }
-
-
-	
-	//if (targetCameraX < 0) targetCameraX = 0;
 
 
 	//Renderer::Get().SetCameraPosition({ static_cast<int>(targetCameraX), static_cast<int>(targetCameraY) });
@@ -56,17 +65,17 @@ void BossLevel::Draw()
 
 	for (const auto& item : mapData)
 	{
-		Renderer::Get().Submit(item.character.c_str(),Vector2(item.pos.x +cameraX, item.pos.y),Color::Red);
+		Renderer::Get().Submit(item.character.c_str(),Vector2(item.pos.x +cameraX, item.pos.y),Color::Red,3 );
 	}
 	for (const auto& item : backgroundData)
 	{
 		if (cameraX > 0)
 		{
-			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+cameraX, item.pos.y + cameraY), Color::White);
+			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+cameraX, item.pos.y + cameraY ), Color::White, 3);
 		}
 		else
 		{
-			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x, item.pos.y), Color::White);
+			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x, item.pos.y), Color::White, 3);
 		}
 	}
 }
@@ -109,4 +118,5 @@ void BossLevel::LoadLine()
 		}
 	}
 }
+
 

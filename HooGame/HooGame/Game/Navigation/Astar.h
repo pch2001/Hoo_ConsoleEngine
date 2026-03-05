@@ -43,6 +43,6 @@ private :
 	std::vector<Node*> closedList;
 	Node* startNode = nullptr;
 	Node* goalNode = nullptr;
-
+	Node* neighborNode = nullptr;
 };
 

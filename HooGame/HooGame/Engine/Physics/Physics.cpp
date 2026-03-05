@@ -27,6 +27,9 @@ void Physics::StartGravity(Actor* actor)
 
 void Physics::EndGravity(Actor* actor)
 {
+    if (gravityActors.empty())return;
+
+
     auto it = std::find(gravityActors.begin(), gravityActors.end(), actor);
     if (it != gravityActors.end())
     {
