@@ -90,6 +90,9 @@
     <ClCompile Include="Actor\Hyeonmu5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\Mine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level\GameLevel.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Actor\Hyeonmu5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\Mine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

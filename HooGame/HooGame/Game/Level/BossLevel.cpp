@@ -3,12 +3,15 @@
 #include "Actor/Item.h"
 #include "Actor/Ground.h"
 #include "Actor/BossEnemy.h"
+#include "Actor/Hyeonmu5.h"
 
 #include "Core/Input.h"
 #include "Engine/Engine.h"
 #include "Render/Renderer.h"
 #include "Game/Game.h"
 #include "Effect/Effect.h"
+#include "Actor/Mine.h"
+#include "Math/Vector2.h"
 
 BossLevel::BossLevel()
 {
@@ -16,6 +19,12 @@ BossLevel::BossLevel()
 	AddNewActor(player);
 	AddNewActor(new BossEnemy());
 	LoadLine();
+
+
+
+	AddNewActor(new Mine(Vector2(3, height - 3)));
+	AddNewActor(new Mine(Vector2(width -3, 5)));
+
 }
 BossLevel::~BossLevel()
 {
@@ -31,6 +40,15 @@ void BossLevel::Tick(float deltaTime)
 	int cameraY = Renderer::Get().GetCameraPosition().y;
 
 	super::Tick(deltaTime);
+	if (Input::Get().GetMouseButtonDown(1))
+	{
+		Vector2 pos = Input::Get().MousePosition();
+
+		int gridX = static_cast<int>(pos.x + 0.5f);
+		int gridY = static_cast<int>(pos.y + 0.5f);
+		AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
+
+	}
 	if (Input::Get().GetMouseButtonDown(0))
 	{
 		if (player->GetPoint() <= 0)

@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cmath>
 #include <Windows.h>
-
+#include <Render/Renderer.h>
 
 Astar::Astar()
 {
@@ -176,6 +176,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             // 열린 리스트에 추가
             openList.emplace_back(neighborNode);
 
+            DisplayGridWithPath(grid, openList);
             // 잠시 대기(옵션)
             //DisplayGrid(grid);
             //DWORD delay = static_cast<DWORD>(0.05f * 1000);
@@ -187,8 +188,15 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
     return std::vector<Node*>();    //아무 빈 파일 넘겨주기
 }
 
-void Astar::DisplayGridWithPath(std::vector<std::vector<int>>& grid, const std::vector<Node*>& path)
+void Astar::DisplayGridWithPath(std::vector<std::vector<int>>& grid, const std::vector<Node*>& openList)
 {
+    if (!openList.empty())
+    {
+        for (Node* open : openList)
+        {
+            grid[open->position.y][open->position.x] = 9;
+        }
+    }
 }
 
 std::vector<Node*> Astar::ConstructPath(Node* goalNode)
@@ -333,3 +341,4 @@ void Astar::DisplayGrid(std::vector<std::vector<int>>& grid)
     position.Y = 0;
 
 }
+

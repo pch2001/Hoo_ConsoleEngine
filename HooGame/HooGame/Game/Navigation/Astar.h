@@ -37,7 +37,6 @@ private :
 	bool IsDestination(const Node* const node);
 	void DisplayGrid(std::vector<std::vector<int>>& grid);
 
-
 private :
 	std::vector<Node*> openList;
 	std::vector<Node*> closedList;

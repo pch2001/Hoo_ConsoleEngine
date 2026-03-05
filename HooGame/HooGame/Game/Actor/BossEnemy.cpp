@@ -4,7 +4,9 @@
 #include "Effect/Effect.h"
 #include "Level/BossLevel.h"
 
-
+#include "Core/Input.h"
+//#include "Game/Game.h"
+#include "Render/Renderer.h"
 BossEnemy::BossEnemy() : super("B", Vector2(Engine::Get().GetWidth()/2, Engine::Get().GetHeight()/2 ), Color::Red)
 {
 	sortingOrder = 8;
@@ -17,15 +19,12 @@ BossEnemy::~BossEnemy()
 {
 }
 
-#include "Core/Input.h"
-#include "Game/Game.h"
-#include "Render/Renderer.h"
+
 void BossEnemy::Tick(float deltaTime)
 {
-	if (Input::Get().GetKeyDown(VK_SPACE) || Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
+	if (Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
 		ChangeImage("K");
-		MisileAttack(); 
-	
+		MisileAttack();
 	}
 
 
@@ -37,7 +36,5 @@ void BossEnemy::OnOverlap(Actor* actor)
 void BossEnemy::MisileAttack()
 {
 	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));
- 	Vector2 effectPos = { position.x, position.y - 5 }; // 머리 
-	Renderer::Get().Submit("!", effectPos, Color::Red);
-
+ 	Vector2 effectPos = { position.x, position.y - 5 };
 }

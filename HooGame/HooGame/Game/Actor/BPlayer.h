@@ -33,9 +33,14 @@ public :
 	int GetPoint() { return (point); }
 	void SetPoint(int pointchange) { point += pointchange; }
 
+	void SetisMine() { isMine = true; }
+	void SetisnotMine() { isMine = false; }
+
 private :
 	float MaxHP = 5;
 	float HP;
+
+	bool isMine = false;
 
 	int point = 10;
 

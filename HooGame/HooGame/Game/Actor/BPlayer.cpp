@@ -4,6 +4,7 @@
 #include "Engine/Engine.h"
 #include "Render/Renderer.h"
 #include "Level/BossLevel.h"
+#include "Game/Game.h"
 
 #include<iostream>
 #include <string>
@@ -56,7 +57,6 @@ void BPlayer::Damaged(int x)
 		Die();
 
 }
-#include "Game/Game.h"
 
 void BPlayer::Die()
 {
@@ -76,7 +76,7 @@ void BPlayer::UIUpdate()
 
 	for (int i = 1; i < currentBar; i++)
 	{
-		Renderer::Get().Submit("*",Vector2(i, 1), Color::Red, 10);
+		Renderer::Get().Submit("*",Vector2(i, 1), Color::Green, 10);
 	}
 	
 

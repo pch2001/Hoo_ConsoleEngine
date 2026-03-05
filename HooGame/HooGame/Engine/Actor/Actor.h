@@ -61,8 +61,17 @@ namespace Wanted
 		CollisionLayer myLayer = CollisionLayer::None;
 		CollisionLayer targetLayer = CollisionLayer::None;
 		virtual void OnOverlap(Actor* actor) {}
+		virtual void EndOverlap(Actor* actor) 
+		{
+			if (TestIntersect(actor))
+				isOnOverlap = false;
+		}
+
+
 		virtual void OnCheck(int distance) {}
 
+		Actor* currentOverlaps;
+		bool isOnOverlap = false;
 
 
 

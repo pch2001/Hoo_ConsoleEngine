@@ -1,6 +1,7 @@
 #pragma once
 #include "Level/Level.h"
 #include "BaseMenuLevel.h"
+#include "Engine/Engine.h"
 using namespace Wanted;
 
 struct MapChar5
@@ -34,5 +35,7 @@ private :
 
 	std::vector<std::vector<int>> navigationGrid;
 
+	const int width = Engine::Get().GetWidth();
+	const int height = Engine::Get().GetHeight();
 };
 
