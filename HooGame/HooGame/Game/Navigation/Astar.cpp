@@ -221,7 +221,7 @@ void Astar::DisplayGridWithPath(Node* startNode, const std::vector<Node*>& path)
             else if (dx == 0 && dy < 0) arrow = "^";
 
             int bgYellow = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-            Wanted::Renderer::Get().Submit(arrow, Wanted::Vector2(currentPos.x, currentPos.y), Wanted::Color::YELLOW,7, bgYellow, true);
+            Wanted::Renderer::Get().Submit(arrow, Wanted::Vector2(currentPos.x, currentPos.y), Wanted::Color::YELLOW, 7);// , bgYellow, true);
 
             prevPos = currentPos;
         }
