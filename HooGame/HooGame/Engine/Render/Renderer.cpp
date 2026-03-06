@@ -195,7 +195,7 @@ namespace Wanted
 		GetCurrentBuffer()->Clear();
 	}
 
-	void Renderer::Submit(const char* text,	const Vector2& position,Color color,int sortingOrder)
+	void Renderer::Submit(const char* text,	const Vector2& position,Color color,int sortingOrder, int bgColor, bool isbgimage)
 	{
 		// 렌더 데이터 생성 후 큐에 추가.
 		RenderCommand command = {};
