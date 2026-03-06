@@ -68,6 +68,7 @@ namespace Wanted
 		void PresentImmediately();
 
 		void StartShake(float duration, float intensity);
+		void UpdateShake(float deltaTime);
 
 
 		// 싱글톤 접근 함수.
@@ -92,6 +93,11 @@ namespace Wanted
 		ScreenBuffer* GetCurrentBuffer();
 
 	private:
+		Vector2 baseCameraPosition;
+		float shakeDuration = 0.0f;
+		float shakeIntensity = 0.0f;
+		bool shakeEnd = true;
+
 		static const int defaultColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 		//카메라 좌표 추가
 		Vector2 cameraPosition = { 0, 0 };

@@ -33,6 +33,7 @@ namespace Wanted
 
 	void Actor::Tick(float deltaTime)
 	{
+
 	}
 
 	void Actor::Draw()

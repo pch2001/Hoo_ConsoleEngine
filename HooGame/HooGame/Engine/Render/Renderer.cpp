@@ -220,6 +220,39 @@ namespace Wanted
 		Present();
 	}
 
+	void Renderer::StartShake(float duration, float intensity)
+	{
+		if(shakeEnd)
+		{
+			shakeEnd = false;
+			shakeDuration = duration;
+			shakeIntensity = intensity;
+			baseCameraPosition = cameraPosition;
+		}
+	}
+
+	void Renderer::UpdateShake(float deltaTime)
+	{
+		if (shakeDuration > 0)
+		{
+			shakeDuration -= deltaTime;
+			float offsetX = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeIntensity;
+			float offsetY = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) * shakeIntensity;
+
+			cameraPosition.x = baseCameraPosition.x + offsetX;
+			cameraPosition.y = baseCameraPosition.y + offsetY;
+
+			if (shakeDuration <= 0)
+			{
+				cameraPosition = baseCameraPosition;
+				shakeEnd = true;
+
+			}
+
+		}
+
+	}
+
 	void Renderer::Present()
 	{
 		// 버퍼 교환.

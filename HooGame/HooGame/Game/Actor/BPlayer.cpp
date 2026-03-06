@@ -58,6 +58,7 @@ void BPlayer::Damaged(int x)
 	BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
 	level->AddNewActor(new WarningEffect());
 
+	Renderer::Get().StartShake(1, 5);
 	SetHP(x);
 	if (GetHP() > 0)
 	{
