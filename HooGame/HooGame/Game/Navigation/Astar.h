@@ -27,7 +27,7 @@ public :
 	~Astar();
 
 	std::vector<Node*> FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid, bool pathLine);
-	void DisplayGridWithPath(const std::vector<Node*>& path);
+	void DisplayGridWithPath(Node* startNode, const std::vector<Node*>& path);
 
 private :
 	std::vector<Node*> ConstructPath(Node* goalNode);

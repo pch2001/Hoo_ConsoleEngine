@@ -75,7 +75,7 @@ void BossLevel::Tick(float deltaTime)
 void BossLevel::Draw()
 {
 	super::Draw();
-
+	
 
 	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
 	int targetCameraY = player->GetPosition().y - (Engine::Get().GetHeight() / 2);

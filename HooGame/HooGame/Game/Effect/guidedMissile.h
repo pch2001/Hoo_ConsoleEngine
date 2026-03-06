@@ -24,7 +24,7 @@ public :
 
 
 private :
-	EngineTimer delay{ 0.02f };
+	EngineTimer delay{ 0.1f };
 	Actor* Enemyactor;
 
 	Node* startNode = nullptr;

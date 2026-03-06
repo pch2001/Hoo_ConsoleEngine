@@ -43,6 +43,8 @@ namespace Wanted
 
 			// 그리기 우선순위.
 			int sortingOrder = 0;
+			int bgColor = defaultColor;
+			bool isbackGround = false;
 		};
 
 	public:
@@ -57,7 +59,9 @@ namespace Wanted
 			const char* text,
 			const Vector2& position,
 			Color color = Color::White,
-			int sortingOrder = 0
+			int sortingOrder = 0,
+			int bgColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+			bool isbgimage = false
 		);
 
 		// 즉시 화면에 표시할 때 사용.
@@ -85,6 +89,7 @@ namespace Wanted
 		ScreenBuffer* GetCurrentBuffer();
 
 	private:
+		static const int defaultColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
 		//카메라 좌표 추가
 		Vector2 cameraPosition = { 0, 0 };
 

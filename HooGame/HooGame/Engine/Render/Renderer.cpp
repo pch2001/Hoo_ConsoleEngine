@@ -37,7 +37,8 @@ namespace Wanted
 				// 글자 값 및 속성 설정.
 				CHAR_INFO& info = charInfoArray[index];
 				info.Char.AsciiChar = ' ';
-				info.Attributes = 0;
+				info.Attributes = (WORD)defaultColor; //0;
+
 
 				// 그리기 우선순위 초기화.
 				sortingOrderArray[index] = -1;
@@ -137,7 +138,8 @@ namespace Wanted
 				const int sourceIndex = x - startX;
 
 				// 프레임 (2차원 문자 배열) 인덱스.
-				const int index	= (command.position.y * screenSize.x) + x;
+				//const int index	= (command.position.y * screenSize.x) + x;
+				const int index = (screenY * screenSize.x) + x;
 
 				/*if (index < 0 || index >= screenSize.x * screenSize.y)
 					continue;*/
@@ -151,7 +153,11 @@ namespace Wanted
 
 				// 데이터 기록.
 				frame->charInfoArray[index].Char.AsciiChar = command.text[sourceIndex];
-				frame->charInfoArray[index].Attributes = (WORD)command.color;
+				//frame->charInfoArray[index].Attributes = (WORD)command.color;
+				if(command.isbackGround)
+					frame->charInfoArray[index].Attributes = (WORD)command.bgColor | (WORD)command.color;
+				else
+					frame->charInfoArray[index].Attributes = (WORD)command.color;
 
 				// 우선순위 업데이트.
 				frame->sortingOrderArray[index]	= command.sortingOrder;
@@ -177,8 +183,7 @@ namespace Wanted
 			__debugbreak();
 		}
 
-		return *instance;
-	}
+		return *instance;	}
 
 	void Renderer::Clear()
 	{
@@ -198,6 +203,12 @@ namespace Wanted
 		command.position = position;
 		command.color = color;
 		command.sortingOrder = sortingOrder;
+
+		if (isbgimage)
+		{
+			command.isbackGround = isbgimage;
+			command.bgColor = bgColor;
+		}
 
 		renderQueue.emplace_back(command);
 	}

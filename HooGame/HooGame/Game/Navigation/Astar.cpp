@@ -78,7 +78,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             std::vector<Node*> finalPath = ConstructPath(currentNode);
             
             if(pathLine)
-                DisplayGridWithPath(finalPath);
+                DisplayGridWithPath(startNode ,finalPath);
             
             
             return finalPath;
@@ -195,17 +195,38 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 #include "Render/Renderer.h"
 #include "Math/Vector2.h"
 
-void Astar::DisplayGridWithPath(const std::vector<Node*>& path)
+void Astar::DisplayGridWithPath(Node* startNode, const std::vector<Node*>& path)
 {
+    Position currentPos = startNode->position;
+    Position prevPos = startNode->position;
 
+    const char* arrow = "*";
     if (!path.empty())
     {
         for (Node* open : path)
         {
-            //grid[open->position.y][open->position.x] = 9;
-            Wanted::Renderer::Get().Submit("-", Wanted::Vector2(open->position.x, open->position.y), Wanted::Color::YELLOW, 7);
+           currentPos = open->position;
 
+            int dx = currentPos.x - prevPos.x;
+            int dy = currentPos.y - prevPos.y;
+
+            if (dx < 0 && dy < 0) arrow = "\\";
+            else if (dx > 0 && dy < 0) arrow = "/";
+            else if (dx > 0 && dy > 0) arrow = "\\";
+            else if (dx < 0 && dy > 0) arrow = "/";
+
+            else if (dx > 0 && dy == 0) arrow = ">";
+            else if (dx < 0 && dy == 0) arrow = "<";
+            else if (dx == 0 && dy > 0) arrow = "V";
+            else if (dx == 0 && dy < 0) arrow = "^";
+
+            int bgYellow = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+            Wanted::Renderer::Get().Submit(arrow, Wanted::Vector2(currentPos.x, currentPos.y), Wanted::Color::YELLOW,7, bgYellow, true);
+
+            prevPos = currentPos;
         }
+
+        
     }
 }
 
