@@ -7,7 +7,7 @@
 #include "Core/Input.h"
 //#include "Game/Game.h"
 #include "Render/Renderer.h"
-BossEnemy::BossEnemy() : super("B", Vector2(Engine::Get().GetWidth()/2, Engine::Get().GetHeight()/2 ), Color::Red)
+BossEnemy::BossEnemy() : super("I", Vector2(Engine::Get().GetWidth()/2, Engine::Get().GetHeight()/2 ), Color::Red)
 {
 	sortingOrder = 8;
 
@@ -23,10 +23,8 @@ BossEnemy::~BossEnemy()
 void BossEnemy::Tick(float deltaTime)
 {
 	if (Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
-		ChangeImage("K");
 		MisileAttack();
 	}
-
 
 }
 

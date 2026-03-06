@@ -32,6 +32,7 @@ BossLevel::~BossLevel()
 }
 void BossLevel::Tick(float deltaTime)
 {
+	super::Tick(deltaTime);
 
 	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
 	int targetCameraY = player->GetPosition().y - (Engine::Get().GetHeight() / 2);
@@ -39,7 +40,6 @@ void BossLevel::Tick(float deltaTime)
 	int cameraX = Renderer::Get().GetCameraPosition().x;
 	int cameraY = Renderer::Get().GetCameraPosition().y;
 
-	super::Tick(deltaTime);
 	if (Input::Get().GetMouseButtonDown(1))
 	{
 		if (player->GetPoint() < 5)
@@ -74,7 +74,29 @@ void BossLevel::Tick(float deltaTime)
 
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
-	//Renderer::Get().SetCameraPosition({ static_cast<int>(targetCameraX), static_cast<int>(targetCameraY) });
+
+
+	// Todo : 턴제 진행
+	stateTimer -= deltaTime;
+
+	switch (currentState)
+	{
+	case EStageState::Farming:
+
+
+		break;
+	case EStageState::maintenance:
+
+		break;
+	case EStageState::battle :
+
+		break;
+	default:
+		break;
+	}
+
+
+
 }
 void BossLevel::Draw()
 {

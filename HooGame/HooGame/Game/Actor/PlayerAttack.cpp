@@ -25,7 +25,6 @@ PlayerAttack::PlayerAttack(Vector2 dir, BPlayer* player) : super("/",player->Get
 	yPosition = startPos.y;
 	myLayer = CollisionLayer::Player;
 	targetLayer = CollisionLayer::Enemy;
-	//checkLayer = CollisionLayer::PlayerAttack;
 }
 
 PlayerAttack::~PlayerAttack()

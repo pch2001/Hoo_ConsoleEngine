@@ -79,13 +79,6 @@ void Physics::ProcessCollision(const std::vector<Actor*>& actors) {
                     B->OnOverlap(A);
                 }
             }
-           /* if (A->checkLayer !=CollisionLayer::None &&  B->checkLayer != CollisionLayer::None)
-            {
-                if (A->TestIntersect(B)) {
-                    A->OnOverlap(B);
-                    B->OnOverlap(A);
-                }
-            }*/
         }
     }
 }

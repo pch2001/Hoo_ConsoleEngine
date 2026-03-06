@@ -246,11 +246,8 @@ namespace Wanted
 			{
 				cameraPosition = baseCameraPosition;
 				shakeEnd = true;
-
 			}
-
 		}
-
 	}
 
 	void Renderer::Present()

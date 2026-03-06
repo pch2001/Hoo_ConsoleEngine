@@ -9,6 +9,14 @@ struct MapChar5
 	std::string character;
 	Vector2 pos;
 };
+
+enum class EStageState
+{
+	Farming,
+	maintenance,
+	battle,
+};
+
 class BPlayer;
 
 class BossLevel : public Level
@@ -30,6 +38,10 @@ public :
 	bool pathLine = true;
 
 private :
+	EStageState currentState = EStageState::Farming;
+	float stateTimer = 0.f;
+	int currentTurn = 1;
+
 	BPlayer* player = nullptr;
 	std::vector<MapChar5> mapData;
 	std::vector<MapChar5> backgroundData;
