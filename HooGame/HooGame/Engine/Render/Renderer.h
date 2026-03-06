@@ -67,6 +67,9 @@ namespace Wanted
 		// 즉시 화면에 표시할 때 사용.
 		void PresentImmediately();
 
+		void StartShake(float duration, float intensity);
+
+
 		// 싱글톤 접근 함수.
 		static Renderer& Get();
 

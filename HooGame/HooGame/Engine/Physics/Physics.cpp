@@ -72,12 +72,20 @@ void Physics::ProcessCollision(const std::vector<Actor*>& actors) {
             Actor* B = actors[j];
 
             // 서로가 서로의 타겟 레이어에 포함되는지 확인
+
             if (A->targetLayer == B->myLayer || B->targetLayer == A->myLayer) {
                 if (A->TestIntersect(B)) {
                     A->OnOverlap(B);
                     B->OnOverlap(A);
                 }
             }
+           /* if (A->checkLayer !=CollisionLayer::None &&  B->checkLayer != CollisionLayer::None)
+            {
+                if (A->TestIntersect(B)) {
+                    A->OnOverlap(B);
+                    B->OnOverlap(A);
+                }
+            }*/
         }
     }
 }

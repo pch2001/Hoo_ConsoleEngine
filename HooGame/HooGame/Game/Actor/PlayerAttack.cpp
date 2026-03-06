@@ -1,14 +1,31 @@
 #include "PlayerAttack.h"
 #include "Actor/Player.h"
 #include "Enemy.h"
+#include "Actor/BPlayer.h"
 
 PlayerAttack::PlayerAttack(const Vector2& position, Player* player) : super("/",position, Color::White), rightAttack(player->IsRightDirection()), xPosition(static_cast<float>(player->GetPosition().x))
 {
-	sortingOrder = 1;
+	sortingOrder = 10;
 
 	myLayer = CollisionLayer::Player;
 	targetLayer = CollisionLayer::Enemy;
 	arriveTimer.Reset();
+}
+
+
+PlayerAttack::PlayerAttack(Vector2 dir, BPlayer* player) : super("/",player->GetPosition())
+{
+	sortingOrder = 10;
+
+	direction = dir;
+	Vector2 startPos = player->GetPosition() + dir;
+	SetPosition(startPos);
+
+	xPosition = startPos.x;
+	yPosition = startPos.y;
+	myLayer = CollisionLayer::Player;
+	targetLayer = CollisionLayer::Enemy;
+	//checkLayer = CollisionLayer::PlayerAttack;
 }
 
 PlayerAttack::~PlayerAttack()
@@ -24,27 +41,21 @@ void PlayerAttack::Tick(float deltaTime)
 	
 
 	if (timer.IsTimeOut())
+
 	{
 		currentFrameIndex = (currentFrameIndex + 1) % 3;
 
-		// 2. πŸ≤Ô ¿Œµ¶Ω∫¿« ¿ÃπÃ¡ˆ∑Œ ∫Ø∞Ê
+		// 2. Î∞îÎÄê Ïù∏Îç±Ïä§Ïùò Ïù¥ÎØ∏ÏßÄÎ°ú Î≥ÄÍ≤Ω
 		ChangeImage(frames[currentFrameIndex]);
 		timer.Reset();
 	}
 
-	if (rightAttack)
-	{
-		xPosition += moveSpeed * deltaTime;
-	}
-	else
-	{
-		xPosition += -moveSpeed * deltaTime;
-	}
+	xPosition += direction.x * moveSpeed * deltaTime;
+	yPosition += direction.y * moveSpeed * deltaTime;
+	
+	Vector2 newPosition = { xPosition, yPosition };
 
-	Vector2 newPosition = GetPosition();
-	newPosition.x = static_cast<int>(xPosition);
-
-	// ¿ßƒ° ∞ªΩ≈
+	// ÏúÑÏπò Í∞±Ïã†
 	SetPosition(newPosition);
 
 	arriveTimer.Tick(deltaTime);
@@ -55,9 +66,12 @@ void PlayerAttack::Tick(float deltaTime)
 	}
 }
 
+#include "Actor/Ground.h"
+#include "Effect/guidedMissile.h"
+#include "Actor/BossEnemy.h"
 void PlayerAttack::OnOverlap(Actor* actor)
 {
-	if (actor->IsTypeOf<Enemy>())
+	if (actor->IsTypeOf<Enemy>() || actor->IsTypeOf<Ground>() || actor->IsTypeOf<guidedMissile>() || actor->IsTypeOf<BossEnemy>())
 	{
 		Destroy();
 	}

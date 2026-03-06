@@ -60,6 +60,7 @@ namespace Wanted
 		// 충돌 했을 때 실행될거
 		CollisionLayer myLayer = CollisionLayer::None;
 		CollisionLayer targetLayer = CollisionLayer::None;
+		CollisionLayer checkLayer = CollisionLayer::None;
 		virtual void OnOverlap(Actor* actor) {}
 		virtual void EndOverlap(Actor* actor) 
 		{

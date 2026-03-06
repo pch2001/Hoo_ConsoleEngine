@@ -25,6 +25,7 @@ public :
 
 	void UIUpdate();
 
+	void Attack(Vector2 dir);
 
 	float GetMaxHp() { return MaxHP; }
 	float GetHP() { return HP; }
@@ -37,6 +38,7 @@ public :
 	void SetisnotMine() { isMine = false; }
 
 private :
+	Vector2 dir;
 	float MaxHP = 5;
 	float HP;
 

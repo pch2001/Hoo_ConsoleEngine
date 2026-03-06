@@ -70,10 +70,7 @@ void ExplosionEffect::OnOverlap(Actor* actor)
 
 void ExplosionEffect::CheckIsVailed(Vector2 checkPosition)
 {
-	if (firstattack)
-		return;
-
-	firstattack = true;
+	
 
 	BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
 	if (level)
@@ -93,6 +90,11 @@ void ExplosionEffect::CheckIsVailed(Vector2 checkPosition)
 					}
 					if (actor->IsTypeOf<BPlayer>())
 					{
+						if (firstattack)
+							return;
+
+						firstattack = true;
+
 						BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
 						if(level->GetBPlayerActor())
 							level->GetBPlayerActor()->Damaged(-1);

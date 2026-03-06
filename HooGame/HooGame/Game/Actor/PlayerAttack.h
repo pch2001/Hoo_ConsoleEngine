@@ -3,6 +3,7 @@
 #include "Actor/Actor.h"
 #include "Player.h"
 #include "Util/EngineTimer.h"
+#include "BPlayer.h"
 
 using namespace Wanted;
 
@@ -11,25 +12,30 @@ class PlayerAttack : public Actor
 	RTTI_DECLARATIONS(PlayerAttack, Actor);
 public :
 	PlayerAttack(const Vector2& position, Player* player);
+	PlayerAttack(Vector2 dir, BPlayer* player);
 	~PlayerAttack();
 	
 	virtual void Tick(float deltaTime) override;
 	virtual void OnOverlap(Actor* actor) override;
 
-	const char* frames[5] = { "/", "|", "-" ,"\\", "-"}; // »ç¿ëÇÒ ÀÌ¹ÌÁö ¼ø¼­
+	const char* frames[5] = { "/", "|", "-" ,"\\", "-"}; // ì‚¬ìš©í•  ì´ë¯¸ì§€ ìˆœì„œ
 
 
 private :
+
+	Vector2 direction;
+
 	bool rightAttack;
 
 	float moveSpeed = 50.0f;
-	float xPosition = 0.0f;
+	int xPosition = 0.0f;
+	int yPosition = 0.0f;
 
-	EngineTimer timer{ 0.1f };
+	EngineTimer timer{ 0.05f };
 
 	EngineTimer arriveTimer{ 2.0f };
 	
-	int currentFrameIndex = 0;                  // ÇöÀç ¸î ¹øÂ° ÀÌ¹ÌÁöÀÎÁö
+	int currentFrameIndex = 0;                  // í˜„ì¬ ëª‡ ë²ˆì§¸ ì´ë¯¸ì§€ì¸ì§€
 
 };
 

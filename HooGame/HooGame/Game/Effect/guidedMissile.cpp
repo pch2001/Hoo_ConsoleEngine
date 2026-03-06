@@ -4,7 +4,6 @@
 #include "Level/BossLevel.h"
 #include "Engine/Engine.h"
 #include "Effect/ExplosionEffect.h"
-#include "Effect/WarningEffect.h"
 
 #include "Render/Renderer.h"
 #include "Actor/BPlayer.h"
@@ -89,7 +88,6 @@ void guidedMissile::OnOverlap(Actor* actor)
 		if (player)
 		{
 			level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 5) );
-			level->AddNewActor(new WarningEffect());
 			player->Damaged(-1);
 			this->Destroy();
 		}

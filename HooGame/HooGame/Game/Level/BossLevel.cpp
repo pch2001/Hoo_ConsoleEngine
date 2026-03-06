@@ -42,6 +42,10 @@ void BossLevel::Tick(float deltaTime)
 	super::Tick(deltaTime);
 	if (Input::Get().GetMouseButtonDown(1))
 	{
+		if (player->GetPoint() < 5)
+			return;
+		player->SetPoint(-5);
+
 		Vector2 pos = Input::Get().MousePosition();
 
 		int gridX = static_cast<int>(pos.x + 0.5f);
