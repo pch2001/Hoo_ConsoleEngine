@@ -14,8 +14,8 @@ BPlayer::BPlayer() : super("P", Vector2::Zero, Color::White)
 	sortingOrder = 10;
 	myLayer = CollisionLayer::Player;
 	targetLayer = CollisionLayer::None;
-	HP = 5;
-	MaxHP = 5;
+	HP = 10;
+	MaxHP = HP;
 	UIUpdate();
 }
 

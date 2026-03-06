@@ -62,12 +62,7 @@ void GameLevel::Tick(float deltaTime)
 			}
 		}
 	}
-	if (Input::Get().GetMouseButtonDown(0))
-	{
-		Vector2 pos = Input::Get().MousePosition();
-		AddNewActor(new Item(pos));
-		
-	}
+	
 }
 
  

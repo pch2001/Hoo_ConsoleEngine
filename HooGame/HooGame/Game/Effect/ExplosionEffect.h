@@ -16,7 +16,17 @@ public:
 	void BoomEffect(int power);
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
+
+	virtual void OnOverlap(Actor* actor) override;
+
+	void CheckIsVailed (Vector2 checkPosition);
+
+
+
+
 private :
+	bool firstattack = false;
+
 	int power;
 	int currentpower =0;
 

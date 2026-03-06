@@ -34,6 +34,8 @@ namespace Wanted
 		// 액터 추가/제거 처리 함수.
 		void ProcessAddAndDestroyActors();
 
+		std::vector<Actor*> GetActors() { return actors; }
+
 	protected:
 		// 액터 배열.
 		std::vector<Actor*> actors;
