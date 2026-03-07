@@ -20,11 +20,8 @@ BossLevel::BossLevel()
 	AddNewActor(new BossEnemy());
 	LoadLine();
 
-
-
 	AddNewActor(new Mine(Vector2(3, height - 3)));
 	AddNewActor(new Mine(Vector2(width -3, 5)));
-
 }
 BossLevel::~BossLevel()
 {
@@ -34,44 +31,32 @@ void BossLevel::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
-	int targetCameraY = player->GetPosition().y - (Engine::Get().GetHeight() / 2);
+	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
 
 	int cameraX = Renderer::Get().GetCameraPosition().x;
 	int cameraY = Renderer::Get().GetCameraPosition().y;
 
-	if (Input::Get().GetMouseButtonDown(1))
+	if (Input::Get().GetMouseButtonDown(1) || Input::Get().GetMouseButtonDown(0))
 	{
-		if (player->GetPoint() < 5)
-			return;
-		player->SetPoint(-5);
+		Vector2 mousePos = Input::Get().MousePosition();
+		int gridX = static_cast<int>(mousePos.x + 0.5f);
+		int gridY = static_cast<int>(mousePos.y + 0.5f);
 
-		Vector2 pos = Input::Get().MousePosition();
-
-		int gridX = static_cast<int>(pos.x + 0.5f);
-		int gridY = static_cast<int>(pos.y + 0.5f);
-		AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
-
+		if (Input::Get().GetMouseButtonDown(1) && player->GetPoint() < 5)
+		{
+			player->SetPoint(-5);
+			AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
+		}
+		else if (Input::Get().GetMouseButtonDown(0) || player->GetPoint() <= 0)
+		{
+			AddNewActor(new Ground(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
+			navigationGrid[gridY][gridX] = 1;
+			player->SetPoint(-1);
+			player->UIUpdate();
+		}
 	}
-	if (Input::Get().GetMouseButtonDown(0))
-	{
-		if (player->GetPoint() <= 0)
-			return;
 
-		Vector2 pos = Input::Get().MousePosition();
-
-		int gridX = static_cast<int>(pos.x + 0.5f);
-		int gridY = static_cast<int>(pos.y + 0.5f);
-
-
-		AddNewActor(new Ground(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
-		navigationGrid[gridY][gridX] = 1;
-		player->SetPoint(-1);
-		player->UIUpdate();
-
-	}
 	if (Input::Get().GetKeyDown(VK_ESCAPE)) { Game::Get().ToggleMenu();	return; }
-
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
 
@@ -101,22 +86,18 @@ void BossLevel::Tick(float deltaTime)
 void BossLevel::Draw()
 {
 	super::Draw();
-	
+	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
 
-	int targetCameraX = player->GetPosition().x - (Engine::Get().GetWidth() / 2);
-	int targetCameraY = player->GetPosition().y - (Engine::Get().GetHeight() / 2);
-	int cameraX = Renderer::Get().GetCameraPosition().x;
-	int cameraY = Renderer::Get().GetCameraPosition().y;
 
 	for (const auto& item : mapData)
 	{
-		Renderer::Get().Submit(item.character.c_str(),Vector2(item.pos.x +cameraX, item.pos.y),Color::Red,3 );
+		Renderer::Get().Submit(item.character.c_str(),Vector2(item.pos.x + cameraPos.x, item.pos.y),Color::Red,3 );
 	}
 	for (const auto& item : backgroundData)
 	{
-		if (cameraX > 0)
+		if (cameraPos.x > 0)
 		{
-			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+cameraX, item.pos.y + cameraY ), Color::White, 3);
+			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+ cameraPos.x, item.pos.y + cameraPos.y), Color::White, 3);
 		}
 		else
 		{
@@ -132,10 +113,8 @@ void BossLevel::LoadScene()
 
 void BossLevel::LoadLine()
 {
-	const int width = Engine::Get().GetWidth();
-	const int height = Engine::Get().GetHeight();
-
 	navigationGrid.assign(height, std::vector<int>(width, 0));
+
 
 	for (int x = 0; x < width; ++x)
 	{

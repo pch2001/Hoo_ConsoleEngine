@@ -38,6 +38,7 @@ public :
 	bool pathLine = true;
 
 private :
+
 	EStageState currentState = EStageState::Farming;
 	float stateTimer = 0.f;
 	int currentTurn = 1;

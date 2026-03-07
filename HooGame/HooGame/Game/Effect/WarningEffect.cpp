@@ -14,18 +14,25 @@ WarningEffect::WarningEffect()
 			Renderer::Get().Submit(" ", Vector2(x, 0), Color::White, 20, BACKGROUND_RED, true);
 			Renderer::Get().Submit(" ", Vector2(x, 1), Color::White, 20, BACKGROUND_RED, true);
 			Renderer::Get().Submit(" ", Vector2(x, 2), Color::White, 20, BACKGROUND_RED, true);
+			Renderer::Get().Submit(" ", Vector2(x, 3), Color::White, 20, BACKGROUND_RED, true);
 
 			Renderer::Get().Submit(" ", Vector2(x, height), Color::White, 20, BACKGROUND_RED, true);
-			Renderer::Get().Submit(" ", Vector2(x, height -1), Color::White, 20, BACKGROUND_RED, true);
+			Renderer::Get().Submit(" ", Vector2(x, height - 1), Color::White, 20, BACKGROUND_RED, true);
 			Renderer::Get().Submit(" ", Vector2(x, height - 2), Color::White, 20, BACKGROUND_RED, true);
+			Renderer::Get().Submit(" ", Vector2(x, height - 3), Color::White, 20, BACKGROUND_RED, true);
+
 		}
 		else
 		{
 			Renderer::Get().Submit(" ", Vector2(x, 0), Color::White, 20, BACKGROUND_RED, true);
 			Renderer::Get().Submit(" ", Vector2(x, 1), Color::White, 20, BACKGROUND_RED, true);
+			Renderer::Get().Submit(" ", Vector2(x, 2), Color::White, 20, BACKGROUND_RED, true);
+
 
 			Renderer::Get().Submit(" ", Vector2(x, height), Color::White, 20, BACKGROUND_RED, true);
 			Renderer::Get().Submit(" ", Vector2(x, height - 1), Color::White, 20, BACKGROUND_RED, true);
+			Renderer::Get().Submit(" ", Vector2(x, height - 2), Color::White, 20, BACKGROUND_RED, true);
+
 		}
 	}
 	for (int y = 0; y < height; y++)
