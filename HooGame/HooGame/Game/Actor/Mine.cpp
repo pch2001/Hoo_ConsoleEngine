@@ -28,24 +28,34 @@ void Mine::Tick(float deltaTime)
 			targetplayer->SetPoint(1);
 		EndOverlap(targetplayer);
 	}
+
+	if (!isMineTime)
+		ChangeImage("X");
 }
 
 void Mine::OnOverlap(Actor* actor)
 {
-	if (actor->IsTypeOf<BPlayer>())
+	if (isMineTime)
 	{
-		ChangeImage("_");
-		BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
-		level->GetBPlayerActor()->SetisMine();
-		targetplayer = level->GetBPlayerActor();
-		isOnOverlap = true;
+		if (actor->IsTypeOf<BPlayer>())
+		{
+			ChangeImage("_");
+			BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
+			level->GetBPlayerActor()->SetisMine();
+			targetplayer = level->GetBPlayerActor();
+			isOnOverlap = true;
+		}
+
 	}
-	
+
 }
 
 void Mine::EndOverlap(Actor* actor)
 {
 	isOnOverlap = false;
+	if(!isMineTime)
+		ChangeImage("X");
 	ChangeImage("M");
+
 }
 

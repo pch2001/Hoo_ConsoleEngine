@@ -85,7 +85,7 @@ void BPlayer::UIUpdate()
 	
 	int currentBar = static_cast<int>(Widgeth * hpRatio);
 
-	for (int i = 1; i < currentBar; i++)
+	for (int i = 1; i < currentBar-1; i++)
 	{
 		Renderer::Get().Submit("*",Vector2(i, 1), Color::Green, 10);
 	}

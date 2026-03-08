@@ -25,14 +25,29 @@ void BossEnemy::Tick(float deltaTime)
 	if (Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
 		MisileAttack();
 	}
-
 }
 
 void BossEnemy::OnOverlap(Actor* actor)
 {
 }
+
+void BossEnemy::SetAttackCountUI(int boomcount)
+{
+	SetboomCount(boomcount*10);
+	BossLevel* currentLevel = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
+	currentLevel->boomCount = std::to_string(boomcount*10);
+}
+
+void BossEnemy::StartAttack()
+{
+	while(GetboomCount()>0)
+	{
+		GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));
+		SetboomCount(-1);
+	}
+
+}
 void BossEnemy::MisileAttack()
 {
 	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));
- 	Vector2 effectPos = { position.x, position.y - 5 };
 }

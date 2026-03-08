@@ -17,93 +17,41 @@ BossLevel::BossLevel()
 {
 	player = new BPlayer();
 	AddNewActor(player);
-	AddNewActor(new BossEnemy());
+	boss = new BossEnemy();
+	AddNewActor(boss);
 	LoadLine();
 
-	AddNewActor(new Mine(Vector2(3, height - 3)));
-	AddNewActor(new Mine(Vector2(width -3, 5)));
+	mine1 = new Mine(Vector2(3, height - 3));
+	mine2 = new Mine(Vector2(width - 3, 5));
+	AddNewActor(mine1);
+	AddNewActor(mine2);
 }
 BossLevel::~BossLevel()
 {
+	if (player) delete player;
+	if (mine1) delete mine1;
+	if (mine2) delete mine2;
 
 }
 void BossLevel::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
 
-	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
-
-	int cameraX = Renderer::Get().GetCameraPosition().x;
-	int cameraY = Renderer::Get().GetCameraPosition().y;
+	
 
 	if (Input::Get().GetMouseButtonDown(1) || Input::Get().GetMouseButtonDown(0))
-	{
-		Vector2 mousePos = Input::Get().MousePosition();
-		int gridX = static_cast<int>(mousePos.x + 0.5f);
-		int gridY = static_cast<int>(mousePos.y + 0.5f);
-
-		if (Input::Get().GetMouseButtonDown(1) && player->GetPoint() < 5)
-		{
-			player->SetPoint(-5);
-			AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
-		}
-		else if (Input::Get().GetMouseButtonDown(0) || player->GetPoint() <= 0)
-		{
-			AddNewActor(new Ground(Vector2((float)gridX + cameraX, (float)gridY + cameraY)));
-			navigationGrid[gridY][gridX] = 1;
-			player->SetPoint(-1);
-			player->UIUpdate();
-		}
-	}
+		SpawnItem();
 
 	if (Input::Get().GetKeyDown(VK_ESCAPE)) { Game::Get().ToggleMenu();	return; }
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
-
-
-	// Todo : 턴제 진행
-	stateTimer -= deltaTime;
-
-	switch (currentState)
-	{
-	case EStageState::Farming:
-
-
-		break;
-	case EStageState::maintenance:
-
-		break;
-	case EStageState::battle :
-
-		break;
-	default:
-		break;
-	}
-
-
-
+	Stageing(deltaTime);
 }
+
 void BossLevel::Draw()
 {
 	super::Draw();
-	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
-
-
-	for (const auto& item : mapData)
-	{
-		Renderer::Get().Submit(item.character.c_str(),Vector2(item.pos.x + cameraPos.x, item.pos.y),Color::Red,3 );
-	}
-	for (const auto& item : backgroundData)
-	{
-		if (cameraPos.x > 0)
-		{
-			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+ cameraPos.x, item.pos.y + cameraPos.y), Color::White, 3);
-		}
-		else
-		{
-			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x, item.pos.y), Color::White, 3);
-		}
-	}
+	StageUIUpdate();
 }
 
 void BossLevel::LoadScene()
@@ -141,6 +89,113 @@ void BossLevel::LoadLine()
 				backgroundData.push_back({".", Vector2((float)x, (float)y )});
 		}
 	}
+}
+
+void BossLevel::SpawnItem()
+{
+	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
+	Vector2 mousePos = Input::Get().MousePosition();
+	int gridX = static_cast<int>(mousePos.x + 0.5f);
+	int gridY = static_cast<int>(mousePos.y + 0.5f);
+
+	if (Input::Get().GetMouseButtonDown(1) && player->GetPoint() >= 5)
+	{
+		player->SetPoint(-5);
+		AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraPos.x, (float)gridY + cameraPos.y)));
+	}
+	if (Input::Get().GetMouseButtonDown(0) && player->GetPoint() > 0)
+	{
+		AddNewActor(new Ground(Vector2((float)gridX + cameraPos.x, (float)gridY + cameraPos.y)));
+		navigationGrid[gridY][gridX] = 1;
+		player->SetPoint(-1);
+		player->UIUpdate();
+	}
+
+}
+
+void BossLevel::StageUIUpdate()
+{
+	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
+
+
+	for (const auto& item : mapData)
+	{
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraPos.x, item.pos.y), Color::Red, 3);
+	}
+	for (const auto& item : backgroundData)
+	{
+		if (cameraPos.x > 0)
+		{
+			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraPos.x, item.pos.y + cameraPos.y), stateColor, 3);
+		}
+		else
+		{
+			Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x, item.pos.y), stateColor, 3);
+		}
+	}
+	
+
+	Renderer::Get().Submit(stateText.c_str(), Vector2(1, 2), Color::White, 3);
+	Renderer::Get().Submit(timeText.c_str(), Vector2(1, 3), Color::White, 10);
+	Renderer::Get().Submit(boomText.c_str(), Vector2(1, 4), Color::White, 10);
+	Renderer::Get().Submit(boomCount.c_str(), Vector2(1+ boomText.size(), 4), Color::White, 10);
+
+	Renderer::Get().Submit(timeCount.c_str(), Vector2(1 + timeText.size() , 3), Color::White, 10);
+
+}
+
+void BossLevel::Stageing(float deltaTime)
+{
+
+	stateTime += deltaTime;
+
+	const auto& config = stageSettings[currentState];
+
+	float remaing = config.duration - stateTime;
+	if (remaing < 0) remaing = 0;
+	timeCount = std::to_string(stageSettings[currentState].duration - stateTime);
+
+	if (stateTime >= config.duration)
+	{
+		EStageState nextState;
+		if (currentState == EStageState::Farming) nextState = EStageState::maintenance;
+		else if (currentState == EStageState::maintenance) nextState = EStageState::battle;
+		else nextState = EStageState::Farming;
+
+		SetState(nextState);
+
+	}
+
+
+	
+}
+
+void BossLevel::SetState(EStageState newState)
+{
+	stateTime = 0.0f;
+	currentState = newState;;
+	stateText = stageSettings[currentState].text;
+	stateColor = stageSettings[currentState].bgColor;
+
+	switch (currentState)
+	{
+	case EStageState::Farming:
+		mine1->SetIsMineTime(true);
+		mine2->SetIsMineTime(true);
+		break;
+	case EStageState::maintenance:
+		
+		boss->SetAttackCountUI(currentTurn);
+		break;
+	case EStageState::battle:
+		mine1->SetIsMineTime(false);
+		mine2->SetIsMineTime(false);
+		boss->StartAttack();
+		break;
+	default:
+		break;
+	}
+
 }
 
 
