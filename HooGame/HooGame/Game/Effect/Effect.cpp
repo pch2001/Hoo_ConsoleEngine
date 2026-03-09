@@ -1,5 +1,6 @@
 #include "Effect.h"
 #include "Level/Level.h"
+#include "Level/BossLevel.h"
 
 #include "WhiteEffect.h"
 #include "RedEffect.h"
@@ -37,7 +38,8 @@ void Effect::Tick(float deltaTime)
 		}
 		else if (EnemyActor->IsTypeOf<BossEnemy>())
 		{
-			GetOwner()->AddNewActor(new guidedMissile(SpawnDirection(0,2), EnemyActor));
+			BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
+			level->AddMissile(new guidedMissile(SpawnDirection(0, 2), EnemyActor));
 		}
 
 		effectTimer.Reset();

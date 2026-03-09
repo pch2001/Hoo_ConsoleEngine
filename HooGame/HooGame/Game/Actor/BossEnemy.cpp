@@ -3,6 +3,7 @@
 #include "PlayerAttack.h"
 #include "Effect/Effect.h"
 #include "Level/BossLevel.h"
+#include "Effect/guidedMissile.h"
 
 #include "Core/Input.h"
 //#include "Game/Game.h"
@@ -47,11 +48,7 @@ void BossEnemy::StartAttack()
 	}
 
 }
-void BossEnemy::UpdateMisile()
-{
-	for(int i = )
 
-}
 void BossEnemy::MisileAttack()
 {
 	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));

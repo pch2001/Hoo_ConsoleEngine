@@ -22,12 +22,12 @@ guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", 
 	//Guide();
 }
 
+
 guidedMissile::~guidedMissile()
 {
 
 
 }
-
 void guidedMissile::Guide()
 {
 
@@ -58,6 +58,7 @@ void guidedMissile::Guide()
 	position.y = (float)nextPosition->position.y;
 }
 
+
 void guidedMissile::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
@@ -65,7 +66,7 @@ void guidedMissile::Tick(float deltaTime)
 	delay.Tick(deltaTime);
 	if (delay.IsTimeOut())
 	{
-		Guide();
+		Guide();		
 		delay.Reset();
 
 	}
@@ -74,7 +75,7 @@ void guidedMissile::Tick(float deltaTime)
 
 void guidedMissile::Draw()
 {
-	super::Draw(); // 상위 클래스 그리기 호출
+	super::Draw();
 
 }
 

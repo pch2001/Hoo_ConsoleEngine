@@ -5,6 +5,7 @@
 #include "Navigation/Node.h"
 #include "Util/EngineTimer.h"
 
+#include <vector>
 using namespace Wanted;
 
 class guidedMissile : public Actor
@@ -12,16 +13,15 @@ class guidedMissile : public Actor
 	RTTI_DECLARATIONS(guidedMissile, Actor)
 public :
 	guidedMissile(Vector2 position, Actor* targetActor);
+
 	~guidedMissile();
 
 	void Guide();
-
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
 
 	virtual void OnOverlap(Actor* actor) override;
 
-		
 
 
 private :
@@ -30,6 +30,7 @@ private :
 
 	Node* startNode = nullptr;
 	Node* endNode = nullptr;
+
 
 };
 

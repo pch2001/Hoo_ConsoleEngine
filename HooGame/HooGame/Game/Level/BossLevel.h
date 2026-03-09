@@ -29,6 +29,7 @@ struct StageConfig
 class BPlayer;
 class Mine;
 class BossEnemy;
+class guidedMissile;
 
 class BossLevel : public Level
 {
@@ -52,9 +53,16 @@ public :
 
 	BPlayer* GetBPlayerActor() { return player; }
 	std::vector<std::vector<int>>& GetNavigationGrid() { return navigationGrid; }
+	BossEnemy* GetBossEnemy() { return boss; }
 	bool pathLine = true;
 
 	std::string boomCount = " 0";
+
+
+	std::vector<guidedMissile*> activeMissiles;
+
+	void UpdatemisileList();
+	void AddMissile(guidedMissile* missile);
 
 private :
 
@@ -83,9 +91,9 @@ private :
 
 	std::map<EStageState, StageConfig> stageSettings =
 	{
-		{EStageState::Farming, { 5.0f, "Farm Time", Color::White }},
-		{EStageState::maintenance, { 10.0f, "Maintenance Time", Color::Brown }},
-		{EStageState::battle, { 15.0f, "Battle Time", Color::Red }},
+		{EStageState::Farming, { 1.0f, "Farm Time", Color::White }},
+		{EStageState::maintenance, { 1.0f, "Maintenance Time", Color::Brown }},
+		{EStageState::battle, { 20.0f, "Battle Time", Color::Red }},
 	};
 };
 

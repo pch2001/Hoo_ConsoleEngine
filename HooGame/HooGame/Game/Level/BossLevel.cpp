@@ -5,6 +5,7 @@
 #include "Actor/BossEnemy.h"
 #include "Actor/Hyeonmu5.h"
 #include "Actor/Cheongung2.h"
+#include "Effect/guidedMissile.h"
 
 #include "Core/Input.h"
 #include "Engine/Engine.h"
@@ -47,6 +48,8 @@ void BossLevel::Tick(float deltaTime)
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
 	Stageing(deltaTime);
+	UpdatemisileList();
+
 }
 
 void BossLevel::Draw()
@@ -114,7 +117,7 @@ void BossLevel::SpawnItem()
 		if (tempactor)
 		{
 			tempactor->Destroy();
-			AddNewActor(new Cheongung2(tempos));
+			AddNewActor(new Cheongung2(tempos, activeMissiles));
 		}
 		else
 		{
@@ -217,3 +220,20 @@ void BossLevel::SetState(EStageState newState)
 }
 
 
+void BossLevel::UpdatemisileList()
+{
+	for (int i = activeMissiles.size() - 1; i >= 0; --i)
+	{
+		guidedMissile* m = activeMissiles[i];
+		if (m == nullptr || m->DestroyRequested())
+		{
+			activeMissiles.erase(activeMissiles.begin() + i);
+		}
+	}
+
+}
+void BossLevel::AddMissile(guidedMissile* missile)
+{
+	activeMissiles.emplace_back(missile);
+	AddNewActor(missile);
+}
