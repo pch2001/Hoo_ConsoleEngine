@@ -22,14 +22,15 @@ public :
 	void SetAttackCountUI(int boomcount);
 	void StartAttack();
 	
-	void SetboomCount(int boomcount) { boomCount = boomcount; }
+	void SetboomCount(int boomcount) { boomCount += boomcount; }
 	int GetboomCount() const { return boomCount; }
 
-
+	void UpdateBoomCountUI();
 private :
-	EngineTimer attackTimer{ 0.3f };
+	EngineTimer attackTimer{ 0.5f };
 
 	int boomCount = 0;
+	bool attacking = false;
 
 };
 

@@ -86,13 +86,16 @@ private :
 	std::string stateText = "no start ";
 	std::string timeText = "time : ";
 	std::string timeCount = " 0";
-	std::string boomText = "Boom Time : ";
+	std::string boomText = "Last Boom : ";
+	std::string totaltext = "total time : ";
+	std::string totalTimeText = " ";
+	float totalTime = 0;
 	Color stateColor = Color::White;
 
 	std::map<EStageState, StageConfig> stageSettings =
 	{
 		{EStageState::Farming, { 1.0f, "Farm Time", Color::White }},
-		{EStageState::maintenance, { 1.0f, "Maintenance Time", Color::Brown }},
+		{EStageState::maintenance, { 5.0f, "Maintenance Time", Color::Brown }},
 		{EStageState::battle, { 20.0f, "Battle Time", Color::Red }},
 	};
 };

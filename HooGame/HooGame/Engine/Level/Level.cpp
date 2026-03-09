@@ -22,9 +22,17 @@ namespace Wanted
 				actor = nullptr;
 			}
 		}
-
-		// 배열 초기화.
 		actors.clear();
+
+		for (Actor* actor : addRequestedActors)
+		{
+			if (actor != nullptr)
+			{
+				delete actor;
+			}
+		}
+		addRequestedActors.clear();
+
 	}
 
 	void Level::BeginPlay()

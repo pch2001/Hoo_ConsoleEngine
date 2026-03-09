@@ -30,9 +30,7 @@ BossLevel::BossLevel()
 }
 BossLevel::~BossLevel()
 {
-	if (player) delete player;
-	if (mine1) delete mine1;
-	if (mine2) delete mine2;
+
 
 }
 void BossLevel::Tick(float deltaTime)
@@ -45,6 +43,8 @@ void BossLevel::Tick(float deltaTime)
 		SpawnItem();
 
 	if (Input::Get().GetKeyDown(VK_ESCAPE)) { Game::Get().ToggleMenu();	return; }
+	if (Input::Get().GetKeyDown(VK_F1)) { Game::Get().EndGame();	return; }
+
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
 	Stageing(deltaTime);
@@ -163,18 +163,23 @@ void BossLevel::StageUIUpdate()
 
 	Renderer::Get().Submit(timeCount.c_str(), Vector2(1 + timeText.size() , 3), Color::White, 10);
 
+	Renderer::Get().Submit(totaltext.c_str(), Vector2(width/2-totaltext.size(), 3), Color::White, 10);
+	Renderer::Get().Submit(totalTimeText.c_str(), Vector2(width/2+1, 3), Color::White, 10);
+
+
 }
 
 void BossLevel::Stageing(float deltaTime)
 {
-
+	totalTime += deltaTime;
 	stateTime += deltaTime;
 
 	const auto& config = stageSettings[currentState];
 
 	float remaing = config.duration - stateTime;
+	totalTimeText = std::to_string((int)totalTime);
 	if (remaing < 0) remaing = 0;
-	timeCount = std::to_string(stageSettings[currentState].duration - stateTime);
+	timeCount = std::to_string((int)stageSettings[currentState].duration - stateTime);
 
 	if (stateTime >= config.duration)
 	{
@@ -206,7 +211,7 @@ void BossLevel::SetState(EStageState newState)
 		break;
 	case EStageState::maintenance:
 		
-		boss->SetAttackCountUI(currentTurn);
+		boss->SetAttackCountUI(currentTurn++);
 		break;
 	case EStageState::battle:
 		mine1->SetIsMineTime(false);

@@ -27,6 +27,12 @@ Astar::~Astar()
 
 std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid, bool pathLine)
 {
+
+    for (Node* node : openList) SafeDelete(node);
+    openList.clear();
+    for (Node* node : closedList) SafeDelete(node);
+    closedList.clear();
+
     this->startNode = StartNode;
     this->goalNode = goalNode;
 
