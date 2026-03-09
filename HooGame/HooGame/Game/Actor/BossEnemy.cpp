@@ -47,6 +47,11 @@ void BossEnemy::StartAttack()
 	}
 
 }
+void BossEnemy::UpdateMisile()
+{
+	for(int i = )
+
+}
 void BossEnemy::MisileAttack()
 {
 	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));

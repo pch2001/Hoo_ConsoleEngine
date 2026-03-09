@@ -8,6 +8,7 @@
 #include "Render/Renderer.h"
 #include "Actor/BPlayer.h"
 #include "Actor/Hyeonmu5.h"
+#include "Actor/Cheongung2.h"
 
 guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", position), Enemyactor(enemytActor)
 {
@@ -18,7 +19,7 @@ guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", 
 	myLayer = CollisionLayer::Enemy;
 	targetLayer = CollisionLayer::Player;
 
-	Guide();
+	//Guide();
 }
 
 guidedMissile::~guidedMissile()

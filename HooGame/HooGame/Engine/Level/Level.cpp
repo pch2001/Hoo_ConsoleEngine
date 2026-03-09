@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "Engine/Engine.h"
 #include "Physics/Physics.h"
+#include "Math/Vector2.h"
 
 namespace Wanted
 {
@@ -107,4 +108,8 @@ namespace Wanted
 		// 처리가 끝났으면 배열 초기화.
 		addRequestedActors.clear();
 	}
+
+
+
+
 }

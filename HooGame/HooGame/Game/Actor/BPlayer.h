@@ -44,7 +44,7 @@ private :
 
 	bool isMine = false;
 
-	int point = 10;
+	int point = 100;
 
 };
 

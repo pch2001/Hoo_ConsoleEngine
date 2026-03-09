@@ -35,7 +35,7 @@ void BPlayer::Tick(float deltaTime)
 	if (Input::Get().GetKey(VK_RIGHT) || Input::Get().GetKey('D') || Input::Get().GetKey('d')) Move(1, 0);
 	if (Input::Get().GetKeyDown(VK_CONTROL)) { GetOwner()->AddNewActor(new PlayerAttack(dir, this)); }
 
-
+	
 	UIUpdate();
 
 }
@@ -104,3 +104,4 @@ void BPlayer::Attack(Vector2 dir)
 {
 	GetOwner()->AddNewActor(new PlayerAttack(dir, this));
 }
+

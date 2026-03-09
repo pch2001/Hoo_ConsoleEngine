@@ -4,6 +4,7 @@
 #include "Actor/Ground.h"
 #include "Actor/BossEnemy.h"
 #include "Actor/Hyeonmu5.h"
+#include "Actor/Cheongung2.h"
 
 #include "Core/Input.h"
 #include "Engine/Engine.h"
@@ -93,19 +94,36 @@ void BossLevel::LoadLine()
 
 void BossLevel::SpawnItem()
 {
+
 	Vector2 cameraPos = Renderer::Get().GetCameraPosition();
 	Vector2 mousePos = Input::Get().MousePosition();
 	int gridX = static_cast<int>(mousePos.x + 0.5f);
 	int gridY = static_cast<int>(mousePos.y + 0.5f);
 
+
+	Vector2 tempos = (Vector2((float)gridX + cameraPos.x, (float)gridY + cameraPos.y));
+	Actor* tempCheongung = GetActorAt<Cheongung2>(tempos);
+	if (tempCheongung)
+		return;
+
 	if (Input::Get().GetMouseButtonDown(1) && player->GetPoint() >= 5)
 	{
 		player->SetPoint(-5);
-		AddNewActor(new Hyeonmu5(Vector2((float)gridX + cameraPos.x, (float)gridY + cameraPos.y)));
+		Actor* tempactor = GetActorAt<Hyeonmu5>(tempos);
+
+		if (tempactor)
+		{
+			tempactor->Destroy();
+			AddNewActor(new Cheongung2(tempos));
+		}
+		else
+		{
+			AddNewActor(new Hyeonmu5(tempos));
+		}
 	}
 	if (Input::Get().GetMouseButtonDown(0) && player->GetPoint() > 0)
 	{
-		AddNewActor(new Ground(Vector2((float)gridX + cameraPos.x, (float)gridY + cameraPos.y)));
+		AddNewActor(new Ground(tempos));
 		navigationGrid[gridY][gridX] = 1;
 		player->SetPoint(-1);
 		player->UIUpdate();

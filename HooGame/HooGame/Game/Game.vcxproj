@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClCompile Include="Actor\BossEnemy.cpp" />
     <ClCompile Include="Actor\BPlayer.cpp" />
+    <ClCompile Include="Actor\Cheongung2.cpp" />
     <ClCompile Include="Actor\Cloud.cpp" />
     <ClCompile Include="Actor\Coin.cpp" />
     <ClCompile Include="Actor\DeathLine.cpp" />
@@ -122,6 +123,7 @@
   <ItemGroup>
     <ClInclude Include="Actor\BossEnemy.h" />
     <ClInclude Include="Actor\BPlayer.h" />
+    <ClInclude Include="Actor\Cheongung2.h" />
     <ClInclude Include="Actor\Cloud.h" />
     <ClInclude Include="Actor\Coin.h" />
     <ClInclude Include="Actor\DeathLine.h" />

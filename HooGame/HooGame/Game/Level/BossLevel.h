@@ -87,7 +87,5 @@ private :
 		{EStageState::maintenance, { 10.0f, "Maintenance Time", Color::Brown }},
 		{EStageState::battle, { 15.0f, "Battle Time", Color::Red }},
 	};
-
-
 };
 

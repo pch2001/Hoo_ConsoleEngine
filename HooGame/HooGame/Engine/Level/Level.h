@@ -4,13 +4,12 @@
 // STL(Standard Template Library - C++에서 기본 제공).
 // 크기가 알아서 변경되는 배열.
 #include <vector>
-
+#include "Math/Vector2.h"
+#include "Actor/Actor.h"
 
 
 namespace Wanted
 {
-	// 전방 선언.
-	class Actor;
 
 	// 담당 임무: 레벨에 있는 모든 액터(물체) 관리.
 	class WANTED_API Level : public RTTI
@@ -35,6 +34,19 @@ namespace Wanted
 		void ProcessAddAndDestroyActors();
 
 		std::vector<Actor*> GetActors() { return actors; }
+		
+		template<typename T>
+		T* GetActorAt(Vector2 searchactor)
+		{
+			for (Actor* actor : actors)
+			{
+				if (!actor->DestroyRequested() && actor->GetPosition() == searchactor && actor->IsTypeOf<T>())
+				{
+					return static_cast<T*> (actor);
+				}
+			}
+			return nullptr;
+		}
 
 	protected:
 		// 액터 배열.
@@ -46,4 +58,5 @@ namespace Wanted
 		Actor* player;
 
 	};
+
 }
