@@ -78,6 +78,8 @@ namespace Wanted
 		// 액터의 이미지 값 변경 함수.
 		void ChangeImage(const char* newImage);
 
+		void ChangeColor(Color changecolor) { color = changecolor; }
+
 		// 액터의 이미지 값 불러오기
 		char* CurrentImage();
 

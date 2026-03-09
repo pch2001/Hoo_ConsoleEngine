@@ -12,7 +12,7 @@ using namespace Wanted;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetBreakAlloc(38665);
+	//_CrtSetBreakAlloc(38665);
 	/*Engine engine;
 	engine.SetNewLevel(new GameLevel());
 	engine.Run();

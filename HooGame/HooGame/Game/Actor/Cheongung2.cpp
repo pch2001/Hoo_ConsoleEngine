@@ -32,7 +32,7 @@ void Cheongung2::Shotdown()
 	if (enemymisilelists.empty())
 		return;
 
-
+	// Tdodo: 색변경
 	guidedMissile* target = enemymisilelists[0];
 	if (target == nullptr || target->DestroyRequested())
 		return;
@@ -68,7 +68,12 @@ void Cheongung2::Tick(float deltaTime)
 		delay.Reset();
 
 	}
-
+	chagnedelay.Tick(deltaTime);
+	if (chagnedelay.IsTimeOut())
+	{
+		
+		ChangeColor(colors[colorcount++%6]);
+	}
 }
 
 void Cheongung2::Draw()

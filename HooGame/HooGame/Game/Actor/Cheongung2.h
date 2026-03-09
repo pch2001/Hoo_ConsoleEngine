@@ -3,9 +3,12 @@
 #include "Actor/Actor.h"
 #include "Navigation/Node.h"
 #include "Util/EngineTimer.h"
+#include "Math/Color.h"
 #include <vector>
 using namespace Wanted;
 class guidedMissile;
+
+
 class Cheongung2 : public Actor
 {
 	RTTI_DECLARATIONS(Cheongung2, Actor)
@@ -25,10 +28,13 @@ public :
 
 
 private :
+	EngineTimer chagnedelay{ 0.1f };
 	EngineTimer delay{ 0.05f };
 
 	Node* startNode = nullptr;
 	Node* endNode = nullptr;
+	int colorcount = 0;
+	Color colors[5] = { Color::Red, Color::Green, Color::Blue, Color::Brown, Color::White };
 
 };
 
