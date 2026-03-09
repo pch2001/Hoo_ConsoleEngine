@@ -23,6 +23,18 @@ BossEnemy::~BossEnemy()
 
 void BossEnemy::Tick(float deltaTime)
 {
+	super::Tick(deltaTime);
+
+	if (boomCount < 0)
+		return;
+
+	attackTimer.Tick(deltaTime);
+	if (attackTimer.IsTimeOut())
+	{
+		StartAttack();
+		attackTimer.Reset();
+	}
+
 	if (Input::Get().GetKeyDown('p') || Input::Get().GetKeyDown('P')) {
 		MisileAttack();
 	}
@@ -41,12 +53,8 @@ void BossEnemy::SetAttackCountUI(int boomcount)
 
 void BossEnemy::StartAttack()
 {
-	while(GetboomCount()>0)
-	{
-		GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));
-		SetboomCount(-1);
-	}
-
+	GetOwner()->AddNewActor(new Effect(this->GetPosition(), this, 1.f));
+	SetboomCount(-1);
 }
 
 void BossEnemy::MisileAttack()

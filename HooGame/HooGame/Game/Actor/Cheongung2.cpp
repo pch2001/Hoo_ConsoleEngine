@@ -28,9 +28,11 @@ void Cheongung2::Shotdown()
 	BPlayer* player = currentLevel->GetBPlayerActor();
 	if (!player) return;
 
+	enemymisilelists = currentLevel->activeMissiles;
 
 	if (enemymisilelists.empty())
 		return;
+
 
 	guidedMissile* target = enemymisilelists[0];
 	if (target == nullptr || target->DestroyRequested())

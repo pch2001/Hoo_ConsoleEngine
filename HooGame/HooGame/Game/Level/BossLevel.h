@@ -63,7 +63,7 @@ public :
 
 	void UpdatemisileList();
 	void AddMissile(guidedMissile* missile);
-
+	//std::vector<guidedMissile*> GetActiveMissiles() { return activeMissiles; }
 private :
 
 	EStageState currentState = EStageState::Farming;
