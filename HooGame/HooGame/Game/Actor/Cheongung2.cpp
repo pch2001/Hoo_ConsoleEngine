@@ -4,9 +4,8 @@
 #include "Effect/guidedMissile.h"
 #include "Effect/ExplosionEffect.h"
 
-Cheongung2::Cheongung2(const Vector2& position, std::vector<guidedMissile*> enemymisilelist) : super("C", position, Color::Red, false)
+Cheongung2::Cheongung2(const Vector2& position) : super("C", position, Color::Red, false)
 {
-	enemymisilelists = enemymisilelist;
 	sortingOrder = 10;
 	myLayer = CollisionLayer::PlayerAttack;
 	targetLayer = CollisionLayer::Enemy;

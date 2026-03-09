@@ -117,7 +117,7 @@ void BossLevel::SpawnItem()
 		if (tempactor)
 		{
 			tempactor->Destroy();
-			AddNewActor(new Cheongung2(tempos, activeMissiles));
+			AddNewActor(new Cheongung2(tempos));
 		}
 		else
 		{

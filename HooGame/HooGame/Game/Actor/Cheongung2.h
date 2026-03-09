@@ -11,7 +11,7 @@ class Cheongung2 : public Actor
 	RTTI_DECLARATIONS(Cheongung2, Actor)
 
 public :
-	Cheongung2(const Vector2& position, std::vector<guidedMissile*> enemymisilelist);
+	Cheongung2(const Vector2& position);
 	~Cheongung2();
 
 	virtual void Tick(float deltaTime) override;
