@@ -42,8 +42,9 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
         // 빈 경로 반환(오류)
         return {};
     }
-
-    // 시작 노드를 열린 리스트에 추가 및 탐색 시작
+    
+    //std::vector<std::vector<float>> minGCost(grid.size(), std::vector<float>(grid[0].size(), FLT_MAX));    
+    //minGCost[this->startNode->position.y][this->startNode->position.x] = 0.0f;
     openList.emplace_back(this->startNode);
 
     // 대각선 비용 상수
@@ -127,6 +128,12 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             // 현재 노드를 기준으로 새 gCost 계산
             float newGCost = currentNode->gCost + direction.cost;
 
+          /*  if (newGCost >= minGCost[newY][newX])
+            {
+                continue;
+            }*/
+           // minGCost[newY][newX] = newGCost;
+
             // 갈 수는 있지만, 이미 방문한 곳인지 확인
             if (HasVisited(newX, newY, newGCost))
             {
@@ -137,7 +144,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 
             // 방문을 위한 이웃 노드 생성
             neighborNode = new Node(newX, newY, currentNode);
-
+            
             // 비용 계산
             neighborNode->gCost = newGCost;
             neighborNode->hCost = CalculateHeuristic(neighborNode, this->goalNode);

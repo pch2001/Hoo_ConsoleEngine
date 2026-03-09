@@ -13,7 +13,6 @@ public:
 	ExplosionEffect(const Vector2& position ,int power);
 	~ExplosionEffect();
 
-	void BoomEffect(int power);
 	virtual void Tick(float deltaTime) override;
 	virtual void Draw() override;
 

@@ -33,7 +33,7 @@ namespace Wanted
 		// 액터 추가/제거 처리 함수.
 		void ProcessAddAndDestroyActors();
 
-		std::vector<Actor*> GetActors() { return actors; }
+		const std::vector<Actor*>& GetActors() { return actors; }
 		
 		template<typename T>
 		T* GetActorAt(Vector2 searchactor)

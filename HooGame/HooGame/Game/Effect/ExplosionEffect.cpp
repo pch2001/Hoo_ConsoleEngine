@@ -16,25 +16,6 @@ ExplosionEffect::~ExplosionEffect()
 {
 }
 
-void ExplosionEffect::BoomEffect(int power)
-{
-	float radius = power / 2;
-	Vector2 center = GetPosition();
-	for (int y = -radius; y <= radius; ++y)
-	{
-		for (int x = -radius; x <= radius; ++x)
-		{
-			float temp = (x * x) + (y * y);
-			if (temp <= (radius * radius))
-			{
-				int white = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-				Renderer::Get().Submit(" ", Vector2(center.x + x, center.y + y), Color::White, 20, white, true);
-				CheckIsVailed(Vector2(center.x + x, center.y + y));
-			}
-		}
-	}
-}
-
 void ExplosionEffect::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
@@ -45,6 +26,18 @@ void ExplosionEffect::Tick(float deltaTime)
 		if (currentpower < power)
 		{
 			currentpower++;
+
+			float radius = currentpower / 2.0f;
+			Vector2 center = GetPosition();
+			for (int y = -radius; y <= radius; ++y) {
+				for (int x = -radius; x <= radius; ++x) {
+					if ((x * x) + (y * y) <= (radius * radius)) {
+						CheckIsVailed(Vector2(center.x + x, center.y + y));
+					}
+				}
+			}
+
+
 			delaytimer.Reset();
 		}
 	}
@@ -58,8 +51,16 @@ void ExplosionEffect::Draw()
 {
 	super::Draw();
 	
-	BoomEffect(currentpower);
-
+	float radius = currentpower / 2.0f;
+	Vector2 center = GetPosition();
+	for (int y = -radius; y <= radius; ++y) {
+		for (int x = -radius; x <= radius; ++x) {
+			if ((x * x) + (y * y) <= (radius * radius)) {
+				int white = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+				Renderer::Get().Submit(" ", Vector2(center.x + x, center.y + y), Color::White, 20, white, true);
+			}
+		}
+	}
 }
 
 void ExplosionEffect::OnOverlap(Actor* actor)
