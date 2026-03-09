@@ -4,6 +4,7 @@
 #include "Navigation/Node.h"
 #include "Util/EngineTimer.h"
 #include "Math/Color.h"
+#include "Navigation/Astar.h"
 #include <vector>
 using namespace Wanted;
 class guidedMissile;
@@ -30,6 +31,8 @@ public :
 private :
 	EngineTimer chagnedelay{ 0.1f };
 	EngineTimer delay{ 0.05f };
+	Astar astar;
+
 
 	Node* startNode = nullptr;
 	Node* endNode = nullptr;

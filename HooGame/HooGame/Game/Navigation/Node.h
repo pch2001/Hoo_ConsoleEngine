@@ -11,6 +11,7 @@ public :
 class Node
 {
 public :
+	Node() : position(0, 0), parentNode(nullptr), isOpen(false), isClosed(false) {}
 	Node(int x, int y, Node* parentNode = nullptr) : position(x, y), parentNode(parentNode){}
 
 	Position operator- (const Node& other)
@@ -23,11 +24,21 @@ public :
 		return position.x == other.position.x && position.y == other.position.y;
 	}
 
+	void Reset(int x, int y) {
+		this->position.x = x; 
+		this->position.y = y;
+		gCost = 100000; 
+		parentNode = nullptr;
+		isOpen = false;
+		isClosed = false;
+	}
 
 public :
 	Position position;
 	float gCost = 0.0f;
 	float hCost = 0.0f;
 	float fCost = 0.0f;
+	bool isOpen = false;
+	bool isClosed = false;
 	Node* parentNode = nullptr;
 };

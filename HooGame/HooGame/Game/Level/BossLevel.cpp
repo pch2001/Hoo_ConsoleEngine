@@ -35,6 +35,8 @@ BossLevel::~BossLevel()
 }
 void BossLevel::Tick(float deltaTime)
 {
+	UpdatemisileList();
+
 	super::Tick(deltaTime);
 
 	
@@ -48,7 +50,6 @@ void BossLevel::Tick(float deltaTime)
 	if (Input::Get().GetKeyDown(VK_TAB)) { pathLine = !pathLine; }
 
 	Stageing(deltaTime);
-	UpdatemisileList();
 
 }
 

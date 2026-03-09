@@ -4,9 +4,12 @@
 #include "Math/Vector2.h"
 #include "Navigation/Node.h"
 #include "Util/EngineTimer.h"
+#include "Navigation/Astar.h"
+
 
 #include <vector>
 using namespace Wanted;
+
 
 class guidedMissile : public Actor
 {
@@ -27,6 +30,7 @@ public :
 private :
 	EngineTimer delay{ 0.1f };
 	Actor* Enemyactor;
+	Astar astar;
 
 	Node* startNode = nullptr;
 	Node* endNode = nullptr;

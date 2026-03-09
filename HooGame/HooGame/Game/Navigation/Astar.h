@@ -2,17 +2,7 @@
 
 #include "Node.h"
 #include <vector>
-
-template<typename T>
-void SafeDelete(T*& t)
-{
-	if (t)
-	{
-		delete t;
-		t = nullptr;
-	}
-}
-
+#include <Actor/Actor.h>
 class Astar
 {
 	struct Direction
@@ -35,13 +25,16 @@ private :
 	bool IsInRange(int x, int y, const std::vector<std::vector<int>>& grid);
 	bool HasVisited(int x, int y, float gCost);
 	bool IsDestination(const Node* const node);
-	void DisplayGrid(std::vector<std::vector<int>>& grid);
+	//void DisplayGrid(std::vector<std::vector<int>>& grid);
 
 private :
+	std::vector<std::vector<Node>> nodeGrid;
+
 	std::vector<Node*> openList;
 	std::vector<Node*> closedList;
+	std::vector<Node*> finalPath;
 	Node* startNode = nullptr;
 	Node* goalNode = nullptr;
-	Node* neighborNode = nullptr;
+	//Node* neighborNode = nullptr;
 };
 

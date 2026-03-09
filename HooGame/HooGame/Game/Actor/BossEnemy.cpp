@@ -69,8 +69,10 @@ void BossEnemy::StartAttack()
 	int randomIndex = Util::Random(0, 8); // 0~7 사이의 인덱스
 	Vector2 finalPos = this->GetPosition() + offsets[randomIndex];
 
-	GetOwner()->AddNewActor(new Effect(finalPos, this, 1.f));
+	//GetOwner()->AddNewActor(new Effect(finalPos, this, 1.f));
 
+	BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
+	level->AddMissile(new guidedMissile(Vector2(GetPosition().x+ 2,GetPosition().y), this));
 
 	UpdateBoomCountUI();
 	if (GetboomCount() <= 0)

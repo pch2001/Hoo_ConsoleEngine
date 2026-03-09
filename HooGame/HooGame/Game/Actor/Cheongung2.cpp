@@ -24,26 +24,25 @@ void Cheongung2::Shotdown()
 	BossLevel* currentLevel = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
 	if (!currentLevel) return;
 
-	BPlayer* player = currentLevel->GetBPlayerActor();
-	if (!player) return;
-
-	enemymisilelists = currentLevel->activeMissiles;
+	auto& enemymisilelists = currentLevel->activeMissiles;
 
 	if (enemymisilelists.empty())
 		return;
 
-	// Tdodo: 색변경
-	guidedMissile* target = enemymisilelists[0];
-	if (target == nullptr || target->DestroyRequested())
-		return;
+	guidedMissile* target = nullptr;
+	for (auto* m : enemymisilelists)
+	{
+		if (m != nullptr && !m->DestroyRequested())
+		{
+			target = m;
+			break; // 가장 앞에 있는 살아있는 미사일을 타겟으로 잡음
+		}
+	}
 
-	startNode = new Node(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
-	endNode = new Node(static_cast<int>(target->GetPosition().x), static_cast<int>(target->GetPosition().y));
+	Node tempStart(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
+	Node tempEnd(static_cast<int>(target->GetPosition().x), static_cast<int>(target->GetPosition().y));
 
-	Astar astar;
-	std::vector<Node*> path;
-
-	path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid(), currentLevel->pathLine);
+	std::vector<Node*> path = astar.FindPath(&tempStart, &tempEnd, currentLevel->GetNavigationGrid(), currentLevel->pathLine);
 
 	if (path.empty())
 		return;
@@ -71,8 +70,7 @@ void Cheongung2::Tick(float deltaTime)
 	chagnedelay.Tick(deltaTime);
 	if (chagnedelay.IsTimeOut())
 	{
-		
-		ChangeColor(colors[colorcount++%6]);
+		ChangeColor(colors[(colorcount++)%6]);
 	}
 }
 

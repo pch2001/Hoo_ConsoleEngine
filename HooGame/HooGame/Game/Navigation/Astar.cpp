@@ -5,13 +5,17 @@
 #include <cmath>
 #include <Windows.h>
 
+#include "Render/Renderer.h"
+#include "Math/Vector2.h"
+#include "Util/Util.h"
+
 Astar::Astar()
 {
 }
 
 Astar::~Astar()
 {
-    for (Node* node : openList)
+   /* for (Node* node : openList)
     {
         SafeDelete(node);
     }
@@ -21,31 +25,62 @@ Astar::~Astar()
     {
         SafeDelete(node);
     }
-    closedList.clear();
+    closedList.clear();*/
+    
+    /*for (Node* node : nodeRegistry)
+        SafeDelete(node);*/
+
 }
 
 
 std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid, bool pathLine)
 {
-
-    for (Node* node : openList) SafeDelete(node);
-    openList.clear();
-    for (Node* node : closedList) SafeDelete(node);
-    closedList.clear();
-
-    this->startNode = StartNode;
-    this->goalNode = goalNode;
-
-    // 예외처리
-    if (!this->startNode || !this->goalNode || grid.empty() || grid[0].empty())
+    if (StartNode == nullptr || goalNode == nullptr)
     {
-        // 빈 경로 반환(오류)
         return {};
     }
-    
-    //std::vector<std::vector<float>> minGCost(grid.size(), std::vector<float>(grid[0].size(), FLT_MAX));    
-    //minGCost[this->startNode->position.y][this->startNode->position.x] = 0.0f;
-    openList.emplace_back(this->startNode);
+    // 1. 그리드 크기가 바뀌었을 때만 재할당 (성능 최적화)
+    // 1. 할당 로직 최적화: assign 대신 resize 사용
+    if (nodeGrid.size() != grid.size()) {
+        nodeGrid.resize(grid.size());
+    }
+
+    for (int y = 0; y < (int)grid.size(); ++y) {
+        if (nodeGrid[y].size() != grid[0].size()) {
+            nodeGrid[y].resize(grid[0].size());
+        }
+
+        // 2. 루프 내부에서 직접 초기화 (Reset 호출)
+        for (int x = 0; x < (int)grid[0].size(); ++x) {
+            nodeGrid[y][x].Reset(x, y);
+        }
+    }
+    // 2. 모든 노드 상태 리셋 (새로운 탐색을 위해 비용과 부모 초기화)
+    for (int y = 0; y < grid.size(); ++y) {
+        for (int x = 0; x < grid[0].size(); ++x) {
+            nodeGrid[y][x].Reset(x, y); // Position 설정 및 비용을 무한대로 초기화하는 함수
+        }
+    }
+    openList.clear();
+    closedList.clear();
+
+    if (!IsInRange(StartNode->position.x, StartNode->position.y, grid) || !IsInRange(goalNode->position.x, goalNode->position.y, grid))
+    {
+        return {}; // 범위를 벗어나면 즉시 종료
+    }
+
+    // 시작점 설정 (new가 아니라 nodeGrid의 주소를 사용)
+    Node* startNode = &nodeGrid[StartNode->position.y][StartNode->position.x];
+    Node* targetNode = &nodeGrid[goalNode->position.y][goalNode->position.x];
+    this->goalNode = goalNode;
+    startNode->gCost = 0;
+    startNode->hCost = CalculateHeuristic(startNode, targetNode);
+    startNode->fCost = startNode->gCost + startNode->hCost;
+    startNode->isOpen = true;
+
+
+
+    openList.emplace_back(startNode);
 
     // 대각선 비용 상수
     const float diagonalcost = 1.41421345f;
@@ -58,155 +93,61 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
         // 대각선 이동
         {1, 1, diagonalcost}, { 1, -1, diagonalcost }, { -1, 1, diagonalcost}, {-1, -1, diagonalcost},
     };
+    while (!openList.empty()) {
+        auto it = std::min_element(openList.begin(), openList.end(), [](Node* a, Node* b) {
+            return a->fCost < b->fCost;
+            });
+        Node* currentNode = *it;
+        openList.erase(it);
+        currentNode->isClosed = true;
 
-
-    // 탐색 가능한 위치가 있으면 계속 진행
-    while (!openList.empty())
-    {
-        // 현재 열린 리스트에 있는 노드 중 fCost가 가장 낮은 노드 검색
-        Node* lowestNode = openList[0];
-        // 가장 비용이 작은 노드 검색 ( 선형 탐색 )
-        for (Node* const node : openList)
-        {
-            if (node->fCost < lowestNode->fCost)
-            {
-                lowestNode = node;
-            }
-        }
-
-        // fCost가 가장 낮은 노드를 현재 노드로 설정
-        Node* currentNode = lowestNode;
-
-        // 현재 노드가 목표 노드인지 확인
-        if (IsDestination(currentNode))
-        {
-            // 경로 반환 후 종료
-
-            std::vector<Node*> finalPath = ConstructPath(currentNode);
-            
-            if(pathLine)
-                DisplayGridWithPath(startNode ,finalPath);
-            
-            
+        if (IsDestination(currentNode)) {
+            finalPath = ConstructPath(currentNode);
+            if (pathLine) DisplayGridWithPath(startNode, finalPath); // 매개변수 이름 확인 (startNode vs StartNode)
             return finalPath;
         }
 
-        // 방문 처리를 위해 열린 리스트에서 제거
-        for (auto iterator = openList.begin(); iterator != openList.end(); ++iterator)
-        {
-            // iterator 위치의 노드가 currentNode인지 확인
-            if ((*iterator) == currentNode)
-            {
-                openList.erase(iterator);
-                break;
-            }
-        }
+        // openList에서 제거 및 closedList 추가
+        // (이때도 SafeDelete 절대 금지! 객체는 nodeGrid에 살아있어야 함)
 
-        // 현재 노드를 방문 노드에 추가
-        closedList.emplace_back(currentNode);
+        for (const auto& dir : directions) {
+            int nX = currentNode->position.x + dir.x;
+            int nY = currentNode->position.y + dir.y;
 
-        // 이웃 노드 방문(탐색)
-        for (const Direction& direction : directions)
-        {
-            // 다음에 이동할 위치(이웃 노드의 위치)
-            int newX = currentNode->position.x + direction.x;
-            int newY = currentNode->position.y + direction.y;
+            if (!IsInRange(nX, nY, grid) || grid[nY][nX] == 1) continue;
 
-            // 유효성 검증 (새 위치가 이동 가능한지 확인)
-            if (!IsInRange(newX, newY, grid))
-            {
-                continue;
-            }
+            // [변경점] new 대신 이미 존재하는 노드의 주소를 가져옴
+            Node* neighborNode = &nodeGrid[nY][nX];
 
-            // 새 위치가 이동 가능한 곳인지 확인
-            // 장애물(못가는 곳) = 1
-            if (grid[newY][newX] == 1) // 장애물을 1로 했기때문에
-            {
-                continue;
-            }
+            // 이미 닫힌 리스트에 있다면 스킵
+            if (neighborNode->isClosed) continue;
 
-            // 현재 노드를 기준으로 새 gCost 계산
-            float newGCost = currentNode->gCost + direction.cost;
+            float newGCost = currentNode->gCost + dir.cost;
 
-          /*  if (newGCost >= minGCost[newY][newX])
-            {
-                continue;
-            }*/
-           // minGCost[newY][newX] = newGCost;
+            // 새로운 경로가 더 짧거나, 아직 열린 리스트에 없다면
+            if (newGCost < neighborNode->gCost) {
+                neighborNode->parentNode = currentNode;
+                neighborNode->gCost = newGCost;
+                neighborNode->hCost = CalculateHeuristic(neighborNode, targetNode);
+                neighborNode->fCost = neighborNode->gCost + neighborNode->hCost;
 
-            // 갈 수는 있지만, 이미 방문한 곳인지 확인
-            if (HasVisited(newX, newY, newGCost))
-            {
-               /* if (neighborNode)
-                    SafeDelete(neighborNode);*/ //오류 해결 불가
-                continue;
-            }
-
-            // 방문을 위한 이웃 노드 생성
-            neighborNode = new Node(newX, newY, currentNode);
-            
-            // 비용 계산
-            neighborNode->gCost = newGCost;
-            neighborNode->hCost = CalculateHeuristic(neighborNode, this->goalNode);
-            neighborNode->fCost = neighborNode->gCost + neighborNode->hCost;
-
-            // 이웃 노드가 열린 리스트에 있는지 확인
-            Node* openListNode = nullptr;
-            for (Node* const node : openList)
-            {
-                if (*node == *neighborNode)
-                {
-                    // 위치만 비교해서 열린 리스트에 넣을지 여부 확인
-                    openListNode = node;
-                    break;
+                // 아직 열린 리스트에 없다면 추가
+                if (!neighborNode->isOpen) {
+                    neighborNode->isOpen = true;
+                    openList.push_back(neighborNode);
                 }
             }
-
-            // 이웃 노드가 열린 리스트에 있으면 더 좋은 비용일 때만 처리
-            if (openListNode)
-            {
-                // 비용 확인
-                if (neighborNode->gCost < openListNode->gCost || neighborNode->fCost < openListNode->fCost)
-                {
-                    // 부모 노드 업데이트
-                    openListNode->parentNode = neighborNode->parentNode;
-                    // 비용 업데이트
-                    openListNode->gCost = neighborNode->gCost;
-                    openListNode->hCost = neighborNode->hCost;
-                    openListNode->fCost = neighborNode->fCost;
-                    // 왜 openListNode->hCost = neighborNode->fCost; 일때 더 적게 검사하는지 확인해보기
-                }
-
-                // 임시 노드 메모리 정리
-                SafeDelete(neighborNode);
-                continue;
-            }
-
-            // 방문할 목록에 추가
-            // 이 노드가 이동 가능한지 확인
-            // 이동 가능한 곳 = 0
-            if (grid[newY][newX] == 0)
-            {
-                // 시각화를 위해 사용 안하는 값 정해서 설정
-                grid[newY][newX] = 9;
-
-            }
-
-            // 열린 리스트에 추가
-            openList.emplace_back(neighborNode);
-
-            // 잠시 대기(옵션)
-            //DisplayGrid(grid);
-            //DWORD delay = static_cast<DWORD>(0.05f * 1000);
-            //Sleep(delay);
         }
     }
-
-
-    return std::vector<Node*>();    //아무 빈 파일 넘겨주기
+    return {};
 }
-#include "Render/Renderer.h"
-#include "Math/Vector2.h"
+
+
+
+
+
+
+
 
 void Astar::DisplayGridWithPath(Node* startNode, const std::vector<Node*>& path)
 {
@@ -250,10 +191,13 @@ std::vector<Node*> Astar::ConstructPath(Node* goalNode)
 
     // 역추적하면서 path에 채우기
     Node* currentNode = goalNode;
-    while (currentNode)
+    int maxNodes = 5000;
+    int safetyCounter = 0;
+    while (currentNode!= nullptr && safetyCounter < maxNodes)
     {
         path.emplace_back(currentNode);
         currentNode = currentNode->parentNode;
+        safetyCounter++;
     }
 
     // 이렇게 얻은 결과는 순서가 거꾸로.
@@ -310,79 +254,80 @@ bool Astar::HasVisited(int x, int y, float gCost)
 
 bool Astar::IsDestination(const Node* const node)
 {
-    return *node == *goalNode;
+    //return *node == *goalNode;
+    return (node->position.x == goalNode->position.x && node->position.y == goalNode->position.y);
 }
 
-void Astar::DisplayGrid(std::vector<std::vector<int>>& grid)
-{
-    // 좌표 변수
-    static COORD position = { 0, 0 };
-    static HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleCursorPosition(handle, position);
-
-    // 색상 값
-    static int white = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
-    static int green = FOREGROUND_GREEN;
-    static int red = FOREGROUND_RED;
-
-    // 맵 출력.
-    for (int y = 0; y < static_cast<int>(grid.size()); ++y)
-    {
-        for (int x = 0; x < static_cast<int>(grid[0].size()); ++x)
-        {
-            // 시작 위치 = 2
-            if (grid[y][x] == 2)
-            {
-                SetConsoleTextAttribute(handle, red);
-                std::cout << "S ";
-                continue;
-            }
-
-            // 목표 위치 = 3
-            if (grid[y][x] == 3)
-            {
-                SetConsoleTextAttribute(handle, red);
-                std::cout << "G ";
-                continue;
-            }
-
-            // 장애물 = 1
-            if (grid[y][x] == 1)
-            {
-                SetConsoleTextAttribute(handle, white);
-                std::cout << "1 ";
-                continue;
-            }
-
-            // 경로 = 5
-            if (grid[y][x] == 5)
-            {
-                SetConsoleTextAttribute(handle, green);
-                std::cout << "+ ";
-                continue;
-            }
-            // 빈 공간 = 0.
-            if (grid[y][x] == 0)
-            {
-                SetConsoleTextAttribute(handle, white);
-                std::cout << "0 ";
-                //continue;
-            }
-
-            if (grid[y][x] == 9)
-            {
-                SetConsoleTextAttribute(handle, red);
-                std::cout << "@ ";
-
-            }
-        }
-        // 개행
-        std::cout << "\n";
-    }
-
-    // 위치 초기화
-    position.X = 0;
-    position.Y = 0;
-
-}
+//void Astar::DisplayGrid(std::vector<std::vector<int>>& grid)
+//{
+//    // 좌표 변수
+//    static COORD position = { 0, 0 };
+//    static HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+//    SetConsoleCursorPosition(handle, position);
+//
+//    // 색상 값
+//    static int white = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE;
+//    static int green = FOREGROUND_GREEN;
+//    static int red = FOREGROUND_RED;
+//
+//    // 맵 출력.
+//    for (int y = 0; y < static_cast<int>(grid.size()); ++y)
+//    {
+//        for (int x = 0; x < static_cast<int>(grid[0].size()); ++x)
+//        {
+//            // 시작 위치 = 2
+//            if (grid[y][x] == 2)
+//            {
+//                SetConsoleTextAttribute(handle, red);
+//                std::cout << "S ";
+//                continue;
+//            }
+//
+//            // 목표 위치 = 3
+//            if (grid[y][x] == 3)
+//            {
+//                SetConsoleTextAttribute(handle, red);
+//                std::cout << "G ";
+//                continue;
+//            }
+//
+//            // 장애물 = 1
+//            if (grid[y][x] == 1)
+//            {
+//                SetConsoleTextAttribute(handle, white);
+//                std::cout << "1 ";
+//                continue;
+//            }
+//
+//            // 경로 = 5
+//            if (grid[y][x] == 5)
+//            {
+//                SetConsoleTextAttribute(handle, green);
+//                std::cout << "+ ";
+//                continue;
+//            }
+//            // 빈 공간 = 0.
+//            if (grid[y][x] == 0)
+//            {
+//                SetConsoleTextAttribute(handle, white);
+//                std::cout << "0 ";
+//                //continue;
+//            }
+//
+//            if (grid[y][x] == 9)
+//            {
+//                SetConsoleTextAttribute(handle, red);
+//                std::cout << "@ ";
+//
+//            }
+//        }
+//        // 개행
+//        std::cout << "\n";
+//    }
+//
+//    // 위치 초기화
+//    position.X = 0;
+//    position.Y = 0;
+//
+//}
 

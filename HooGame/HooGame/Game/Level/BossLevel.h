@@ -95,7 +95,7 @@ private :
 	std::map<EStageState, StageConfig> stageSettings =
 	{
 		{EStageState::Farming, { 1.0f, "Farm Time", Color::White }},
-		{EStageState::maintenance, { 5.0f, "Maintenance Time", Color::Brown }},
+		{EStageState::maintenance, { 2.0f, "Maintenance Time", Color::Brown }},
 		{EStageState::battle, { 20.0f, "Battle Time", Color::Red }},
 	};
 };

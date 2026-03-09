@@ -9,6 +9,8 @@
 #include "Actor/BPlayer.h"
 #include "Actor/Hyeonmu5.h"
 #include "Actor/Cheongung2.h"
+#include "Util/Util.h"
+#include "Navigation/Node.h"
 
 guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", position), Enemyactor(enemytActor)
 {
@@ -20,12 +22,14 @@ guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", 
 	targetLayer = CollisionLayer::Player;
 
 	//Guide();
+
+	delay = Util::RandomRange(0.01, 0.2);
+
 }
 
 
 guidedMissile::~guidedMissile()
 {
-
 
 }
 void guidedMissile::Guide()
@@ -39,13 +43,21 @@ void guidedMissile::Guide()
 	
 	
 
-	startNode = new Node(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
-	endNode = new Node(static_cast<int>(player->GetPosition().x), static_cast<int>(player->GetPosition().y));
+	//startNode = new Node(static_cast<int>(GetPosition().x), static_cast<int>(GetPosition().y));
+	//endNode = new Node(static_cast<int>(player->GetPosition().x), static_cast<int>(player->GetPosition().y));
 
-	Astar astar;
-	std::vector<Node*> path;
+	Node tempStart(static_cast<int>(position.x), static_cast<int>(position.y));
+	Node tempEnd(static_cast<int>(player->GetPosition().x), static_cast<int>(player->GetPosition().y));
 
-	path = astar.FindPath(startNode, endNode, currentLevel->GetNavigationGrid(), currentLevel->pathLine);
+	// [수정] 멤버 변수 astar를 사용하여 이미 할당된 nodeGrid를 재사용합니다.
+	std::vector<Node*> path = astar.FindPath(&tempStart, &tempEnd, currentLevel->GetNavigationGrid(), currentLevel->pathLine);
+
+	/*std::vector<Node*> path;
+
+	path = astar
+	
+	.FindPath(startNode, endNode, currentLevel->GetNavigationGrid(), currentLevel->pathLine);*/
+
 
 	if (path.empty())
 		return;
@@ -56,6 +68,7 @@ void guidedMissile::Guide()
 	
 	position.x = (float)nextPosition->position.x;
 	position.y = (float)nextPosition->position.y;
+
 }
 
 

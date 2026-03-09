@@ -11,7 +11,7 @@
 
 #include<iostream>
 #include <string>
-BPlayer::BPlayer() : super("P", Vector2::Zero, Color::White)
+BPlayer::BPlayer() : super("P", Vector2(3,3), Color::White)
 {
 	gravity = false;
 	sortingOrder = 10;
@@ -42,14 +42,23 @@ void BPlayer::Tick(float deltaTime)
 
 void BPlayer::Move(int x, int y)
 {
-	position.x += x;
-	position.y += y;
+	float nextX = position.x + x;
+	float nextY = position.y + y;
 
-	dir = Vector2(x,y);
+	dir = Vector2((float)x, (float)y);
+	
+	/*if (position.x <= 1 || position.y <= 1 || position.x >= Engine::Get().GetWidth()-1 || position. >= Engine::Get().GetHeight() + 1)
+		return;*/
 
-	Vector2 nextPos = position;
-	nextPos.x = Util::Clamp<int>((int)nextPos.x, 0, Engine::Get().GetWidth() - 1);
-	nextPos.y = Util::Clamp<int>((int)nextPos.y, 0, Engine::Get().GetHeight() - 1);
+	if (nextX <= 1 || nextY <= 1 || nextX >= Engine::Get().GetWidth() - 1 || nextY >= Engine::Get().GetHeight() - 2)
+	{
+		return;
+	}
+	Vector2 nextPos = Vector2(nextX,nextY);
+	
+
+	/*nextPos.x = Util::Clamp<int>((int)nextPos.x, 2, Engine::Get().GetWidth() - 1);
+	nextPos.y = Util::Clamp<int>((int)nextPos.y, 2, Engine::Get().GetHeight() +1);*/
 	this->SetPosition(nextPos);
 }
 

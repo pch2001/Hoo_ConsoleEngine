@@ -12,7 +12,24 @@ using namespace Wanted;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(38665);
+	/*_CrtSetBreakAlloc(79559); 
+	_CrtSetBreakAlloc(12516);
+	_CrtSetBreakAlloc(13286);
+	_CrtSetBreakAlloc(41325);
+	_CrtSetBreakAlloc(51649);
+
+	_CrtSetBreakAlloc(51082);
+	_CrtSetBreakAlloc(50993);
+	_CrtSetBreakAlloc(23678);
+	_CrtSetBreakAlloc(50320);
+	_CrtSetBreakAlloc(25235);
+
+	_CrtSetBreakAlloc(25759);
+	_CrtSetBreakAlloc(45443);
+	_CrtSetBreakAlloc(45082);
+	_CrtSetBreakAlloc(44413);
+	_CrtSetBreakAlloc(36527);*/
+
 	/*Engine engine;
 	engine.SetNewLevel(new GameLevel());
 	engine.Run();
