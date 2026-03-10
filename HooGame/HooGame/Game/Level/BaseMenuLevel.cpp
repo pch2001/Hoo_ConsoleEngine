@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 BaseMenuLevel::BaseMenuLevel()
 {
 	currentIndex = 0;
@@ -46,17 +47,18 @@ void BaseMenuLevel::Tick(float deltaTime)
 void BaseMenuLevel::Draw()
 {
 
+
 }
 
 std::vector<MapCharTxt> BaseMenuLevel::LoadLineDraw()
 {
 	const int width = Engine::Get().GetWidth();
 	const int height = Engine::Get().GetHeight();
-
+	mapData.reserve((width + height) * 2);
 	// ┌───────────────┐ (top)
 	for (int x = 0; x < width; ++x)
 	{
-		mapData.push_back({ "_", Vector2((float)x, 0.f) });
+		mapData.push_back({ "_", Vector2((float)x, 0.f )});
 	}
 
 	// │               │ (middle)

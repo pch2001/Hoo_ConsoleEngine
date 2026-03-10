@@ -107,7 +107,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 
             if (!IsInRange(nX, nY, grid) || grid[nY][nX] == 1) continue;
 
-            // [변경점] new 대신 이미 존재하는 노드의 주소를 가져옴
+            // [변경점] new 대신 이미 존재하는 노드의 주소를 가져옴            
             Node* neighborNode = &nodeGrid[nY][nX];
 
             // 이미 닫힌 리스트에 있다면 스킵
@@ -166,12 +166,9 @@ void Astar::DisplayGridWithPath(Node* startNode, const std::vector<Node*>& path)
             else if (dx == 0 && dy < 0) arrow = "^";
 
             int bgYellow = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-            Wanted::Renderer::Get().Submit(arrow, Wanted::Vector2(currentPos.x, currentPos.y), Wanted::Color::YELLOW, 7);// , bgYellow, true);
-
+            Wanted::Renderer::Get().Submit(arrow, Wanted::Vector2(currentPos.x, currentPos.y), Wanted::Color::YELLOW, 7);   // , bgYellow, true);
             prevPos = currentPos;
-        }
-
-        
+        } 
     }
 }
 

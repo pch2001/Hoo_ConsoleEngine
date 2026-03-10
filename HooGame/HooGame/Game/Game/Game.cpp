@@ -103,7 +103,7 @@ void Game::StoreEntry()
 void Game::BuyMaxHP()
 {
 
-	if (Money >= MaxHP * 2 && MaxSpeedLevel < 5)
+	if (Money >= MaxHP * 2 && MaxHPLevel < 5)
 	{
 		Money -= (MaxHP * 2);
 		MaxHP++;

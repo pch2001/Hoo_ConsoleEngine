@@ -30,6 +30,12 @@ int main()
 	_CrtSetBreakAlloc(44413);
 	_CrtSetBreakAlloc(36527);*/
 
+	/*_CrtSetBreakAlloc(964);
+	_CrtSetBreakAlloc(958);
+	_CrtSetBreakAlloc(1847);
+	_CrtSetBreakAlloc(1858);
+	_CrtSetBreakAlloc(1870);*/
+
 	/*Engine engine;
 	engine.SetNewLevel(new GameLevel());
 	engine.Run();

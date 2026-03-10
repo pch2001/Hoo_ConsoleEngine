@@ -38,7 +38,7 @@ public :
 	float gCost = 0.0f;
 	float hCost = 0.0f;
 	float fCost = 0.0f;
-	bool isOpen = false;
-	bool isClosed = false;
+	bool isOpen = false;  //현재 탐색 후보(OpenList)
+	bool isClosed = false;//탐색 완료(ClosedList)
 	Node* parentNode = nullptr;
 };

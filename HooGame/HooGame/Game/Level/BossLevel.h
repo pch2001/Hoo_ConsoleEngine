@@ -83,8 +83,8 @@ private :
 	const int width = Engine::Get().GetWidth();
 	const int height = Engine::Get().GetHeight();
 
-	std::string stateText = "no start ";
-	std::string timeText = "time : ";
+	std::string stateText = "Farm Time ";
+	std::string timeText = "Last time : ";
 	std::string timeCount = " 0";
 	std::string boomText = "Last Boom : ";
 	std::string totaltext = "total time : ";
@@ -94,8 +94,8 @@ private :
 
 	std::map<EStageState, StageConfig> stageSettings =
 	{
-		{EStageState::Farming, { 1.0f, "Farm Time", Color::White }},
-		{EStageState::maintenance, { 2.0f, "Maintenance Time", Color::Brown }},
+		{EStageState::Farming, { 5.0f, "Farm Time", Color::White }},
+		{EStageState::maintenance, { 10.0f, "Maintenance Time", Color::Brown }},
 		{EStageState::battle, { 20.0f, "Battle Time", Color::Red }},
 	};
 };

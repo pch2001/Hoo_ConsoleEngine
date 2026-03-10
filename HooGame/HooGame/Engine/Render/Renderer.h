@@ -32,16 +32,11 @@ namespace Wanted
 		// 렌더링할 데이터.
 		struct RenderCommand
 		{
-			// 화면에 보여줄 문자열 값.
 			const char* text = nullptr;
-			//std::string text;
-			// 좌표.
 			Vector2 position;
 
-			// 색상.
 			Color color = Color::White;
 
-			// 그리기 우선순위.
 			int sortingOrder = 0;
 			int bgColor = defaultColor;
 			bool isbackGround = false;

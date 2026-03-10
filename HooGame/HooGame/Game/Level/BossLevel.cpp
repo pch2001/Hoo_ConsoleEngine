@@ -130,9 +130,11 @@ void BossLevel::SpawnItem()
 	}
 	if (Input::Get().GetMouseButtonDown(0) && player->GetPoint() > 0)
 	{
+		if(currentState != EStageState::maintenance)
+			player->SetPoint(-1);
+
 		AddNewActor(new Ground(tempos));
 		navigationGrid[gridY][gridX] = 1;
-		player->SetPoint(-1);
 		player->UIUpdate();
 	}
 
@@ -183,7 +185,7 @@ void BossLevel::Stageing(float deltaTime)
 	float remaing = config.duration - stateTime;
 	totalTimeText = std::to_string((int)totalTime);
 	if (remaing < 0) remaing = 0;
-	timeCount = std::to_string((int)stageSettings[currentState].duration - stateTime);
+	timeCount = std::to_string((int)stageSettings[currentState].duration - (int)stateTime);
 
 	if (stateTime >= config.duration)
 	{

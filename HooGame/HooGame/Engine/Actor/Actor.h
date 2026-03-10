@@ -61,6 +61,7 @@ namespace Wanted
 		CollisionLayer myLayer = CollisionLayer::None;
 		CollisionLayer targetLayer = CollisionLayer::None;
 		virtual void OnOverlap(Actor* actor) {}
+
 		virtual void EndOverlap(Actor* actor) 
 		{
 			if (TestIntersect(actor))

@@ -35,7 +35,7 @@ void Cheongung2::Shotdown()
 		if (m != nullptr && !m->DestroyRequested())
 		{
 			target = m;
-			break; // 가장 앞에 있는 살아있는 미사일을 타겟으로 잡음
+			break; // 가장 앞에 있는 살아있는 미사일을 타겟
 		}
 	}
 
