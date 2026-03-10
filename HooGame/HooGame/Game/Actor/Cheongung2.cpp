@@ -87,7 +87,7 @@ void Cheongung2::OnOverlap(Actor* actor)
 
 	if (actor->IsTypeOf<guidedMissile>())
 	{
-		level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 10));
+		level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 10, Color::White));
 		actor->Destroy();
 		this->Destroy();
 

@@ -19,8 +19,6 @@ Game::Game()
 	levels.emplace_back(new BossLevel());
 	levels.emplace_back(new EndLevel());
 
-
-
 	state = State::Menu;
 
 	mainLevel = levels[0];
@@ -69,6 +67,9 @@ void Game::RestartGame(int level)
 
 void Game::BossGame()
 {
+	delete levels[static_cast<int>(State::Boss)];
+	levels[static_cast<int>(State::Boss)] = new BossLevel();
+
 	state = State::Boss;
 	mainLevel = levels[static_cast<int>(State::Boss)];
 }

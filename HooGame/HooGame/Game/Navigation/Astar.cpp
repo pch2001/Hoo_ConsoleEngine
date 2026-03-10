@@ -35,15 +35,11 @@ Astar::~Astar()
 
 std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<std::vector<int>>& grid, bool pathLine)
 {
-    if (StartNode == nullptr || goalNode == nullptr)
-    {
+    if (StartNode == nullptr || goalNode == nullptr) 
         return {};
-    }
-    // 1. 그리드 크기가 바뀌었을 때만 재할당 (성능 최적화)
-    // 1. 할당 로직 최적화: assign 대신 resize 사용
-    if (nodeGrid.size() != grid.size()) {
+    
+    if (nodeGrid.size() != grid.size()) 
         nodeGrid.resize(grid.size());
-    }
 
     for (int y = 0; y < (int)grid.size(); ++y) {
         if (nodeGrid[y].size() != grid[0].size()) {
@@ -55,14 +51,8 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
             nodeGrid[y][x].Reset(x, y);
         }
     }
-    // 2. 모든 노드 상태 리셋 (새로운 탐색을 위해 비용과 부모 초기화)
-    for (int y = 0; y < grid.size(); ++y) {
-        for (int x = 0; x < grid[0].size(); ++x) {
-            nodeGrid[y][x].Reset(x, y); // Position 설정 및 비용을 무한대로 초기화하는 함수
-        }
-    }
+
     openList.clear();
-    closedList.clear();
 
     if (!IsInRange(StartNode->position.x, StartNode->position.y, grid) || !IsInRange(goalNode->position.x, goalNode->position.y, grid))
     {
@@ -72,7 +62,8 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
     // 시작점 설정 (new가 아니라 nodeGrid의 주소를 사용)
     Node* startNode = &nodeGrid[StartNode->position.y][StartNode->position.x];
     Node* targetNode = &nodeGrid[goalNode->position.y][goalNode->position.x];
-    this->goalNode = goalNode;
+    this->goalNode = targetNode;
+
     startNode->gCost = 0;
     startNode->hCost = CalculateHeuristic(startNode, targetNode);
     startNode->fCost = startNode->gCost + startNode->hCost;
@@ -81,8 +72,6 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 
 
     openList.emplace_back(startNode);
-
-    // 대각선 비용 상수
     const float diagonalcost = 1.41421345f;
 
     // 비용 계산에 사용할 변수 값 설정.
@@ -93,6 +82,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
         // 대각선 이동
         {1, 1, diagonalcost}, { 1, -1, diagonalcost }, { -1, 1, diagonalcost}, {-1, -1, diagonalcost},
     };
+
     while (!openList.empty()) {
         auto it = std::min_element(openList.begin(), openList.end(), [](Node* a, Node* b) {
             return a->fCost < b->fCost;
@@ -103,7 +93,8 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
 
         if (IsDestination(currentNode)) {
             finalPath = ConstructPath(currentNode);
-            if (pathLine) DisplayGridWithPath(startNode, finalPath); // 매개변수 이름 확인 (startNode vs StartNode)
+            if (pathLine) 
+                DisplayGridWithPath(startNode, finalPath); // 매개변수 이름 확인 (startNode vs StartNode)
             return finalPath;
         }
 

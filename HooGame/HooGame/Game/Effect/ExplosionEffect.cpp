@@ -5,8 +5,9 @@
 #include "Level/BossLevel.h"
 #include "WarningEffect.h"
 
-ExplosionEffect::ExplosionEffect(const Vector2& position, int power) : super(" ",position), power(power)
+ExplosionEffect::ExplosionEffect(const Vector2& position, int power, Color color) : super(" ",position), power(power)
 {
+	EffectColor = color;
 	sortingOrder = 20;
 	myLayer = CollisionLayer::EnemyAttack;
 	targetLayer = CollisionLayer::Ground;
@@ -46,6 +47,15 @@ void ExplosionEffect::Tick(float deltaTime)
 	if (dietimer.IsTimeOut())
 		this->Destroy();
 }
+/*
+void Submit(
+			const char* text,
+			const Vector2& position,
+			Color color = Color::White,
+			int sortingOrder = 0,
+			int bgColor = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+			bool isbgimage = false
+		);*/
 
 void ExplosionEffect::Draw()
 {
@@ -56,8 +66,7 @@ void ExplosionEffect::Draw()
 	for (int y = -radius; y <= radius; ++y) {
 		for (int x = -radius; x <= radius; ++x) {
 			if ((x * x) + (y * y) <= (radius * radius)) {
-				int white = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-				Renderer::Get().Submit(" ", Vector2(center.x + x, center.y + y), Color::White, 20, white, true);
+				Renderer::Get().Submit(" ", Vector2(center.x + x, center.y + y), Color::White, 20, SetChangeColortoBackGroundColor(EffectColor), true);
 			}
 		}
 	}
@@ -69,10 +78,27 @@ void ExplosionEffect::OnOverlap(Actor* actor)
 
 }
 
+int ExplosionEffect::SetChangeColortoBackGroundColor(Color color)
+{
+	if (Color::White == color)
+	{
+		return BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+	}
+	// 노란색: 빨간색 + 초록색 (R + G)
+	else if (Color::YELLOW == color)
+	{
+		return BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+	}
+	// 빨간색: 빨간색만 사용 (R)
+	else if (Color::Red == color)
+	{
+		return BACKGROUND_RED | BACKGROUND_INTENSITY;
+	}
+
+}
+
 void ExplosionEffect::CheckIsVailed(Vector2 checkPosition)
 {
-	
-
 	BossLevel* level = dynamic_cast<BossLevel*>(Engine::Get().GetMainLevel());
 	if (level)
 	{
@@ -106,6 +132,4 @@ void ExplosionEffect::CheckIsVailed(Vector2 checkPosition)
 
 		}
 	}
-
-
 }

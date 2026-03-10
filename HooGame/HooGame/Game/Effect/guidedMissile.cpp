@@ -102,7 +102,7 @@ void guidedMissile::OnOverlap(Actor* actor)
 		BPlayer* player = level->GetBPlayerActor();
 		if (player)
 		{
-			level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 5) );
+			level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 5, Color::Red) );
 			player->Damaged(-1);
 			this->Destroy();
 		}
@@ -111,7 +111,7 @@ void guidedMissile::OnOverlap(Actor* actor)
 	if (actor->IsTypeOf<Hyeonmu5>())
 	{
 
-		level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 10));
+		level->AddNewActor(new ExplosionEffect(actor->GetPosition(), 10, Color::YELLOW));
 		actor->Destroy();
 		this->Destroy();
 	}
