@@ -9,16 +9,8 @@
 
 using namespace Wanted;
 
-struct MapChar
-{
-	std::string character;
-	Vector2 pos;
-};
-struct MapChar2
-{
-	const char* character;
-	Vector2 pos;
-};
+
+
 
 class MainLevel : public BaseMenuLevel
 {
@@ -31,10 +23,9 @@ public :
 	virtual void Draw() override;
 
 	void LoadMap(const char* image);
-	void LoadLine();
 
-	std::vector<MapChar> mapData;
-	std::vector<MapChar2> mapData2;
+	std::vector<MapCharTxt> mapData2;
+	std::vector<MapCharTxt> mapData;
 
 };
 

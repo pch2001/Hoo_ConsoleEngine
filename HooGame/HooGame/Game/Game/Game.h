@@ -12,6 +12,7 @@ enum class State
 	GamePlay = 2,
 	Boss = 3,
 	End = 4,
+	Store =5,
 	Length
 };
 
@@ -28,6 +29,7 @@ public :
 	void BossGame();
 	static Game& Get();
 
+	void StoreEntry();
 
 	int GetScore() { return score; }
 	void SetScore(int i) { score = i; }

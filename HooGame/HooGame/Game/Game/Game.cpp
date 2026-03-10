@@ -4,6 +4,7 @@
 #include "Level/EndLevel.h"
 #include "Level/SelectedLevel.h"
 #include "Level/BossLevel.h"
+#include "Level/Store.h"
 #include "Render/Renderer.h"
 
 #include <iostream>
@@ -19,6 +20,7 @@ Game::Game()
 	levels.emplace_back(new GameLevel());
 	levels.emplace_back(new BossLevel());
 	levels.emplace_back(new EndLevel());
+	levels.emplace_back(new Store());
 
 	state = State::Menu;
 
@@ -88,4 +90,11 @@ Game& Game::Get()
 
 	return *instance;
 
+}
+
+void Game::StoreEntry()
+{
+	state = State::Store;
+
+	mainLevel = levels[static_cast<int>(State::Store)];
 }

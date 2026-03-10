@@ -14,9 +14,8 @@ MainLevel::MainLevel()
 	items.emplace_back(new MenuItem("Start Game", []() { Game::Get().ToggleMenu(); }));
 
 	items.emplace_back(new MenuItem("Quit Game", []() { Game::Get().QuitEngine(); }));
-	//LoadMap("Stage2.txt");
 	LoadMap("Map.txt");
-	LoadLine();
+	mapData = LoadLineDraw();
 }
 
 MainLevel::~MainLevel()
@@ -44,7 +43,7 @@ void MainLevel::Draw()
 		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x+cameraX, item.pos.y ), Color::Red);
 	}
 	for (const auto& item : mapData2) {
-		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
 	}
 }
 
@@ -84,36 +83,10 @@ void MainLevel::LoadMap(const char* filename)
 			continue;
 		}
 		if (data[i] != ' ') {
-			mapData.push_back({std::string(1, data[i]), Vector2((float)x+ Engine::Get().GetWidth() / 5 , (float)y + 5.f) });
+			mapData2.push_back({std::string(1, data[i]), Vector2((float)x+ Engine::Get().GetWidth() / 5 , (float)y + 5.f) });
 		}
 		x++;
 	}
 	delete[] data;
 	fclose(file);
 }
-
-void MainLevel::LoadLine()
-{
-	const int width = Engine::Get().GetWidth();
-	const int height = Engine::Get().GetHeight();
-
-	// ┌───────────────┐ (top)
-	for (int x = 0; x < width; ++x)
-	{
-		mapData2.push_back({ "_", Vector2((float)x, 0.f) });
-	}
-
-	// │               │ (middle)
-	for (int y = 1; y < height - 1; ++y)
-	{
-		mapData2.push_back({ "|", Vector2(0.f, (float)y) });
-		mapData2.push_back({ "|", Vector2((float)(width - 1), (float)y) });
-	}
-
-	// └───────────────┘ (bottom)
-	for (int x = 0; x < width; ++x)
-	{
-		mapData2.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
-	}
-}
-

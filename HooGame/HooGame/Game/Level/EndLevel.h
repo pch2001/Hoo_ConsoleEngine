@@ -2,17 +2,9 @@
 #include "Level/Level.h"
 #include "Math/Color.h"
 #include "BaseMenuLevel.h"
-
 #include <vector>
 
-
 using namespace Wanted;
-
-struct MapChar3
-{
-	const char* character;
-	Vector2 pos;
-};
 
 class EndLevel : public BaseMenuLevel
 {
@@ -23,10 +15,8 @@ public:
 	~EndLevel();
 	virtual void Draw() override;
 
-	void LoadScene();
 private:
-
-	std::vector<MapChar3> mapData3;
+	std::vector<MapCharTxt> mapData;
 
 
 };

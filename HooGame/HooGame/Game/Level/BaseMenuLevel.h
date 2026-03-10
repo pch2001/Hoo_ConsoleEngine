@@ -32,11 +32,17 @@ struct MenuItem
 	OnSelected onselected = nullptr;
 };
 
+struct MapCharTxt
+{
+	std::string character;
+	Vector2 pos;
+};
 
 //===============================================================
 
 class BaseMenuLevel : public Level
 {
+
 	RTTI_DECLARATIONS(BaseMenuLevel, Level)
 public :
 	BaseMenuLevel();
@@ -46,6 +52,7 @@ public :
 	virtual void Draw() override;
 
 	void LoadLine();
+	std::vector<MapCharTxt> LoadLineDraw();
 
 protected :
 	std::vector<MenuItem*> items;
@@ -54,6 +61,7 @@ protected :
 
 	Color selectedColor = Color::Green;
 	Color unselectedColor = Color::White;
+	std::vector<MapCharTxt> mapData;
 
 };
 

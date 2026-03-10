@@ -117,6 +117,7 @@
     <ClCompile Include="Level\GameLevel.cpp" />
     <ClCompile Include="Level\MainLevel.cpp" />
     <ClCompile Include="Level\SelectedLevel.cpp" />
+    <ClCompile Include="Level\Store.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Navigation\Astar.cpp" />
   </ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="Level\GameLevel.h" />
     <ClInclude Include="Level\MainLevel.h" />
     <ClInclude Include="Level\SelectedLevel.h" />
+    <ClInclude Include="level\Store.h" />
     <ClInclude Include="Navigation\Astar.h" />
     <ClInclude Include="Navigation\Node.h" />
   </ItemGroup>

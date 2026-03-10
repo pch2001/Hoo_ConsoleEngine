@@ -4,7 +4,7 @@
 #include "Game/Game.h"
 #include "Render/Renderer.h"
 
-#include <iostream>1
+#include <iostream>
 #include "BossLevel.h"
 
 
@@ -12,7 +12,7 @@ EndLevel::EndLevel()
 {
 	items.emplace_back(new MenuItem("Retry Game", []() { Game::Get().ToggleMenu(); }));
 	items.emplace_back(new MenuItem("Quit Game", []() { Game::Get().QuitEngine(); }));
-	LoadScene();
+	mapData = LoadLineDraw();
 }
 
 EndLevel::~EndLevel()
@@ -33,35 +33,8 @@ void EndLevel::Draw()
 
 		Util::SetConsoleTextColor(textColor);
 	}
-	for (const auto& item : mapData3) {
-		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
+	for (const auto& item : mapData) {
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
 	}
 
-}
-
-
-
-void EndLevel::LoadScene()
-{
-	const int width = Engine::Get().GetWidth();
-	const int height = Engine::Get().GetHeight();
-
-	// ┌───────────────┐ (top)
-	for (int x = 0; x < width; ++x)
-	{
-		mapData3.push_back({ "_", Vector2((float)x, 0.f) });
-	}
-
-	// │               │ (middle)
-	for (int y = 1; y < height - 1; ++y)
-	{
-		mapData3.push_back({ "|", Vector2(0.f, (float)y) });
-		mapData3.push_back({ "|", Vector2((float)(width - 1), (float)y) });
-	}
-
-	// └───────────────┘ (bottom)
-	for (int x = 0; x < width; ++x)
-	{
-		mapData3.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
-	}
 }

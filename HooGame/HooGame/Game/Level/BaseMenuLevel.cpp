@@ -3,6 +3,7 @@
 #include "Engine/Engine.h"
 
 #include <iostream>
+#include <string>
 BaseMenuLevel::BaseMenuLevel()
 {
 	currentIndex = 0;
@@ -49,5 +50,32 @@ void BaseMenuLevel::Draw()
 	//	Renderer::Get().Submit(item.character.c_str(), item.pos, Color::Red);
 	//}
 
+}
+
+std::vector<MapCharTxt> BaseMenuLevel::LoadLineDraw()
+{
+	const int width = Engine::Get().GetWidth();
+	const int height = Engine::Get().GetHeight();
+
+	// ┌───────────────┐ (top)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "_", Vector2((float)x, 0.f) });
+	}
+
+	// │               │ (middle)
+	for (int y = 1; y < height - 1; ++y)
+	{
+		mapData.push_back({ "|", Vector2(0.f, (float)y) });
+		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
+	}
+
+	// └───────────────┘ (bottom)
+	for (int x = 0; x < width; ++x)
+	{
+		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+	}
+
+	return mapData;
 }
 

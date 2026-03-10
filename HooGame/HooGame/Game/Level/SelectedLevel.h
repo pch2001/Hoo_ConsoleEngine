@@ -6,12 +6,6 @@
 class SelectedLevel : public BaseMenuLevel
 {
 
-	struct MapChar8
-	{
-		std::string character;
-		Vector2 pos;
-	};
-
 
 	RTTI_DECLARATIONS(SelectedLevel, BaseMenuLevel)
 
@@ -20,11 +14,9 @@ public :
 	~SelectedLevel();
 
 	virtual void Draw() override;
-	void LoadLine();
-
 
 private :
-	std::vector<MapChar8> mapData;
+	std::vector<MapCharTxt> mapData;
 
 };
 
