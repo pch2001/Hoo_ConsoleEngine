@@ -27,6 +27,7 @@ BossLevel::BossLevel()
 	mine2 = new Mine(Vector2(width - 3, 5));
 	AddNewActor(mine1);
 	AddNewActor(mine2);
+
 }
 BossLevel::~BossLevel()
 {
