@@ -28,6 +28,8 @@ BossLevel::BossLevel()
 	AddNewActor(mine1);
 	AddNewActor(mine2);
 
+
+
 }
 BossLevel::~BossLevel()
 {

@@ -23,7 +23,7 @@ guidedMissile::guidedMissile(Vector2 position, Actor* enemytActor) : super("O", 
 
 	//Guide();
 
-	delay = Util::RandomRange(0.01, 0.2);
+	delay = Util::RandomRange(0, 0.1);
 
 }
 

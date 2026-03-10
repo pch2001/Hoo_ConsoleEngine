@@ -11,6 +11,7 @@
 #include "Render/Renderer.h"
 #include "Engine/Engine.h"
 #include "Util/Util.h"
+#include "Game/Game.h"
 
 #include <iostream>
 
@@ -27,6 +28,7 @@ GameLevel::GameLevel(int level) : spawnRange(level)
 
 void GameLevel::PlusScore()
 {
+	Game::Get().SetMoney(1);
 	score++;
 }
 

@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <Math/Vector2.h>
-
+#include <Util/EngineTimer.h>
 
 
 using namespace Wanted;
@@ -38,6 +38,7 @@ public :
 	void SetisnotMine() { isMine = false; }
 
 private :
+	EngineTimer moveTimer{};
 	Vector2 dir;
 	float MaxHP = 5;
 	float HP;

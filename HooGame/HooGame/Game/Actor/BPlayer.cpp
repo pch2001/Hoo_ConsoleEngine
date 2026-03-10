@@ -17,7 +17,8 @@ BPlayer::BPlayer() : super("P", Vector2(3,3), Color::White)
 	sortingOrder = 10;
 	myLayer = CollisionLayer::Player;
 	targetLayer = CollisionLayer::None;
-	HP = 10;
+	HP = Game::Get().GetMaxHP();
+	moveTimer = 1 - Game::Get().GetMaxSpeed();
 	MaxHP = HP;
 	UIUpdate();
 }
@@ -29,10 +30,16 @@ BPlayer::~BPlayer()
 void BPlayer::Tick(float deltaTime)
 {
 	super::Tick(deltaTime);
-	if (Input::Get().GetKey(VK_UP) || Input::Get().GetKey('W') || Input::Get().GetKey('w')) Move(0, -1);
-	if (Input::Get().GetKey(VK_DOWN) || Input::Get().GetKey('S') || Input::Get().GetKey('s')) Move(0, 1);
-	if (Input::Get().GetKey(VK_LEFT) || Input::Get().GetKey('A') || Input::Get().GetKey('a')) Move(-1, 0);
-	if (Input::Get().GetKey(VK_RIGHT) || Input::Get().GetKey('D') || Input::Get().GetKey('d')) Move(1, 0);
+	moveTimer.Tick(deltaTime);
+	if (moveTimer.IsTimeOut())
+	{
+		if (Input::Get().GetKey(VK_UP) || Input::Get().GetKey('W') || Input::Get().GetKey('w')) Move(0, -1);
+		if (Input::Get().GetKey(VK_DOWN) || Input::Get().GetKey('S') || Input::Get().GetKey('s')) Move(0, 1);
+		if (Input::Get().GetKey(VK_LEFT) || Input::Get().GetKey('A') || Input::Get().GetKey('a')) Move(-1, 0);
+		if (Input::Get().GetKey(VK_RIGHT) || Input::Get().GetKey('D') || Input::Get().GetKey('d')) Move(1, 0);
+		moveTimer.Reset();
+	}
+
 	if (Input::Get().GetKeyDown(VK_CONTROL)) { GetOwner()->AddNewActor(new PlayerAttack(dir, this)); }
 
 	

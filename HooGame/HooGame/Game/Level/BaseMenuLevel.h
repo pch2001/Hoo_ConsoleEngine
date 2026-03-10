@@ -32,11 +32,11 @@ struct MenuItem
 	OnSelected onselected = nullptr;
 };
 
-struct MapCharTxt
-{
-	std::string character;
-	Vector2 pos;
-};
+	struct MapCharTxt
+	{
+		std::string character;
+		Vector2 pos;
+	};
 
 //===============================================================
 

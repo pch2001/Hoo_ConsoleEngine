@@ -15,9 +15,7 @@ enum class State
 	Store =5,
 	Length
 };
-
-
-class Game:public Engine
+class Game : public Engine
 {
 public :
 	Game();
@@ -34,6 +32,17 @@ public :
 	int GetScore() { return score; }
 	void SetScore(int i) { score = i; }
 
+	void BuyMaxHP();
+	void BuyMaxSpeed();
+
+
+	void SetMoney(int money) { Money += money; }
+	int GetMoney() { return Money; }
+	int GetMaxHP() { return MaxHP; }
+	float GetMaxSpeed() { return MaxSpeed; }
+	int GetMaxSpeedLevel() { return MaxSpeedLevel; }
+	int GetMaxHPLevel() { return MaxHPLevel; }
+
 private :
 
 	std::vector<Level*> levels;
@@ -42,6 +51,15 @@ private :
 	int score = 0;
 
 	static Game* instance;
+
+	int MaxHP = 10;
+	int MaxHPLevel = 1;
+
+
+	float MaxSpeed = 0.98;
+	int MaxSpeedLevel = 1;
+	int SpeedPrice = 10;
+	int Money = 100000;
 
 };
 

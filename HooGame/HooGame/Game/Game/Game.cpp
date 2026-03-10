@@ -95,6 +95,30 @@ Game& Game::Get()
 void Game::StoreEntry()
 {
 	state = State::Store;
+	Renderer::Get().SetCameraPosition(Vector2(0, 0));
 
 	mainLevel = levels[static_cast<int>(State::Store)];
+}
+
+void Game::BuyMaxHP()
+{
+
+	if (Money >= MaxHP * 2 && MaxSpeedLevel < 5)
+	{
+		Money -= (MaxHP * 2);
+		MaxHP++;
+		MaxHPLevel++;
+	}
+
+}
+
+void Game::BuyMaxSpeed()
+{
+	if (Money >= SpeedPrice * 2 && MaxSpeedLevel < 5)
+	{
+		Money -= (MaxSpeed * 20);
+		MaxSpeed += 0.01;
+		SpeedPrice++;
+		MaxSpeedLevel++;
+	}
 }
