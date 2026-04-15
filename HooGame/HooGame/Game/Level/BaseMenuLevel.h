@@ -36,6 +36,13 @@ struct MapCharTxt
 {
 	std::string character;
 	Vector2 pos;
+
+	MapCharTxt(const std::string& ch, const Vector2& p)
+		: character(ch), pos(p) {
+	}
+
+	// 기본 생성자 (필요한 경우를 대비해 두는 것이 좋습니다)
+	MapCharTxt() : character(""), pos(0.f, 0.f) {}
 };
 
 //===============================================================

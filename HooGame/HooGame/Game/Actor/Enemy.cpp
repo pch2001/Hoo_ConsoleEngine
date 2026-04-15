@@ -11,7 +11,7 @@
 
 Enemy::Enemy(const Vector2& position): super("E", position, Color::Red)
 {
-	sortingOrder = 5;
+	sortingOrder = 50;
 
 
 	myLayer = CollisionLayer::Enemy;

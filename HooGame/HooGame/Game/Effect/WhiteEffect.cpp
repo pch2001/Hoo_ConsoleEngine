@@ -57,7 +57,7 @@ void WhiteEffect::Draw()
         for (int iy = (int)position.y; iy < (int)position.y + height; iy++)
         {
             Vector2 drawPos = { ix, iy };
-            Renderer::Get().Submit(icon, drawPos, drawColor);
+            Renderer::Get().Submit(icon, drawPos, drawColor, 10);
         }
     }
 

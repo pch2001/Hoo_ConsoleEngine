@@ -12,11 +12,13 @@ using namespace Wanted;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	/*_CrtSetBreakAlloc(79559); 
-	_CrtSetBreakAlloc(12516);
-	_CrtSetBreakAlloc(13286);
-	_CrtSetBreakAlloc(41325);
-	_CrtSetBreakAlloc(51649);
+	
+
+	_CrtSetBreakAlloc(158); 
+	_CrtSetBreakAlloc(177);
+	_CrtSetBreakAlloc(788);
+	_CrtSetBreakAlloc(830);
+	/*_CrtSetBreakAlloc(51649);
 
 	_CrtSetBreakAlloc(51082);
 	_CrtSetBreakAlloc(50993);

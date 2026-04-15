@@ -14,6 +14,19 @@ Physics::~Physics()
 {
     ClearActors();
 }
+void Physics::EndGravity(Actor* actor)
+{
+    if (gravityActors.empty())
+        return;
+
+
+    auto it = std::find(gravityActors.begin(), gravityActors.end(), actor);
+    if (it != gravityActors.end())
+    {
+        gravityActors.erase(it);
+    }
+}
+
 
 void Physics::StartGravity(Actor* actor)
 {
@@ -23,18 +36,6 @@ void Physics::StartGravity(Actor* actor)
             return;
     }
     gravityActors.emplace_back(actor);
-}
-
-void Physics::EndGravity(Actor* actor)
-{
-    if (gravityActors.empty())return;
-
-
-    auto it = std::find(gravityActors.begin(), gravityActors.end(), actor);
-    if (it != gravityActors.end())
-    {
-        gravityActors.erase(it);
-    }
 }
 
 void Physics::Tick(float deltaTime)

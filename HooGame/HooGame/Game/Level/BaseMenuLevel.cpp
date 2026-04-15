@@ -52,8 +52,13 @@ void BaseMenuLevel::Draw()
 
 std::vector<MapCharTxt> BaseMenuLevel::LoadLineDraw()
 {
+	mapData.clear();
+
 	const int width = Engine::Get().GetWidth();
 	const int height = Engine::Get().GetHeight();
+
+	if (width <= 0 || width > 500 || height <= 0 || height > 500) return mapData;
+
 	mapData.reserve((width + height) * 2);
 	// ┌───────────────┐ (top)
 	for (int x = 0; x < width; ++x)
@@ -71,7 +76,7 @@ std::vector<MapCharTxt> BaseMenuLevel::LoadLineDraw()
 	// └───────────────┘ (bottom)
 	for (int x = 0; x < width; ++x)
 	{
-		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+		mapData.emplace_back( "-", Vector2((float)x, (float)(height - 1)) );
 	}
 
 	return mapData;
