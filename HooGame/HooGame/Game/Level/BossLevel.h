@@ -11,6 +11,9 @@ struct MapChar5
 {
 	std::string character;
 	Vector2 pos;
+	
+	MapChar5(std::string c, Vector2 p) : character(c), pos(p) {}
+	MapChar5() : character(""), pos(Vector2()) {}
 };
 
 enum class EStageState

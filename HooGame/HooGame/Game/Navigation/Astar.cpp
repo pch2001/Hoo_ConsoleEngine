@@ -125,6 +125,7 @@ std::vector<Node*> Astar::FindPath(Node* StartNode, Node* goalNode, std::vector<
                 // 아직 열린 리스트에 없다면 추가
                 if (!neighborNode->isOpen) {
                     neighborNode->isOpen = true;
+                    //openList.emplace_back(neighborNode);
                     openList.push_back(neighborNode);
                 }
             }

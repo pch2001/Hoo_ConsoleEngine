@@ -75,16 +75,16 @@ void BossLevel::LoadLine()
 	for (int x = 0; x < width; ++x)
 	{
 		navigationGrid[0][x] = 1;
-		mapData.push_back({ "_", Vector2((float)x, 0.f) });
-		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+		mapData.emplace_back( "_", Vector2((float)x, 0.f) );
+		mapData.emplace_back( "-", Vector2((float)x, (float)(height - 1)) );
 
 	}
 	for (int y = 1; y < height - 1; ++y)
 	{
 		navigationGrid[y][0] = 1; // Left wall
 		navigationGrid[y][width - 1] = 1; // Right wall
-		mapData.push_back({ "|", Vector2(0.f, (float)y) });
-		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
+		mapData.emplace_back( "|", Vector2(0.f, (float)y) );
+		mapData.emplace_back( "|", Vector2((float)(width - 1), (float)y) );
 	}
 
 
@@ -94,7 +94,7 @@ void BossLevel::LoadLine()
 		{
 			navigationGrid[y][x] = 0;
 			if ((x + y) % 2 == 0)
-				backgroundData.push_back({".", Vector2((float)x, (float)y )});
+				backgroundData.emplace_back(".", Vector2((float)x, (float)y ));
 		}
 	}
 }

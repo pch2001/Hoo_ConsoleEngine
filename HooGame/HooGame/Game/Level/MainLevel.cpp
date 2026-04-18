@@ -69,26 +69,27 @@ void MainLevel::LoadMap(const char* filename)
 	char* data = new char[fileSize + 1];
 	size_t readSize = fread(data, sizeof(char), fileSize, file);
 
-	// 읽어온 문자열을 분석(파싱-Parcing)해서 출력.
-	int x = 0; //Engine::Get().GetWidth() / 2;
-	int y = 0;//Engine::Get().GetHeight()/2;
+	int x = 0;
+	int y = 0;
 
 	for (size_t i = 0; i < readSize; ++i) {
 
 		if (data[i] == '\r') continue;
 
-		// 1. 줄바꿈 처리 (\n)
 		if (data[i] == '\n') {
 			y++;
 			x = 0;
 			continue;
 		}
 		if (data[i] != ' ') {
-			mapData2.emplace_back(data[i]+"", Vector2((float)x + Engine::Get().GetWidth() / 5, (float)y + 5.f));
-			//mapData2.push_back({std::string(1, data[i]), Vector2((float)x+ Engine::Get().GetWidth() / 5 , (float)y + 5.f) });
+			mapData2.emplace_back(std::string(1, data[i]), Vector2((float)x+ Engine::Get().GetWidth() / 5 , (float)y + 5.f));
 		}
 		x++;
 	}
 	delete[] data;
 	fclose(file);
 }
+
+
+//
+// mapData2.emplace_back(data[i]+"", Vector2((float)x + Engine::Get().GetWidth() / 5, (float)y + 5.f));

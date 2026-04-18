@@ -75,7 +75,7 @@ void GameLevel::Draw()
 	int cameraX = Renderer::Get().GetCameraPosition().x;
 
 	for (const auto& item : mapData) {
-		Renderer::Get().Submit(item.character, Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
+		Renderer::Get().Submit(item.character.c_str(), Vector2(item.pos.x + cameraX, item.pos.y), Color::Red);
 	}
 }
 
@@ -184,19 +184,19 @@ void GameLevel::LoadScene()
 	// ┌───────────────┐ (top)
 	for (int x = 0; x < width; ++x)
 	{
-		mapData.push_back({ "_", Vector2((float)x, 0.f) });
+		mapData.emplace_back( "_", Vector2((float)x, 0.f) );
 	}
 
 	// │               │ (middle)
 	for (int y = 1; y < height - 1; ++y)
 	{
-		mapData.push_back({ "|", Vector2(0.f, (float)y) });
-		mapData.push_back({ "|", Vector2((float)(width - 1), (float)y) });
+		mapData.emplace_back( "|", Vector2(0.f, (float)y) );
+		mapData.emplace_back( "|", Vector2((float)(width - 1), (float)y) );
 	}
 
 	// └───────────────┘ (bottom)
 	for (int x = 0; x < width; ++x)
 	{
-		mapData.push_back({ "-", Vector2((float)x, (float)(height - 1)) });
+		mapData.emplace_back( "-", Vector2((float)x, (float)(height - 1)) );
 	}
 }

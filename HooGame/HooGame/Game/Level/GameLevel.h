@@ -8,8 +8,13 @@ using namespace Wanted;
 
 struct MapChar4
 {
-	const char* character;
+	//const char* character;
+	std::string character;
 	Vector2 pos;
+
+
+	MapChar4(std::string c, Vector2 p) : character(c), pos(p) {}
+	MapChar4() : character(""), pos(Vector2()) {}
 };
 class GameLevel : public Level
 {
